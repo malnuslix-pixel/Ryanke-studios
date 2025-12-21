@@ -1,25 +1,31 @@
 import { motion } from 'framer-motion';
-import { Instagram, Facebook, Twitter, Linkedin, ArrowUp } from 'lucide-react';
+import { Instagram, Facebook, ArrowUp, Phone, Mail, MapPin } from 'lucide-react';
+import ryankeyLogo from '@/assets/ryankey-logo.png';
 
 const socialLinks = [
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
+  { icon: Instagram, href: 'https://www.instagram.com/ryankeystudios', label: 'Instagram' },
+  { icon: Facebook, href: 'https://www.facebook.com/RyankeyStudios', label: 'Facebook' },
 ];
 
 const footerLinks = [
   {
     title: 'Services',
-    links: ['Wedding Photography', 'Portrait Sessions', 'Commercial', 'Events', 'Videography'],
+    links: [
+      { name: 'Corporate Photography', href: '#services' },
+      { name: 'Family Photoshoots', href: '#services' },
+      { name: 'Event Coverage', href: '#services' },
+      { name: 'Product Photography', href: '#services' },
+      { name: 'Videography', href: '#services' },
+    ],
   },
   {
-    title: 'Company',
-    links: ['About Us', 'Our Team', 'Careers', 'Press', 'Blog'],
-  },
-  {
-    title: 'Support',
-    links: ['Contact', 'FAQ', 'Privacy Policy', 'Terms of Service'],
+    title: 'Quick Links',
+    links: [
+      { name: 'About Us', href: '#about' },
+      { name: 'Portfolio', href: '#portfolio' },
+      { name: 'Pricing', href: '#pricing' },
+      { name: 'Contact', href: '#contact' },
+    ],
   },
 ];
 
@@ -28,19 +34,31 @@ export const Footer = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="relative bg-primary text-primary-foreground">
       {/* Main Footer */}
-      <div className="container mx-auto px-6 lg:px-12 py-20">
+      <div className="container mx-auto px-6 lg:px-12 py-16">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-4 space-y-6">
-            <a href="#home" className="font-serif text-2xl font-medium tracking-tight inline-block">
-              Visual<span className="text-accent">.</span>Storytellers
-            </a>
-            <p className="text-primary-foreground/70 leading-relaxed max-w-sm">
-              Crafting visual narratives that inspire, connect, and leave lasting impressions. 
-              Your story deserves to be told beautifully.
+            <img 
+              src={ryankeyLogo} 
+              alt="Ryankey Studios" 
+              className="h-14 w-auto"
+            />
+            <p className="text-sm font-semibold text-accent tracking-wider uppercase">
+              Your Dream Studios
+            </p>
+            <p className="text-primary-foreground/70 leading-relaxed max-w-sm text-sm">
+              Ryankey Studios is a creative photography and videography studio 
+              specializing in high-quality visual storytelling. Established 2021.
             </p>
 
             {/* Social Links */}
@@ -49,31 +67,61 @@ export const Footer = () => {
                 <motion.a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="w-10 h-10 flex items-center justify-center border border-primary-foreground/20 hover:border-accent hover:text-accent transition-colors"
+                  className="w-10 h-10 flex items-center justify-center border-2 border-primary-foreground/20 hover:border-accent hover:text-accent transition-colors"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
                   <social.icon size={18} />
                 </motion.a>
               ))}
+              {/* TikTok */}
+              <motion.a
+                href="https://www.tiktok.com/@ryankeystudios"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="w-10 h-10 flex items-center justify-center border-2 border-primary-foreground/20 hover:border-accent hover:text-accent transition-colors text-sm font-bold"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                TT
+              </motion.a>
+              {/* YouTube */}
+              <motion.a
+                href="https://www.youtube.com/@RyankeyStudios"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="w-10 h-10 flex items-center justify-center border-2 border-primary-foreground/20 hover:border-accent hover:text-accent transition-colors text-sm font-bold"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                YT
+              </motion.a>
             </div>
           </div>
 
           {/* Links Columns */}
           {footerLinks.map((column) => (
             <div key={column.title} className="lg:col-span-2">
-              <h4 className="font-medium text-sm tracking-[0.2em] uppercase mb-6">
+              <h4 className="font-semibold text-sm tracking-[0.2em] uppercase mb-6">
                 {column.title}
               </h4>
               <ul className="space-y-3">
                 {column.links.map((link) => (
-                  <li key={link}>
+                  <li key={link.name}>
                     <a
-                      href="#"
-                      className="text-primary-foreground/70 hover:text-accent transition-colors text-sm"
+                      href={link.href}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(link.href);
+                      }}
+                      className="text-primary-foreground/70 hover:text-accent transition-colors text-sm cursor-pointer"
                     >
-                      {link}
+                      {link.name}
                     </a>
                   </li>
                 ))}
@@ -81,29 +129,44 @@ export const Footer = () => {
             </div>
           ))}
 
-          {/* Newsletter */}
-          <div className="lg:col-span-2">
-            <h4 className="font-medium text-sm tracking-[0.2em] uppercase mb-6">
-              Newsletter
+          {/* Contact Info */}
+          <div className="lg:col-span-4">
+            <h4 className="font-semibold text-sm tracking-[0.2em] uppercase mb-6">
+              Contact Us
             </h4>
-            <p className="text-primary-foreground/70 text-sm mb-4">
-              Subscribe for updates and exclusive offers.
-            </p>
-            <form className="space-y-3">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="w-full px-4 py-2 bg-transparent border border-primary-foreground/20 focus:border-accent focus:outline-none text-sm transition-colors"
-              />
-              <motion.button
-                type="submit"
-                className="w-full px-4 py-2 bg-accent text-charcoal text-sm font-medium tracking-wide hover:bg-accent/90 transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Subscribe
-              </motion.button>
-            </form>
+            <ul className="space-y-4">
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 text-accent" />
+                <a href="tel:0702340700" className="text-primary-foreground/70 hover:text-accent transition-colors text-sm">
+                  0702 340 700
+                </a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-accent" />
+                <a href="mailto:ryankeyimages@gmail.com" className="text-primary-foreground/70 hover:text-accent transition-colors text-sm">
+                  ryankeyimages@gmail.com
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                <span className="text-primary-foreground/70 text-sm">
+                  Nexus Business Centre,<br />
+                  Ruiru Bypass (Kamakis)
+                </span>
+              </li>
+            </ul>
+
+            {/* WhatsApp Button */}
+            <motion.a
+              href="https://wa.me/254702340700"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-accent text-accent-foreground text-sm font-semibold tracking-wide hover:bg-accent/90 transition-colors"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Book via WhatsApp
+            </motion.a>
           </div>
         </div>
       </div>
@@ -113,7 +176,7 @@ export const Footer = () => {
         <div className="container mx-auto px-6 lg:px-12 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-primary-foreground/50 text-sm">
-              © {new Date().getFullYear()} Visual Storytellers. All rights reserved.
+              © {new Date().getFullYear()} Ryankey Studios. All rights reserved.
             </p>
 
             {/* Back to Top */}

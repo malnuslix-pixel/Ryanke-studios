@@ -8,50 +8,50 @@ import portfolio4 from '@/assets/portfolio-4.jpg';
 import portfolio5 from '@/assets/portfolio-5.jpg';
 import portfolio6 from '@/assets/portfolio-6.jpg';
 
-const categories = ['All', 'Weddings', 'Portraits', 'Commercial', 'Events'];
+const categories = ['All', 'Corporate', 'Events', 'Family & Lifestyle', 'Brands & Products'];
 
 const portfolioItems = [
   { 
     id: 1, 
     image: portfolio1, 
-    title: 'Eternal Moments', 
-    category: 'Weddings',
-    description: 'A sunset celebration of love'
+    title: 'Corporate Brand Session', 
+    category: 'Corporate',
+    description: 'Professional team and executive portraits'
   },
   { 
     id: 2, 
     image: portfolio2, 
-    title: 'Fashion Forward', 
-    category: 'Portraits',
-    description: 'Editorial elegance'
+    title: 'Family Moments', 
+    category: 'Family & Lifestyle',
+    description: 'Capturing warmth and connection'
   },
   { 
     id: 3, 
     image: portfolio3, 
-    title: 'Luxury Brand Campaign', 
-    category: 'Commercial',
-    description: 'Premium product storytelling'
+    title: 'Product Campaign', 
+    category: 'Brands & Products',
+    description: 'Clean, vibrant product photography'
   },
   { 
     id: 4, 
     image: portfolio4, 
-    title: 'Executive Presence', 
-    category: 'Portraits',
-    description: 'Corporate leadership portraits'
+    title: 'Corporate Event', 
+    category: 'Events',
+    description: 'Professional event documentation'
   },
   { 
     id: 5, 
     image: portfolio5, 
-    title: 'Architectural Vision', 
-    category: 'Commercial',
-    description: 'Luxury real estate imagery'
+    title: 'Lifestyle Portrait', 
+    category: 'Family & Lifestyle',
+    description: 'Natural light lifestyle sessions'
   },
   { 
     id: 6, 
     image: portfolio6, 
-    title: 'Family Legacy', 
-    category: 'Portraits',
-    description: 'Intimate family connections'
+    title: 'Brand Identity', 
+    category: 'Brands & Products',
+    description: 'Visual storytelling for brands'
   },
 ];
 
@@ -71,36 +71,36 @@ export const PortfolioSection = () => {
     : portfolioItems.filter(item => item.category === activeCategory);
 
   return (
-    <section id="portfolio" ref={containerRef} className="relative py-32 lg:py-48 overflow-hidden">
+    <section id="portfolio" ref={containerRef} className="relative py-24 lg:py-40 overflow-hidden">
       {/* Section Header */}
       <div className="container mx-auto px-6 lg:px-12 mb-16">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-medium tracking-[0.3em] uppercase text-accent">
-              <span className="w-8 h-px bg-accent" />
+            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+              <span className="w-8 h-0.5 bg-accent" />
               Portfolio
-              <span className="w-8 h-px bg-accent" />
+              <span className="w-8 h-0.5 bg-accent" />
             </span>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
               Our Featured
-              <span className="block text-accent italic mt-2">Work</span>
+              <span className="block text-accent mt-2">Work</span>
             </h2>
           </ScrollReveal>
         </div>
 
         {/* Category Filter */}
         <ScrollReveal delay={0.2}>
-          <div className="flex flex-wrap justify-center gap-4 mt-12">
+          <div className="flex flex-wrap justify-center gap-3 mt-12">
             {categories.map((category) => (
               <motion.button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-6 py-2 text-sm font-medium tracking-wider uppercase border transition-all duration-300 ${
+                className={`px-5 py-2 text-sm font-semibold tracking-wider uppercase border-2 transition-all duration-300 ${
                   activeCategory === category
-                    ? 'bg-primary text-primary-foreground border-primary'
+                    ? 'bg-accent text-accent-foreground border-accent'
                     : 'bg-transparent text-muted-foreground border-border hover:border-accent hover:text-accent'
                 }`}
                 whileHover={{ scale: 1.02 }}
@@ -141,24 +141,24 @@ export const PortfolioSection = () => {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 {/* Content */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                   <span className="text-xs tracking-[0.2em] uppercase text-accent mb-2">
                     {item.category}
                   </span>
-                  <h3 className="font-serif text-2xl lg:text-3xl font-medium text-ivory mb-2">
+                  <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-pure-white mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-ivory/70 text-sm">
+                  <p className="text-pure-white/70 text-sm">
                     {item.description}
                   </p>
                 </div>
 
                 {/* Corner Decorations */}
-                <div className="absolute top-4 left-4 w-8 h-8 border-l border-t border-ivory/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-4 right-4 w-8 h-8 border-r border-b border-ivory/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-pure-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-pure-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </motion.div>
           ))}
@@ -167,13 +167,16 @@ export const PortfolioSection = () => {
         {/* View All Button */}
         <ScrollReveal delay={0.3}>
           <div className="text-center mt-16">
-            <motion.button
+            <motion.a
+              href="https://www.instagram.com/ryankeystudios"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-outline-luxury"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              View Full Portfolio
-            </motion.button>
+              View More on Instagram
+            </motion.a>
           </div>
         </ScrollReveal>
       </div>

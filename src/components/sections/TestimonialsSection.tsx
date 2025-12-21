@@ -6,30 +6,37 @@ import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 const testimonials = [
   {
     id: 1,
-    name: 'Alexandra & Michael',
-    role: 'Wedding Clients',
-    content: 'Visual Storytellers captured our wedding day with such artistry and emotion. Every image tells a story, and looking through our album feels like reliving the magic all over again. Truly exceptional work.',
+    name: 'Crystal Breeze',
+    role: 'Brand Client',
+    content: 'Ryankey Studios captured our brand essence perfectly. Their attention to detail and creative vision elevated our visual identity to new heights. Professional, reliable, and exceptional quality.',
     rating: 5,
   },
   {
     id: 2,
-    name: 'Sarah Chen',
-    role: 'Creative Director, Luxe Magazine',
-    content: 'Working with this team has been an absolute pleasure. Their attention to detail and creative vision elevated our editorial shoots to new heights. They understand the nuances of luxury branding.',
+    name: 'BSR Hospital',
+    role: 'Corporate Client',
+    content: 'Outstanding corporate photography services. They understood our needs and delivered beyond expectations. The team portraits and facility shots were exactly what we needed for our marketing materials.',
     rating: 5,
   },
   {
     id: 3,
-    name: 'James & Emily Foster',
-    role: 'Family Portrait Clients',
-    content: 'We\'ve had family photos taken before, but never like this. They captured our family\'s personality and connection in ways we didn\'t think possible. These images are treasures we\'ll cherish forever.',
+    name: 'Finest Mazda Garage',
+    role: 'Brand Client',
+    content: 'The product photography for our automotive services was top-notch. Clean, vibrant images that truly showcase our work. Fast turnaround and great communication throughout.',
     rating: 5,
   },
   {
     id: 4,
-    name: 'David Morrison',
-    role: 'CEO, Morrison Estates',
-    content: 'The real estate photography they provided transformed how we present our luxury properties. The quality and professionalism are unmatched. Our listings now tell compelling visual stories.',
+    name: 'Vapella Spur & Salon',
+    role: 'Brand Client',
+    content: 'Brian and his team brought our salon to life through stunning visuals. The photos capture the luxury and care we put into our services. Highly recommend for any business.',
+    rating: 5,
+  },
+  {
+    id: 5,
+    name: 'Opal Luxurious Suites',
+    role: 'Hospitality Client',
+    content: 'The real estate and hospitality photography exceeded all expectations. Every shot tells a story of luxury and comfort. Our bookings increased significantly after using these images.',
     rating: 5,
   },
 ];
@@ -56,7 +63,7 @@ export const TestimonialsSection = () => {
     <section
       id="testimonials"
       ref={containerRef}
-      className="relative py-32 lg:py-48 bg-primary text-primary-foreground overflow-hidden"
+      className="relative py-24 lg:py-40 bg-primary text-primary-foreground overflow-hidden"
     >
       {/* Background Decorations */}
       <motion.div
@@ -70,17 +77,17 @@ export const TestimonialsSection = () => {
         {/* Section Header */}
         <div className="max-w-3xl mx-auto text-center mb-16">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-medium tracking-[0.3em] uppercase text-accent">
-              <span className="w-8 h-px bg-accent" />
+            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+              <span className="w-8 h-0.5 bg-accent" />
               Testimonials
-              <span className="w-8 h-px bg-accent" />
+              <span className="w-8 h-0.5 bg-accent" />
             </span>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
               What Our Clients
-              <span className="block text-accent italic mt-2">Say About Us</span>
+              <span className="block text-accent mt-2">Say About Us</span>
             </h2>
           </ScrollReveal>
         </div>
@@ -102,12 +109,12 @@ export const TestimonialsSection = () => {
               transition={{ duration: 0.5 }}
               className="text-center py-12"
             >
-              <p className="font-serif text-2xl md:text-3xl lg:text-4xl font-light leading-relaxed mb-12 italic">
+              <p className="font-heading text-2xl md:text-3xl lg:text-4xl font-light leading-relaxed mb-12">
                 "{testimonials[currentIndex].content}"
               </p>
 
               <div>
-                <p className="font-medium text-lg">
+                <p className="font-semibold text-lg">
                   {testimonials[currentIndex].name}
                 </p>
                 <p className="text-primary-foreground/60 text-sm mt-1">
@@ -118,7 +125,7 @@ export const TestimonialsSection = () => {
               {/* Rating */}
               <div className="flex justify-center gap-1 mt-4">
                 {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <span key={i} className="text-accent">★</span>
+                  <span key={i} className="text-accent text-xl">★</span>
                 ))}
               </div>
             </motion.div>
@@ -127,7 +134,7 @@ export const TestimonialsSection = () => {
             <div className="flex items-center justify-center gap-4 mt-8">
               <motion.button
                 onClick={prevTestimonial}
-                className="w-12 h-12 flex items-center justify-center border border-primary-foreground/30 hover:border-accent hover:text-accent transition-colors"
+                className="w-12 h-12 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -151,7 +158,7 @@ export const TestimonialsSection = () => {
 
               <motion.button
                 onClick={nextTestimonial}
-                className="w-12 h-12 flex items-center justify-center border border-primary-foreground/30 hover:border-accent hover:text-accent transition-colors"
+                className="w-12 h-12 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent transition-colors"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

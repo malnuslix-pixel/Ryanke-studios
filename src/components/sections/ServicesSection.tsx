@@ -1,71 +1,83 @@
 import { motion } from 'framer-motion';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
-import { Camera, Heart, Users, Building, Film, Sparkles } from 'lucide-react';
+import { Camera, Users, Building, Film, Sparkles, Plane, Palette, Video } from 'lucide-react';
 
 const services = [
   {
-    icon: Heart,
-    title: 'Wedding Photography',
-    description: 'Capturing the magic of your special day with timeless elegance and emotional depth.',
-    features: ['Full Day Coverage', 'Engagement Sessions', 'Album Design'],
-  },
-  {
-    icon: Camera,
-    title: 'Portrait Sessions',
-    description: 'Professional portraits that reveal your authentic self with artistic sophistication.',
-    features: ['Individual Portraits', 'Family Sessions', 'Creative Concepts'],
-  },
-  {
     icon: Building,
-    title: 'Commercial',
-    description: 'Elevate your brand with striking imagery that commands attention and drives results.',
-    features: ['Product Photography', 'Brand Campaigns', 'Architectural'],
+    title: 'Corporate & Brand Photography',
+    description: 'Elevate your brand with professional corporate imagery that commands attention and builds trust.',
+    features: ['Brand Campaigns', 'Team Portraits', 'Office Photography'],
   },
   {
     icon: Users,
-    title: 'Corporate Events',
-    description: 'Document your corporate milestones with professional precision and creative flair.',
-    features: ['Conferences', 'Team Portraits', 'Corporate Events'],
+    title: 'Family & Lifestyle',
+    description: 'Capture the warmth and connection of your family with natural, vibrant photography.',
+    features: ['Family Photoshoots', 'Lifestyle Sessions', 'Maternity Shoots'],
   },
   {
-    icon: Film,
-    title: 'Videography',
-    description: 'Cinematic storytelling that brings your vision to life through the power of motion.',
-    features: ['Wedding Films', 'Brand Videos', 'Documentary'],
+    icon: Camera,
+    title: 'Event Photography',
+    description: 'Document your special events with professional precision and creative storytelling.',
+    features: ['Baby Showers', 'Birthday Events', 'Corporate Events'],
   },
   {
     icon: Sparkles,
-    title: 'Creative Direction',
-    description: 'Full-service creative consultation to conceptualize and execute your visual narrative.',
-    features: ['Concept Development', 'Art Direction', 'Styling'],
+    title: 'Product Photography',
+    description: 'Showcase your products with clean, vibrant images that drive sales and engagement.',
+    features: ['E-commerce Shots', 'Catalog Images', 'Social Media Content'],
+  },
+  {
+    icon: Film,
+    title: 'Videography Services',
+    description: 'Cinematic video production that brings your story to life through the power of motion.',
+    features: ['Brand Videos', 'Social Media Reels', 'Documentary Style'],
+  },
+  {
+    icon: Plane,
+    title: 'Drone Services',
+    description: 'Stunning aerial perspectives that add a breathtaking dimension to your visual content.',
+    features: ['Aerial Photography', 'Drone Videography', 'Property Tours'],
+  },
+  {
+    icon: Palette,
+    title: 'Photo Retouching',
+    description: 'Professional post-production that enhances your images to perfection.',
+    features: ['Color Grading', 'Skin Retouching', 'Background Editing'],
+  },
+  {
+    icon: Video,
+    title: 'Video Editing',
+    description: 'Cinematic editing that transforms raw footage into compelling visual stories.',
+    features: ['Cinematic Editing', 'Color Grading', 'Social Media Formatting'],
   },
 ];
 
 export const ServicesSection = () => {
   return (
-    <section id="services" className="relative py-32 lg:py-48 bg-secondary/30">
+    <section id="services" className="relative py-24 lg:py-40 bg-secondary/50">
       {/* Section Header */}
-      <div className="container mx-auto px-6 lg:px-12 mb-20">
+      <div className="container mx-auto px-6 lg:px-12 mb-16">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-medium tracking-[0.3em] uppercase text-accent">
-              <span className="w-8 h-px bg-accent" />
+            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+              <span className="w-8 h-0.5 bg-accent" />
               Our Services
-              <span className="w-8 h-px bg-accent" />
+              <span className="w-8 h-0.5 bg-accent" />
             </span>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mt-6">
-              Exceptional Services for
-              <span className="block text-accent italic mt-2">Every Vision</span>
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
+              Professional Services for
+              <span className="block text-accent mt-2">Every Vision</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
             <p className="text-lg text-muted-foreground leading-relaxed mt-6 max-w-2xl mx-auto">
-              From intimate moments to grand celebrations, we offer a comprehensive 
-              suite of visual services tailored to bring your unique story to life.
+              From intimate family moments to grand corporate events, we offer comprehensive 
+              photography and videography services tailored to bring your unique story to life.
             </p>
           </ScrollReveal>
         </div>
@@ -73,27 +85,26 @@ export const ServicesSection = () => {
 
       {/* Services Grid */}
       <div className="container mx-auto px-6 lg:px-12">
-        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
             <StaggerItem key={service.title}>
               <motion.div
-                className="group card-luxury p-8 lg:p-10 h-full"
+                className="group card-luxury p-6 lg:p-8 h-full"
                 whileHover={{ y: -8 }}
                 transition={{ duration: 0.3 }}
               >
                 {/* Icon */}
                 <div className="relative mb-6">
-                  <div className="w-14 h-14 flex items-center justify-center border border-border group-hover:border-accent/50 transition-colors duration-300">
-                    <service.icon className="w-6 h-6 text-accent" />
+                  <div className="w-14 h-14 flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+                    <service.icon className="w-6 h-6 text-accent group-hover:text-accent-foreground transition-colors" />
                   </div>
-                  <div className="absolute -inset-2 border border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Content */}
-                <h3 className="font-serif text-2xl font-medium mb-4 group-hover:text-accent transition-colors duration-300">
+                <h3 className="font-heading text-xl font-semibold mb-3 group-hover:text-accent transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed mb-6">
+                <p className="text-muted-foreground leading-relaxed mb-4 text-sm">
                   {service.description}
                 </p>
 
@@ -109,21 +120,20 @@ export const ServicesSection = () => {
                     </li>
                   ))}
                 </ul>
-
-                {/* Hover Indicator */}
-                <div className="mt-8 pt-6 border-t border-border/50">
-                  <motion.span
-                    className="inline-flex items-center gap-2 text-sm font-medium text-foreground group-hover:text-accent transition-colors duration-300"
-                    whileHover={{ x: 5 }}
-                  >
-                    Learn More
-                    <span className="w-4 h-px bg-current group-hover:w-8 transition-all duration-300" />
-                  </motion.span>
-                </div>
               </motion.div>
             </StaggerItem>
           ))}
         </StaggerContainer>
+
+        {/* Photography Style Note */}
+        <ScrollReveal delay={0.3}>
+          <div className="text-center mt-16 p-8 bg-card border border-border/50">
+            <p className="font-heading font-semibold text-lg mb-2">Our Photography Style</p>
+            <p className="text-muted-foreground">
+              Clean, vibrant, cinematic, natural-light focused, storytelling-driven visuals.
+            </p>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

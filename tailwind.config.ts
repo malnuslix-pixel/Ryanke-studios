@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['DM Sans', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Montserrat', 'system-ui', 'sans-serif'],
+        heading: ['Poppins', 'system-ui', 'sans-serif'],
+        display: ['Poppins', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -44,6 +44,7 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
           muted: "hsl(var(--accent-muted))",
+          light: "hsl(var(--accent-light))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -63,12 +64,14 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
+        wine: {
+          DEFAULT: "hsl(var(--wine))",
+          light: "hsl(var(--wine-light))",
+          dark: "hsl(var(--wine-dark))",
         },
-        ivory: "hsl(var(--ivory))",
-        charcoal: "hsl(var(--charcoal))",
+        maroon: "hsl(var(--maroon))",
+        "jet-black": "hsl(var(--jet-black))",
+        "pure-white": "hsl(var(--pure-white))",
         "warm-gray": "hsl(var(--warm-gray))",
       },
       borderRadius: {
@@ -80,6 +83,7 @@ export default {
         soft: "var(--shadow-soft)",
         elevated: "var(--shadow-elevated)",
         glow: "var(--shadow-glow)",
+        wine: "var(--shadow-wine)",
       },
       keyframes: {
         "accordion-down": {
@@ -158,8 +162,9 @@ export default {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "gradient-luxury": "linear-gradient(135deg, hsl(var(--background)) 0%, hsl(var(--secondary)) 50%, hsl(var(--background)) 100%)",
-        "shimmer-gold": "linear-gradient(90deg, transparent, hsl(var(--gold) / 0.3), transparent)",
+        "gradient-wine": "linear-gradient(135deg, hsl(var(--wine)) 0%, hsl(var(--maroon)) 100%)",
+        "gradient-dark": "linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 8%) 100%)",
+        "shimmer-wine": "linear-gradient(90deg, transparent, hsl(var(--wine) / 0.3), transparent)",
       },
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
