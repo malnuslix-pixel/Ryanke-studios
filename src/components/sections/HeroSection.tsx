@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Camera, Video, Play } from 'lucide-react';
 import heroImage from '@/assets/hero-image.jpg';
 
 export const HeroSection = () => {
@@ -32,10 +32,10 @@ export const HeroSection = () => {
         style={{ y, scale }}
         className="absolute inset-0 z-0"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-primary/40 to-background z-10" />
         <img
           src={heroImage}
-          alt="Luxury photography studio"
+          alt="Ryankey Studios professional photography"
           className="w-full h-full object-cover"
         />
       </motion.div>
@@ -66,10 +66,10 @@ export const HeroSection = () => {
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-6"
         >
-          <span className="inline-flex items-center gap-3 text-sm font-medium tracking-[0.3em] uppercase text-muted-foreground">
-            <span className="w-8 h-px bg-accent" />
-            Premium Visual Agency
-            <span className="w-8 h-px bg-accent" />
+          <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-pure-white/80">
+            <Camera className="w-4 h-4" />
+            Your Dream Studios
+            <Video className="w-4 h-4" />
           </span>
         </motion.div>
 
@@ -78,13 +78,13 @@ export const HeroSection = () => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-medium leading-[0.9] tracking-tight mb-8"
+          className="font-heading text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.9] tracking-tight mb-8 text-pure-white"
         >
-          <span className="block">Crafting Visual</span>
+          <span className="block">Capturing</span>
           <span className="block mt-2">
-            <span className="text-accent italic">Stories</span> That
+            <span className="text-accent">Moments</span> That
           </span>
-          <span className="block mt-2">Inspire</span>
+          <span className="block mt-2">Last Forever</span>
         </motion.h1>
 
         {/* Subtitle */}
@@ -92,10 +92,10 @@ export const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-xl mx-auto text-lg md:text-xl text-muted-foreground leading-relaxed mb-12"
+          className="max-w-2xl mx-auto text-lg md:text-xl text-pure-white/80 leading-relaxed mb-12"
         >
-          We transform moments into timeless masterpieces through the art of 
-          premium photography and visual storytelling.
+          Ryankey Studios specializes in high-quality visual storytelling for individuals, 
+          families, brands, and institutions across Nairobi and its environs.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -115,20 +115,32 @@ export const HeroSection = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span className="relative z-10">View Our Work</span>
+            <span className="relative z-10 flex items-center gap-2">
+              <Play className="w-4 h-4" />
+              View Our Work
+            </span>
           </motion.a>
           <motion.a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="btn-outline-luxury"
+            href="https://wa.me/254702340700"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline-luxury text-pure-white border-pure-white/30 hover:border-accent hover:text-accent"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            Start a Project
+            Book via WhatsApp
           </motion.a>
+        </motion.div>
+
+        {/* Location Badge */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="mt-12 inline-flex items-center gap-2 px-4 py-2 bg-pure-white/10 backdrop-blur-sm rounded-full text-sm text-pure-white/70"
+        >
+          <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+          Serving Nairobi, Ruiru, Kamakis, Kiambu & Westlands
         </motion.div>
       </motion.div>
 
@@ -138,7 +150,7 @@ export const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-pure-white/70 hover:text-pure-white transition-colors cursor-pointer"
       >
         <span className="text-xs tracking-[0.2em] uppercase">Scroll</span>
         <motion.div
@@ -150,8 +162,8 @@ export const HeroSection = () => {
       </motion.button>
 
       {/* Corner Decorations */}
-      <div className="absolute bottom-0 left-0 w-32 h-32 border-l border-b border-border/30" />
-      <div className="absolute bottom-0 right-0 w-32 h-32 border-r border-b border-border/30" />
+      <div className="absolute bottom-0 left-0 w-32 h-32 border-l border-b border-pure-white/20" />
+      <div className="absolute bottom-0 right-0 w-32 h-32 border-r border-b border-pure-white/20" />
     </section>
   );
 };

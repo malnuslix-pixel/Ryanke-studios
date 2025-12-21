@@ -1,7 +1,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { ScrollReveal } from '../ScrollReveal';
-import { Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
+import brianAbuga2 from '@/assets/brian-abuga-2.png';
 
 export const ContactSection = () => {
   const containerRef = useRef(null);
@@ -16,7 +17,7 @@ export const ContactSection = () => {
     <section
       id="contact"
       ref={containerRef}
-      className="relative py-32 lg:py-48 overflow-hidden"
+      className="relative py-24 lg:py-40 overflow-hidden"
     >
       {/* Background Decorations */}
       <motion.div
@@ -29,57 +30,57 @@ export const ContactSection = () => {
           {/* Left Content */}
           <div className="space-y-8">
             <ScrollReveal>
-              <span className="inline-flex items-center gap-3 text-sm font-medium tracking-[0.3em] uppercase text-accent">
-                <span className="w-8 h-px bg-accent" />
+              <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+                <span className="w-8 h-0.5 bg-accent" />
                 Get in Touch
               </span>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight">
+              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight">
                 Let's Create
-                <span className="block text-accent italic mt-2">Something Beautiful</span>
+                <span className="block text-accent mt-2">Something Beautiful</span>
               </h2>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
                 Ready to bring your vision to life? We'd love to hear from you. 
-                Reach out and let's discuss how we can capture your story.
+                Reach out via WhatsApp or call us to discuss your project.
               </p>
             </ScrollReveal>
 
             {/* Contact Info */}
             <ScrollReveal delay={0.3}>
-              <div className="space-y-6 pt-8">
+              <div className="space-y-6 pt-4">
                 <motion.a
-                  href="mailto:hello@visualstorytellers.com"
+                  href="tel:0702340700"
                   className="flex items-center gap-4 group"
                   whileHover={{ x: 5 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center border border-border group-hover:border-accent transition-colors">
-                    <Mail className="w-5 h-5 text-accent" />
+                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all">
+                    <Phone className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-medium group-hover:text-accent transition-colors">
-                      hello@visualstorytellers.com
+                    <p className="text-sm text-muted-foreground">Phone / WhatsApp</p>
+                    <p className="font-semibold group-hover:text-accent transition-colors">
+                      0702 340 700
                     </p>
                   </div>
                 </motion.a>
 
                 <motion.a
-                  href="tel:+15551234567"
+                  href="mailto:ryankeyimages@gmail.com"
                   className="flex items-center gap-4 group"
                   whileHover={{ x: 5 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center border border-border group-hover:border-accent transition-colors">
-                    <Phone className="w-5 h-5 text-accent" />
+                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all">
+                    <Mail className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
-                    <p className="font-medium group-hover:text-accent transition-colors">
-                      +1 (555) 123-4567
+                    <p className="text-sm text-muted-foreground">Email</p>
+                    <p className="font-semibold group-hover:text-accent transition-colors">
+                      ryankeyimages@gmail.com
                     </p>
                   </div>
                 </motion.a>
@@ -88,99 +89,148 @@ export const ContactSection = () => {
                   className="flex items-center gap-4 group"
                   whileHover={{ x: 5 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center border border-border">
+                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20">
                     <MapPin className="w-5 h-5 text-accent" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Studio</p>
-                    <p className="font-medium">
-                      123 Artisan Lane, Creative District
+                    <p className="text-sm text-muted-foreground">Studio Location</p>
+                    <p className="font-semibold">
+                      Nexus Business Centre, Ruiru Bypass (Kamakis)
+                    </p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="flex items-center gap-4 group"
+                  whileHover={{ x: 5 }}
+                >
+                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20">
+                    <Clock className="w-5 h-5 text-accent" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Business Hours</p>
+                    <p className="font-semibold">
+                      Mon – Sat | 8:00 AM – 6:00 PM
                     </p>
                   </div>
                 </motion.div>
               </div>
             </ScrollReveal>
+
+            {/* WhatsApp CTA */}
+            <ScrollReveal delay={0.4}>
+              <motion.a
+                href="https://wa.me/254702340700"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-luxury inline-flex items-center gap-3"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <MessageCircle className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">Chat on WhatsApp</span>
+              </motion.a>
+            </ScrollReveal>
           </div>
 
-          {/* Right Content - Contact Form */}
+          {/* Right Content - Booking Form */}
           <ScrollReveal delay={0.2} direction="right">
             <div className="relative">
               {/* Decorative Frame */}
-              <div className="absolute -inset-4 border border-accent/20 -rotate-1" />
+              <div className="absolute -inset-4 border-2 border-accent/20 -rotate-1" />
 
-              <form className="relative bg-card p-8 lg:p-12 space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium tracking-wide">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 bg-transparent border border-border focus:border-accent focus:outline-none transition-colors"
-                      placeholder="John"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium tracking-wide">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 bg-transparent border border-border focus:border-accent focus:outline-none transition-colors"
-                      placeholder="Doe"
-                    />
-                  </div>
-                </div>
-
+              <div className="relative bg-card p-8 lg:p-12 space-y-6">
+                <h3 className="font-heading text-2xl font-semibold mb-6">Book a Session</h3>
+                
                 <div className="space-y-2">
                   <label className="text-sm font-medium tracking-wide">
-                    Email
+                    Your Name
                   </label>
                   <input
-                    type="email"
-                    className="w-full px-4 py-3 bg-transparent border border-border focus:border-accent focus:outline-none transition-colors"
-                    placeholder="john@example.com"
+                    type="text"
+                    className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                    placeholder="John Doe"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium tracking-wide">
-                    Service Interest
+                    Phone / WhatsApp
                   </label>
-                  <select className="w-full px-4 py-3 bg-transparent border border-border focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer">
+                  <input
+                    type="tel"
+                    className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                    placeholder="0712 345 678"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium tracking-wide">
+                    Event / Project Type
+                  </label>
+                  <select className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer">
                     <option value="">Select a service</option>
-                    <option value="wedding">Wedding Photography</option>
-                    <option value="portrait">Portrait Sessions</option>
-                    <option value="commercial">Commercial</option>
-                    <option value="events">Corporate Events</option>
+                    <option value="portrait">Portrait Session</option>
+                    <option value="family">Family Photoshoot</option>
+                    <option value="corporate">Corporate Photography</option>
+                    <option value="event">Event Coverage</option>
+                    <option value="product">Product Photography</option>
                     <option value="video">Videography</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
 
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium tracking-wide">
+                      Preferred Date
+                    </label>
+                    <input
+                      type="date"
+                      className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium tracking-wide">
+                      Duration
+                    </label>
+                    <select className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer">
+                      <option value="">Select duration</option>
+                      <option value="45min">45 minutes</option>
+                      <option value="1.5hr">1.5 hours</option>
+                      <option value="2hr">2 hours</option>
+                      <option value="3hr">3 hours</option>
+                      <option value="full-day">Full Day</option>
+                    </select>
+                  </div>
+                </div>
+
                 <div className="space-y-2">
                   <label className="text-sm font-medium tracking-wide">
-                    Tell Us About Your Project
+                    Additional Details
                   </label>
                   <textarea
-                    rows={4}
-                    className="w-full px-4 py-3 bg-transparent border border-border focus:border-accent focus:outline-none transition-colors resize-none"
-                    placeholder="Share your vision with us..."
+                    rows={3}
+                    className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors resize-none"
+                    placeholder="Tell us about your project..."
                   />
                 </div>
 
-                <motion.button
-                  type="submit"
-                  className="w-full btn-luxury group"
+                <motion.a
+                  href="https://wa.me/254702340700"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full btn-luxury group block text-center"
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    Send Inquiry
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </span>
-                </motion.button>
-              </form>
+                  <span className="relative z-10">Send Booking Request</span>
+                </motion.a>
+
+                <p className="text-xs text-muted-foreground text-center">
+                  *Form opens WhatsApp with your details. 50% deposit required to confirm booking.
+                </p>
+              </div>
             </div>
           </ScrollReveal>
         </div>

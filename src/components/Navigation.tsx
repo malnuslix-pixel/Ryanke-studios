@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
+import ryankeyLogo from '@/assets/ryankey-logo.png';
 
 const navLinks = [
   { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
   { href: '#services', label: 'Services' },
-  { href: '#portfolio', label: 'Work' },
-  { href: '#testimonials', label: 'Testimonials' },
+  { href: '#portfolio', label: 'Portfolio' },
+  { href: '#pricing', label: 'Pricing' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -40,8 +41,8 @@ export const Navigation = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
-            ? 'bg-background/90 backdrop-blur-lg border-b border-border/50 py-4'
-            : 'bg-transparent py-6'
+            ? 'bg-background/95 backdrop-blur-lg border-b border-border/50 py-3'
+            : 'bg-transparent py-5'
         }`}
       >
         <div className="container mx-auto px-6 lg:px-12">
@@ -53,15 +54,19 @@ export const Navigation = () => {
                 e.preventDefault();
                 scrollToSection('#home');
               }}
-              className="font-serif text-2xl font-medium tracking-tight text-foreground"
+              className="flex items-center"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              Visual<span className="text-accent">.</span>Storytellers
+              <img 
+                src={ryankeyLogo} 
+                alt="Ryankey Studios" 
+                className="h-12 md:h-14 w-auto"
+              />
             </motion.a>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-10">
+            <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <motion.a
                   key={link.href}
@@ -80,14 +85,24 @@ export const Navigation = () => {
             </div>
 
             {/* CTA Button */}
-            <motion.button
-              onClick={() => scrollToSection('#contact')}
-              className="hidden lg:block btn-luxury"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="relative z-10">Start a Project</span>
-            </motion.button>
+            <div className="hidden lg:flex items-center gap-4">
+              <motion.a
+                href="tel:0702340700"
+                className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
+                whileHover={{ scale: 1.02 }}
+              >
+                <Phone size={16} />
+                0702 340 700
+              </motion.a>
+              <motion.button
+                onClick={() => scrollToSection('#contact')}
+                className="btn-luxury"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <span className="relative z-10">Book Now</span>
+              </motion.button>
+            </div>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -116,7 +131,7 @@ export const Navigation = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: 0.1, duration: 0.4 }}
-              className="flex flex-col items-center justify-center h-full gap-8"
+              className="flex flex-col items-center justify-center h-full gap-6"
             >
               {navLinks.map((link, index) => (
                 <motion.a
@@ -126,7 +141,7 @@ export const Navigation = () => {
                     e.preventDefault();
                     scrollToSection(link.href);
                   }}
-                  className="font-serif text-3xl font-medium text-foreground hover:text-accent transition-colors"
+                  className="font-heading text-2xl font-semibold text-foreground hover:text-accent transition-colors"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 + index * 0.05 }}
@@ -134,14 +149,26 @@ export const Navigation = () => {
                   {link.label}
                 </motion.a>
               ))}
+              
+              <motion.a
+                href="tel:0702340700"
+                className="flex items-center gap-2 text-accent font-semibold mt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+              >
+                <Phone size={20} />
+                0702 340 700
+              </motion.a>
+              
               <motion.button
                 onClick={() => scrollToSection('#contact')}
-                className="btn-luxury mt-4"
+                className="btn-luxury mt-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <span className="relative z-10">Start a Project</span>
+                <span className="relative z-10">Book Now</span>
               </motion.button>
             </motion.nav>
           </motion.div>
