@@ -13,15 +13,11 @@ export const WhatsAppWidget = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   const whatsappNumber = '254718445264';
-  const defaultMessage = 'Hello! I would like to inquire about your photography/videography services.';
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello! I would like to inquire about your photography/videography services.')}`;
 
   const handleClick = () => {
     if (isOpen) {
-      // Open WhatsApp
-      window.open(
-        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`,
-        '_blank'
-      );
+      window.open(whatsappLink, '_blank');
     } else {
       setIsOpen(true);
     }
@@ -74,7 +70,7 @@ export const WhatsAppWidget = () => {
             {/* CTA Button */}
             <div className="p-4 pt-0">
               <motion.a
-                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(defaultMessage)}`}
+                href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all"

@@ -61,17 +61,25 @@ export const MapSection = () => {
             <div className="absolute -inset-3 border-2 border-accent/20 rounded-2xl -rotate-1 group-hover:rotate-0 transition-transform duration-500" />
             
             <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-accent/10">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.951526456271!2d36.95783567496567!3d-1.1747699355455893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f3f3c3b7c7c7c%3A0x1c3c3c3c3c3c3c3c!2sNexus%20Business%20Centre%2C%20Ruiru%20Bypass%2C%20Kamakis!5e0!3m2!1sen!2ske!4v1702893456789!5m2!1sen!2ske"
-                width="100%"
-                height="450"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Ryankey Studios Location"
-                className="w-full"
-              />
+              {/* Static Map Image with Link - No API Required */}
+              <a
+                href="https://maps.app.goo.gl/qbnSnoA3k6FELAbH9"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full h-[450px] bg-muted relative group overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-primary/30 to-accent/20" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
+                  <MapPin className="w-16 h-16 text-accent mb-4 group-hover:scale-110 transition-transform duration-300" />
+                  <h3 className="text-2xl font-heading font-bold mb-2">Ryankey Studios</h3>
+                  <p className="text-muted-foreground mb-4">Nexus Business Centre, Ruiru Bypass (Kamakis)</p>
+                  <span className="inline-flex items-center gap-2 px-4 py-2 bg-accent/20 rounded-lg text-accent group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
+                    <Navigation className="w-4 h-4" />
+                    Click to Open in Google Maps
+                    <ExternalLink className="w-4 h-4" />
+                  </span>
+                </div>
+              </a>
               
               {/* Overlay with CTA */}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">
