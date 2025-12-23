@@ -1,48 +1,56 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { ScrollReveal } from '../ScrollReveal';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 
 const testimonials = [
   {
     id: 1,
-    name: 'Crystal Breeze',
+    name: 'Wanjiku Mwangi',
     role: 'Brand Client',
     content: 'Ryankey Studios captured our brand essence perfectly. Their attention to detail and creative vision elevated our visual identity to new heights. Professional, reliable, and exceptional quality.',
     rating: 5,
   },
   {
     id: 2,
-    name: 'BSR Hospital',
-    role: 'Corporate Client',
+    name: 'Dr. Ochieng Otieno',
+    role: 'Corporate Client - BSR Hospital',
     content: 'Outstanding corporate photography services. They understood our needs and delivered beyond expectations. The team portraits and facility shots were exactly what we needed for our marketing materials.',
     rating: 5,
   },
   {
     id: 3,
-    name: 'Finest Mazda Garage',
-    role: 'Brand Client',
+    name: 'Kamau Njoroge',
+    role: 'Brand Client - Finest Mazda Garage',
     content: 'The product photography for our automotive services was top-notch. Clean, vibrant images that truly showcase our work. Fast turnaround and great communication throughout.',
     rating: 5,
   },
   {
     id: 4,
-    name: 'Vapella Spur & Salon',
-    role: 'Brand Client',
+    name: 'Akinyi Odhiambo',
+    role: 'Brand Client - Vapella Spur & Salon',
     content: 'Brian and his team brought our salon to life through stunning visuals. The photos capture the luxury and care we put into our services. Highly recommend for any business.',
     rating: 5,
   },
   {
     id: 5,
-    name: 'Opal Luxurious Suites',
-    role: 'Hospitality Client',
+    name: 'Hassan Abdullahi',
+    role: 'Hospitality Client - Opal Luxurious Suites',
     content: 'The real estate and hospitality photography exceeded all expectations. Every shot tells a story of luxury and comfort. Our bookings increased significantly after using these images.',
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: 'Nyambura Kariuki',
+    role: 'Family Client',
+    content: 'We had the most beautiful family photoshoot! Brian made everyone feel comfortable, especially the children. The photos are now treasured memories we will keep forever.',
     rating: 5,
   },
 ];
 
 export const TestimonialsSection = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -50,6 +58,7 @@ export const TestimonialsSection = () => {
   });
 
   const decorY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const decorRotate = useTransform(scrollYProgress, [0, 1], [0, 15]);
 
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -67,11 +76,29 @@ export const TestimonialsSection = () => {
     >
       {/* Background Decorations */}
       <motion.div
-        style={{ y: decorY }}
+        style={{ y: decorY, rotate: decorRotate }}
         className="absolute right-0 top-0 w-1/2 h-full opacity-5"
       >
         <Quote className="w-full h-full" />
       </motion.div>
+
+      {/* Animated floating elements */}
+      <motion.div
+        animate={{ 
+          y: [0, -20, 0],
+          opacity: [0.1, 0.2, 0.1]
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-10 top-1/4 w-32 h-32 rounded-full bg-accent/10 blur-2xl"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, 20, 0],
+          opacity: [0.05, 0.15, 0.05]
+        }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        className="absolute right-20 bottom-1/3 w-48 h-48 rounded-full bg-accent/10 blur-3xl"
+      />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         {/* Section Header */}
@@ -94,78 +121,112 @@ export const TestimonialsSection = () => {
 
         {/* Testimonial Carousel */}
         <div className="max-w-4xl mx-auto">
-          <div className="relative">
+          <motion.div 
+            className="relative"
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+          >
             {/* Quote Icon */}
-            <div className="absolute -top-8 left-0 lg:-left-12">
+            <motion.div 
+              className="absolute -top-8 left-0 lg:-left-12"
+              animate={{ 
+                scale: isHovered ? 1.1 : 1,
+                rotate: isHovered ? 10 : 0
+              }}
+              transition={{ duration: 0.3 }}
+            >
               <Quote className="w-16 h-16 text-accent/30" />
-            </div>
+            </motion.div>
 
             {/* Testimonial Content */}
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="text-center py-12"
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -30, scale: 0.95 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="text-center py-12 px-4"
             >
-              <p className="font-heading text-2xl md:text-3xl lg:text-4xl font-light leading-relaxed mb-12">
+              <motion.p 
+                className="font-heading text-2xl md:text-3xl lg:text-4xl font-light leading-relaxed mb-12"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
                 "{testimonials[currentIndex].content}"
-              </p>
+              </motion.p>
 
-              <div>
-                <p className="font-semibold text-lg">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <p className="font-semibold text-xl">
                   {testimonials[currentIndex].name}
                 </p>
                 <p className="text-primary-foreground/60 text-sm mt-1">
                   {testimonials[currentIndex].role}
                 </p>
-              </div>
+              </motion.div>
 
-              {/* Rating */}
-              <div className="flex justify-center gap-1 mt-4">
+              {/* Rating Stars with Animation */}
+              <motion.div 
+                className="flex justify-center gap-1 mt-4"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.5 }}
+              >
                 {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
-                  <span key={i} className="text-accent text-xl">★</span>
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, rotate: -180 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    transition={{ delay: 0.6 + i * 0.1, duration: 0.4 }}
+                  >
+                    <Star className="w-5 h-5 text-accent fill-accent" />
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
 
             {/* Navigation */}
             <div className="flex items-center justify-center gap-4 mt-8">
               <motion.button
                 onClick={prevTestimonial}
-                className="w-12 h-12 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="w-14 h-14 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent hover:bg-accent/10 transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-primary"
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <ChevronLeft size={20} />
+                <ChevronLeft size={24} />
               </motion.button>
 
               {/* Dots */}
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 {testimonials.map((_, index) => (
-                  <button
+                  <motion.button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    className={`h-3 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-accent ${
                       index === currentIndex
-                        ? 'bg-accent w-8'
-                        : 'bg-primary-foreground/30 hover:bg-primary-foreground/50'
+                        ? 'bg-accent w-10'
+                        : 'bg-primary-foreground/30 hover:bg-primary-foreground/50 w-3'
                     }`}
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
                   />
                 ))}
               </div>
 
               <motion.button
                 onClick={nextTestimonial}
-                className="w-12 h-12 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="w-14 h-14 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent hover:bg-accent/10 transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-primary"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
               >
-                <ChevronRight size={20} />
+                <ChevronRight size={24} />
               </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
