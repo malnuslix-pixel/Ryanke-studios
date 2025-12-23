@@ -7,9 +7,11 @@ import { PortfolioSection } from '@/components/sections/PortfolioSection';
 import { PricingSection } from '@/components/sections/PricingSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { TestimonialsSection } from '@/components/sections/TestimonialsSection';
+import { MapSection } from '@/components/sections/MapSection';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { Footer } from '@/components/sections/Footer';
 import { BrandMarquee } from '@/components/BrandMarquee';
+import { WhatsAppWidget } from '@/components/WhatsAppWidget';
 
 const Index = () => {
   useSmoothScroll();
@@ -28,8 +30,10 @@ const Index = () => {
       <PricingSection />
       <ProcessSection />
       <TestimonialsSection />
+      <MapSection />
       <ContactSection />
       <Footer />
+      <WhatsAppWidget />
     </main>
   );
 };

@@ -120,7 +120,7 @@ export const ContactSection = () => {
             {/* WhatsApp CTA */}
             <ScrollReveal delay={0.4}>
               <motion.a
-                href="https://wa.me/254702340700"
+                href="https://wa.me/254718445264"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-luxury inline-flex items-center gap-3"
@@ -217,7 +217,7 @@ export const ContactSection = () => {
                 </div>
 
                 <motion.a
-                  href="https://wa.me/254702340700"
+                  href="https://wa.me/254718445264"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full btn-luxury group block text-center"
