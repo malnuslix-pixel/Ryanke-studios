@@ -100,13 +100,13 @@ export const AboutSection = () => {
 
             {/* Unique Selling Points */}
             <ScrollReveal delay={0.4}>
-              <div className="space-y-3 pt-4">
-                <p className="font-heading font-semibold text-foreground text-lg">Why Choose Us:</p>
-                <ul className="space-y-3">
+              <div className="space-y-4 pt-4">
+                <p className="font-heading font-semibold text-foreground text-lg md:text-xl">Why Choose Us:</p>
+                <ul className="space-y-3 md:space-y-4">
                   {uniquePoints.map((point, index) => (
                     <li key={index} className="flex items-start gap-3 text-body-text text-base md:text-lg leading-relaxed">
-                      <span className="w-2.5 h-2.5 bg-accent rounded-full flex-shrink-0 mt-2" />
-                      {point}
+                      <span className="w-3 h-3 bg-accent rounded-full flex-shrink-0 mt-1.5" />
+                      <span className="flex-1">{point}</span>
                     </li>
                   ))}
                 </ul>
