@@ -2,46 +2,47 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { ScrollReveal } from '../ScrollReveal';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
+import testimonialsBg from '@/assets/testimonials-bg.png';
 
 const testimonials = [
   {
     id: 1,
-    name: 'Wanjiku Mwangi',
+    name: 'Grace Wanjiku',
     role: 'Brand Client',
     content: 'Ryankey Studios captured our brand essence perfectly. Their attention to detail and creative vision elevated our visual identity to new heights. Professional, reliable, and exceptional quality.',
     rating: 5,
   },
   {
     id: 2,
-    name: 'Dr. Ochieng Otieno',
+    name: 'Dr. Peter Ochieng',
     role: 'Corporate Client - BSR Hospital',
     content: 'Outstanding corporate photography services. They understood our needs and delivered beyond expectations. The team portraits and facility shots were exactly what we needed for our marketing materials.',
     rating: 5,
   },
   {
     id: 3,
-    name: 'Kamau Njoroge',
+    name: 'David Kamau',
     role: 'Brand Client - Finest Mazda Garage',
     content: 'The product photography for our automotive services was top-notch. Clean, vibrant images that truly showcase our work. Fast turnaround and great communication throughout.',
     rating: 5,
   },
   {
     id: 4,
-    name: 'Akinyi Odhiambo',
+    name: 'Faith Akinyi',
     role: 'Brand Client - Vapella Spur & Salon',
     content: 'Brian and his team brought our salon to life through stunning visuals. The photos capture the luxury and care we put into our services. Highly recommend for any business.',
     rating: 5,
   },
   {
     id: 5,
-    name: 'Hassan Abdullahi',
+    name: 'James Hassan',
     role: 'Hospitality Client - Opal Luxurious Suites',
     content: 'The real estate and hospitality photography exceeded all expectations. Every shot tells a story of luxury and comfort. Our bookings increased significantly after using these images.',
     rating: 5,
   },
   {
     id: 6,
-    name: 'Nyambura Kariuki',
+    name: 'Mary Nyambura',
     role: 'Family Client',
     content: 'We had the most beautiful family photoshoot! Brian made everyone feel comfortable, especially the children. The photos are now treasured memories we will keep forever.',
     rating: 5,
@@ -72,14 +73,22 @@ export const TestimonialsSection = () => {
     <section
       id="testimonials"
       ref={containerRef}
-      className="relative py-24 lg:py-40 bg-primary text-primary-foreground overflow-hidden"
+      className="relative py-24 lg:py-40 text-primary-foreground overflow-hidden"
     >
+      {/* Background Cover Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${testimonialsBg})` }}
+      />
+      {/* Dark Overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" />
+      
       {/* Background Decorations */}
       <motion.div
         style={{ y: decorY, rotate: decorRotate }}
         className="absolute right-0 top-0 w-1/2 h-full opacity-5"
       >
-        <Quote className="w-full h-full" />
+        <Quote className="w-full h-full text-white" />
       </motion.div>
 
       {/* Animated floating elements */}
@@ -89,7 +98,7 @@ export const TestimonialsSection = () => {
           opacity: [0.1, 0.2, 0.1]
         }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-10 top-1/4 w-32 h-32 rounded-full bg-accent/10 blur-2xl"
+        className="absolute left-10 top-1/4 w-32 h-32 rounded-full bg-accent/20 blur-2xl"
       />
       <motion.div
         animate={{ 
@@ -97,7 +106,7 @@ export const TestimonialsSection = () => {
           opacity: [0.05, 0.15, 0.05]
         }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute right-20 bottom-1/3 w-48 h-48 rounded-full bg-accent/10 blur-3xl"
+        className="absolute right-20 bottom-1/3 w-48 h-48 rounded-full bg-accent/20 blur-3xl"
       />
 
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
