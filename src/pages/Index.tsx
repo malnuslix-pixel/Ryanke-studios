@@ -1,4 +1,7 @@
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
+import { LoadingScreen } from '@/components/LoadingScreen';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { AboutSection } from '@/components/sections/AboutSection';
@@ -14,27 +17,34 @@ import { BrandMarquee } from '@/components/BrandMarquee';
 import { WhatsAppWidget } from '@/components/WhatsAppWidget';
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
   useSmoothScroll();
 
   return (
-    <main className="relative">
-      {/* Subtle grain overlay for luxury feel */}
-      <div className="grain-overlay" />
+    <>
+      <AnimatePresence>
+        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+      </AnimatePresence>
       
-      <Navigation />
-      <HeroSection />
-      <BrandMarquee />
-      <AboutSection />
-      <ServicesSection />
-      <PortfolioSection />
-      <PricingSection />
-      <ProcessSection />
-      <TestimonialsSection />
-      <MapSection />
-      <ContactSection />
-      <Footer />
-      <WhatsAppWidget />
-    </main>
+      <main className="relative">
+        {/* Subtle grain overlay for luxury feel */}
+        <div className="grain-overlay" />
+        
+        <Navigation />
+        <HeroSection />
+        <BrandMarquee />
+        <AboutSection />
+        <ServicesSection />
+        <PortfolioSection />
+        <PricingSection />
+        <ProcessSection />
+        <TestimonialsSection />
+        <MapSection />
+        <ContactSection />
+        <Footer />
+        <WhatsAppWidget />
+      </main>
+    </>
   );
 };
 

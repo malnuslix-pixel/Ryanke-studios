@@ -80,14 +80,15 @@ export const PortfolioSection = () => {
     offset: ['start end', 'end start'],
   });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -30]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 30]);
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -60]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
   return (
     <section id="portfolio" ref={containerRef} className="relative py-24 lg:py-40 overflow-hidden">
       {/* Background Decorations */}
       <motion.div
-        style={{ y: y1 }}
+        style={{ y: y1, rotate }}
         className="absolute -right-20 top-1/4 w-96 h-96 rounded-full bg-accent/5 blur-3xl"
       />
       <motion.div

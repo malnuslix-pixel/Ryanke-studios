@@ -129,8 +129,8 @@ export const PricingSection = () => {
                 className={`relative card-luxury p-8 h-full flex flex-col ${
                   pkg.popular ? 'border-accent ring-2 ring-accent/20' : ''
                 }`}
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ y: -12, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
                 {/* Popular Badge */}
                 {pkg.popular && (
@@ -167,15 +167,15 @@ export const PricingSection = () => {
 
                 {/* CTA */}
                 <motion.a
-                  href="https://wa.me/254702340700"
+                  href="https://wa.me/254718445264?text=Hello%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(pkg.name)}"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`mt-8 w-full py-3 text-center font-semibold text-sm tracking-wider uppercase transition-all duration-300 ${
+                  className={`mt-8 w-full py-3 text-center font-semibold text-sm tracking-wider uppercase transition-all duration-300 block ${
                     pkg.popular
                       ? 'bg-accent text-accent-foreground hover:bg-accent/90'
                       : 'border-2 border-foreground/20 text-foreground hover:border-accent hover:text-accent'
                   }`}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   Book This Package
@@ -207,11 +207,11 @@ export const PricingSection = () => {
               Looking for ongoing brand photography support?
             </p>
             <motion.a
-              href="https://wa.me/254702340700?text=I'm interested in the Monthly Retainer package for my brand"
+              href="https://wa.me/254718445264?text=I'm%20interested%20in%20the%20Monthly%20Retainer%20package%20for%20my%20brand"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-luxury inline-flex"
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.98 }}
             >
               <span className="relative z-10">Inquire About Monthly Retainer</span>

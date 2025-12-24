@@ -90,8 +90,8 @@ export const ServicesSection = () => {
             <StaggerItem key={service.title}>
               <motion.div
                 className="group card-luxury p-6 lg:p-8 h-full"
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ y: -12, scale: 1.02 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
                 {/* Icon */}
                 <div className="relative mb-6">
