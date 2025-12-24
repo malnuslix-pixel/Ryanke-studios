@@ -141,7 +141,7 @@ export const HeroSection = () => {
           className="mt-12 inline-flex items-center gap-2 px-4 py-2 bg-pure-white/10 backdrop-blur-sm rounded-full text-sm text-pure-white/70"
         >
           <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-          Serving Nairobi, Ruiru, Kamakis, Kiambu & Westlands
+          Serving Ruiru, Kamakis, Nairobi and its environs
         </motion.div>
       </motion.div>
 
