@@ -75,7 +75,7 @@ export const ServicesSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <p className="text-lg text-muted-foreground leading-relaxed mt-6 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-body-text leading-relaxed mt-6 max-w-2xl mx-auto">
               From intimate family moments to grand corporate events, we offer comprehensive 
               photography and videography services tailored to bring your unique story to life.
             </p>
@@ -101,21 +101,21 @@ export const ServicesSection = () => {
                 </div>
 
                 {/* Content */}
-                <h3 className="font-heading text-xl font-semibold mb-3 group-hover:text-accent transition-colors duration-300">
+                <h3 className="font-heading text-xl font-semibold mb-3 text-foreground group-hover:text-accent transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed mb-4 text-sm">
+                <p className="text-body-text leading-relaxed mb-4 text-sm md:text-base">
                   {service.description}
                 </p>
 
-                {/* Features */}
-                <ul className="space-y-2">
+                {/* Features - visible bullet points */}
+                <ul className="space-y-2.5">
                   {service.features.map((feature) => (
                     <li 
                       key={feature}
-                      className="flex items-center gap-2 text-sm text-muted-foreground"
+                      className="flex items-center gap-3 text-sm md:text-base text-body-text"
                     >
-                      <span className="w-1.5 h-1.5 bg-accent rounded-full" />
+                      <span className="w-2 h-2 bg-accent rounded-full flex-shrink-0" />
                       {feature}
                     </li>
                   ))}
@@ -127,9 +127,9 @@ export const ServicesSection = () => {
 
         {/* Photography Style Note */}
         <ScrollReveal delay={0.3}>
-          <div className="text-center mt-16 p-8 bg-card border border-border/50">
-            <p className="font-heading font-semibold text-lg mb-2">Our Photography Style</p>
-            <p className="text-muted-foreground">
+          <div className="text-center mt-16 p-8 bg-card border border-border/50 rounded-lg">
+            <p className="font-heading font-semibold text-lg md:text-xl text-foreground mb-2">Our Photography Style</p>
+            <p className="text-body-text text-base md:text-lg">
               Clean, vibrant, cinematic, natural-light focused, storytelling-driven visuals.
             </p>
           </div>

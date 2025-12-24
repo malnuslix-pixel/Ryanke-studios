@@ -112,7 +112,7 @@ export const PricingSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <p className="text-lg text-muted-foreground leading-relaxed mt-6 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-body-text leading-relaxed mt-6 max-w-2xl mx-auto">
               Professional yet affordable packages tailored to your needs. 
               Custom packages are also available for brands and special requirements.
             </p>
@@ -142,24 +142,24 @@ export const PricingSection = () => {
 
                 {/* Header */}
                 <div className="mb-6">
-                  <h3 className="font-heading text-xl font-semibold mb-2">
+                  <h3 className="font-heading text-xl font-semibold mb-2 text-foreground">
                     {pkg.name}
                   </h3>
-                  <p className="text-muted-foreground text-sm mb-4">
+                  <p className="text-body-text text-sm md:text-base mb-4">
                     {pkg.description}
                   </p>
                   <div className="flex items-baseline gap-1">
-                    <span className="font-heading text-4xl font-bold text-accent">
+                    <span className="font-heading text-3xl md:text-4xl font-bold text-accent">
                       {pkg.price}
                     </span>
                   </div>
                 </div>
 
-                {/* Features */}
+                {/* Features - visible bullet points */}
                 <ul className="space-y-3 flex-grow">
                   {pkg.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
-                      <Check className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                    <li key={i} className="flex items-start gap-3 text-sm md:text-base text-body-text leading-relaxed">
+                      <Check className="w-4 h-4 text-accent flex-shrink-0 mt-1" />
                       {feature}
                     </li>
                   ))}
@@ -170,11 +170,11 @@ export const PricingSection = () => {
                   href="https://wa.me/254718445264?text=Hello%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(pkg.name)}"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`mt-8 w-full py-3 text-center font-semibold text-sm tracking-wider uppercase transition-all duration-300 block ${
+                  className={`mt-8 w-full py-3 text-center font-semibold text-sm md:text-base tracking-wider uppercase transition-all duration-300 block rounded-md ${
                     pkg.popular
-                      ? 'bg-accent text-accent-foreground hover:bg-accent/90'
-                      : 'border-2 border-foreground/20 text-foreground hover:border-accent hover:text-accent'
-                  }`}
+                      ? 'bg-accent text-accent-foreground hover:bg-wine-light hover:shadow-wine'
+                      : 'border-2 border-foreground/20 text-foreground hover:border-accent hover:text-accent hover:bg-accent/5'
+                  } focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2`}
                   whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -187,12 +187,12 @@ export const PricingSection = () => {
 
         {/* Notes */}
         <ScrollReveal delay={0.3}>
-          <div className="mt-16 p-8 bg-card border border-border/50">
-            <h4 className="font-heading font-semibold text-lg mb-4 text-center">Please Note</h4>
-            <ul className="grid md:grid-cols-2 gap-3 max-w-3xl mx-auto">
+          <div className="mt-16 p-8 bg-card border border-border/50 rounded-lg">
+            <h4 className="font-heading font-semibold text-lg md:text-xl mb-4 text-center text-foreground">Please Note</h4>
+            <ul className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
               {notes.map((note, index) => (
-                <li key={index} className="flex items-start gap-3 text-sm text-muted-foreground">
-                  <span className="w-2 h-2 bg-accent rounded-full flex-shrink-0 mt-1.5" />
+                <li key={index} className="flex items-start gap-3 text-sm md:text-base text-body-text leading-relaxed">
+                  <span className="w-2.5 h-2.5 bg-accent rounded-full flex-shrink-0 mt-2" />
                   {note}
                 </li>
               ))}
@@ -203,14 +203,14 @@ export const PricingSection = () => {
         {/* Monthly Retainer CTA */}
         <ScrollReveal delay={0.4}>
           <div className="mt-12 text-center">
-            <p className="text-muted-foreground mb-4">
+            <p className="text-body-text text-base md:text-lg mb-6">
               Looking for ongoing brand photography support?
             </p>
             <motion.a
               href="https://wa.me/254718445264?text=I'm%20interested%20in%20the%20Monthly%20Retainer%20package%20for%20my%20brand"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-luxury inline-flex"
+              className="btn-cta"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.98 }}
             >
