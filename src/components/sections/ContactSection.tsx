@@ -44,7 +44,7 @@ export const ContactSection = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
+              <p className="text-base md:text-lg text-body-text leading-relaxed max-w-md">
                 Ready to bring your vision to life? We'd love to hear from you. 
                 Reach out via WhatsApp or call us to discuss your project.
               </p>
@@ -64,7 +64,7 @@ export const ContactSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Phone (Calls Only)</p>
-                    <p className="font-semibold group-hover:text-accent transition-colors">
+                    <p className="font-semibold text-foreground group-hover:text-accent transition-colors">
                       +254 702 340 700
                     </p>
                   </div>
@@ -80,7 +80,7 @@ export const ContactSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <p className="font-semibold group-hover:text-accent transition-colors">
+                    <p className="font-semibold text-foreground group-hover:text-accent transition-colors">
                       ryankeyimages@gmail.com
                     </p>
                   </div>
@@ -95,7 +95,7 @@ export const ContactSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Studio Location</p>
-                    <p className="font-semibold">
+                    <p className="font-semibold text-foreground">
                       Nexus Business Centre, Ruiru Bypass (Kamakis)
                     </p>
                   </div>
@@ -110,7 +110,7 @@ export const ContactSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Business Hours</p>
-                    <p className="font-semibold">
+                    <p className="font-semibold text-foreground">
                       Mon – Sat | 8:00 AM – 6:00 PM
                     </p>
                   </div>
@@ -124,12 +124,12 @@ export const ContactSection = () => {
                 href="https://wa.me/254718445264"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-luxury inline-flex items-center gap-3"
+                className="btn-cta"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <MessageCircle className="w-5 h-5 relative z-10" />
-                <span className="relative z-10">Chat on WhatsApp</span>
+                <MessageCircle className="w-5 h-5" />
+                <span>Chat on WhatsApp</span>
               </motion.a>
             </ScrollReveal>
           </div>
@@ -140,36 +140,36 @@ export const ContactSection = () => {
               {/* Decorative Frame */}
               <div className="absolute -inset-4 border-2 border-accent/20 -rotate-1" />
 
-              <div className="relative bg-card p-8 lg:p-12 space-y-6">
-                <h3 className="font-heading text-2xl font-semibold mb-6">Book a Session</h3>
+              <div className="relative bg-card p-8 lg:p-12 space-y-6 rounded-lg">
+                <h3 className="font-heading text-xl md:text-2xl font-semibold mb-6 text-foreground">Book a Session</h3>
                 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium tracking-wide">
+                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Your Name
                   </label>
                   <input
                     type="text"
-                    className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-transparent border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors rounded-md"
                     placeholder="John Doe"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium tracking-wide">
+                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Phone / WhatsApp
                   </label>
                   <input
                     type="tel"
-                    className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-transparent border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors rounded-md"
                     placeholder="0712 345 678"
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium tracking-wide">
+                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Event / Project Type
                   </label>
-                  <select className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer">
+                  <select className="w-full px-4 py-3 bg-background border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer rounded-md">
                     <option value="">Select a service</option>
                     <option value="portrait">Portrait Session</option>
                     <option value="family">Family Photoshoot</option>
@@ -183,19 +183,19 @@ export const ContactSection = () => {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium tracking-wide">
+                    <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                       Preferred Date
                     </label>
                     <input
                       type="date"
-                      className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors"
+                      className="w-full px-4 py-3 bg-background border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors rounded-md"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium tracking-wide">
+                    <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                       Duration
                     </label>
-                    <select className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer">
+                    <select className="w-full px-4 py-3 bg-background border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer rounded-md">
                       <option value="">Select duration</option>
                       <option value="45min">45 minutes</option>
                       <option value="1.5hr">1.5 hours</option>
@@ -207,12 +207,12 @@ export const ContactSection = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium tracking-wide">
+                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Additional Details
                   </label>
                   <textarea
                     rows={3}
-                    className="w-full px-4 py-3 bg-transparent border-2 border-border focus:border-accent focus:outline-none transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-transparent border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors resize-none rounded-md"
                     placeholder="Tell us about your project..."
                   />
                 </div>
@@ -221,14 +221,14 @@ export const ContactSection = () => {
                   href="https://wa.me/254718445264"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full btn-luxury group block text-center"
+                  className="w-full btn-cta text-center block"
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                 >
-                  <span className="relative z-10">Send Booking Request</span>
+                  Send Booking Request
                 </motion.a>
 
-                <p className="text-xs text-muted-foreground text-center">
+                <p className="text-xs md:text-sm text-muted-foreground text-center">
                   *Form opens WhatsApp with your details. 50% deposit required to confirm booking.
                 </p>
               </div>

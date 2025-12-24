@@ -13,13 +13,13 @@
   :root {
     /* Core palette - deep black base with wine red accent */
     --background: 0 0% 100%;
-    --foreground: 0 0% 8%;
+    --foreground: 0 0% 13%; /* #222 equivalent - dark readable text */
 
     --card: 0 0% 98%;
-    --card-foreground: 0 0% 8%;
+    --card-foreground: 0 0% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 8%;
+    --popover-foreground: 0 0% 13%;
 
     /* Primary - Deep black */
     --primary: 0 0% 5%;
@@ -29,9 +29,12 @@
     --secondary: 0 0% 96%;
     --secondary-foreground: 0 0% 15%;
 
-    /* Muted - Soft gray */
+    /* Muted - Soft gray - improved contrast for WCAG AA */
     --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 45%;
+    --muted-foreground: 0 0% 35%; /* Darker for better contrast */
+    
+    /* Body text color for maximum readability */
+    --body-text: 0 0% 20%; /* #333 equivalent */
 
     /* Accent - Wine Red/Maroon */
     --accent: 345 65% 35%;
@@ -134,11 +137,54 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Montserrat', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  /* Standardized heading hierarchy with clear size/weight differences */
+  h1 {
     font-family: 'Poppins', system-ui, sans-serif;
-    @apply font-semibold tracking-tight;
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight;
+  }
+
+  h2 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight;
+  }
+
+  h3 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    @apply text-xl md:text-2xl font-semibold tracking-tight leading-snug;
+  }
+
+  h4 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    @apply text-lg md:text-xl font-semibold tracking-tight leading-snug;
+  }
+
+  h5, h6 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    @apply text-base md:text-lg font-medium tracking-tight;
+  }
+
+  /* Body text with proper contrast */
+  p {
+    @apply text-base md:text-lg leading-relaxed;
+    color: hsl(var(--body-text));
+  }
+
+  /* List items with proper visibility */
+  li {
+    @apply text-base leading-relaxed;
+    color: hsl(var(--body-text));
+  }
+
+  ul, ol {
+    @apply space-y-2;
+  }
+
+  ul li {
+    @apply pl-1;
   }
 }
 
@@ -148,29 +194,43 @@
     @apply bg-gradient-to-r from-accent via-wine-light to-accent bg-clip-text text-transparent;
   }
 
-  /* Premium button styles */
+  /* Premium button styles - solid background with clear hover/active states */
   .btn-luxury {
-    @apply relative overflow-hidden px-8 py-4 text-sm font-semibold tracking-widest uppercase;
+    @apply relative overflow-hidden px-8 py-4 text-sm font-semibold tracking-widest uppercase rounded-md;
     @apply bg-accent text-accent-foreground;
-    @apply transition-all duration-500 ease-out;
-    @apply hover:shadow-wine;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:shadow-wine hover:brightness-110;
+    @apply active:scale-95 active:brightness-90;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
   }
 
   .btn-luxury::before {
     content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-wine-dark to-wine opacity-0 transition-opacity duration-500;
+    @apply absolute inset-0 bg-gradient-to-r from-wine-dark to-wine opacity-0 transition-opacity duration-300;
   }
 
   .btn-luxury:hover::before {
     @apply opacity-100;
   }
 
+  /* CTA button - prominent solid style */
+  .btn-cta {
+    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md;
+    @apply bg-accent text-accent-foreground font-semibold text-base;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:bg-wine-light hover:shadow-wine hover:scale-[1.02];
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+  }
+
   /* Outline luxury button */
   .btn-outline-luxury {
-    @apply relative px-8 py-4 text-sm font-semibold tracking-widest uppercase;
+    @apply relative px-8 py-4 text-sm font-semibold tracking-widest uppercase rounded-md;
     @apply bg-transparent text-foreground border-2 border-foreground/30;
-    @apply transition-all duration-500 ease-out;
-    @apply hover:border-accent hover:text-accent;
+    @apply transition-all duration-300 ease-out;
+    @apply hover:border-accent hover:text-accent hover:bg-accent/5;
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
   }
 
   /* Text link with underline animation */

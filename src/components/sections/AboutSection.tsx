@@ -84,14 +84,14 @@ export const AboutSection = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-base md:text-lg text-body-text leading-relaxed">
                 Ryankey Studios is a creative photography and videography studio specializing 
                 in high-quality visual storytelling for individuals, families, brands, and institutions.
               </p>
             </ScrollReveal>
 
             <ScrollReveal delay={0.3}>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              <p className="text-base md:text-lg text-body-text leading-relaxed">
                 Founded by Brian Abuga, Ryankey Studios was born out of a passion for capturing 
                 genuine moments and telling meaningful stories through visuals. We focus on creativity, 
                 professionalism, and consistency while helping clients build strong visual identities.
@@ -101,11 +101,11 @@ export const AboutSection = () => {
             {/* Unique Selling Points */}
             <ScrollReveal delay={0.4}>
               <div className="space-y-3 pt-4">
-                <p className="font-heading font-semibold text-foreground">Why Choose Us:</p>
-                <ul className="space-y-2">
+                <p className="font-heading font-semibold text-foreground text-lg">Why Choose Us:</p>
+                <ul className="space-y-3">
                   {uniquePoints.map((point, index) => (
-                    <li key={index} className="flex items-center gap-3 text-muted-foreground">
-                      <span className="w-2 h-2 bg-accent rounded-full flex-shrink-0" />
+                    <li key={index} className="flex items-start gap-3 text-body-text text-base md:text-lg leading-relaxed">
+                      <span className="w-2.5 h-2.5 bg-accent rounded-full flex-shrink-0 mt-2" />
                       {point}
                     </li>
                   ))}
@@ -120,11 +120,12 @@ export const AboutSection = () => {
                   e.preventDefault();
                   document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="inline-flex items-center gap-3 group text-foreground font-semibold"
-                whileHover={{ x: 5 }}
+                className="btn-cta mt-4"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 Explore Our Services
-                <span className="w-8 h-0.5 bg-accent group-hover:w-12 transition-all duration-300" />
+                <span className="w-8 h-0.5 bg-accent-foreground group-hover:w-12 transition-all duration-300" />
               </motion.a>
             </ScrollReveal>
           </div>
