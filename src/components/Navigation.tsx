@@ -87,21 +87,23 @@ export const Navigation = () => {
             {/* CTA Button */}
             <div className="hidden lg:flex items-center gap-4">
               <motion.a
-                href="tel:0702340700"
+                href="tel:+254702340700"
                 className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-accent transition-colors"
                 whileHover={{ scale: 1.02 }}
               >
                 <Phone size={16} />
-                0702 340 700
+                +254 702 340 700
               </motion.a>
-              <motion.button
-                onClick={() => scrollToSection('#contact')}
+              <motion.a
+                href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-luxury"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <span className="relative z-10">Book Now</span>
-              </motion.button>
+              </motion.a>
             </div>
 
             {/* Mobile Menu Button */}
@@ -151,25 +153,27 @@ export const Navigation = () => {
               ))}
               
               <motion.a
-                href="tel:0702340700"
+                href="tel:+254702340700"
                 className="flex items-center gap-2 text-accent font-semibold mt-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35 }}
               >
                 <Phone size={20} />
-                0702 340 700
+                +254 702 340 700
               </motion.a>
               
-              <motion.button
-                onClick={() => scrollToSection('#contact')}
+              <motion.a
+                href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-luxury mt-2"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
                 <span className="relative z-10">Book Now</span>
-              </motion.button>
+              </motion.a>
             </motion.nav>
           </motion.div>
         )}

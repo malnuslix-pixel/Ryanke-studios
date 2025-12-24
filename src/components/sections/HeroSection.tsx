@@ -10,9 +10,10 @@ export const HeroSection = () => {
     offset: ['start start', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '80%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.3]);
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
   const scrollToAbout = () => {
     const element = document.querySelector('#about');
@@ -56,7 +57,7 @@ export const HeroSection = () => {
 
       {/* Content */}
       <motion.div
-        style={{ opacity }}
+        style={{ opacity, y: textY }}
         className="relative z-20 container mx-auto px-6 lg:px-12 text-center"
       >
         {/* Pre-heading */}
@@ -121,11 +122,11 @@ export const HeroSection = () => {
             </span>
           </motion.a>
           <motion.a
-            href="https://wa.me/254702340700"
+            href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline-luxury text-pure-white border-pure-white/30 hover:border-accent hover:text-accent"
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.05, y: -3 }}
             whileTap={{ scale: 0.98 }}
           >
             Book via WhatsApp

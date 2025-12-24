@@ -54,17 +54,18 @@ export const ContactSection = () => {
             <ScrollReveal delay={0.3}>
               <div className="space-y-6 pt-4">
                 <motion.a
-                  href="tel:0702340700"
+                  href="tel:+254702340700"
                   className="flex items-center gap-4 group"
-                  whileHover={{ x: 5 }}
+                  whileHover={{ x: 8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all">
+                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
                     <Phone className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone / WhatsApp</p>
+                    <p className="text-sm text-muted-foreground">Phone (Calls Only)</p>
                     <p className="font-semibold group-hover:text-accent transition-colors">
-                      0702 340 700
+                      +254 702 340 700
                     </p>
                   </div>
                 </motion.a>

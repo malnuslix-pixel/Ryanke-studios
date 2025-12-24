@@ -7,7 +7,7 @@ import brianAbuga from '@/assets/brian-abuga.jpeg';
 const stats = [
   { value: '2021', label: 'Established' },
   { value: '500+', label: 'Projects Completed' },
-  { value: '150+', label: 'Happy Clients' },
+  { value: '1000+', label: 'Happy Clients' },
   { value: '5+', label: 'Brands Served' },
 ];
 
