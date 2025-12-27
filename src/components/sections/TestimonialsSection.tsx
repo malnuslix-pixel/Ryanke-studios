@@ -157,7 +157,7 @@ export const TestimonialsSection = () => {
               className="text-center py-12 px-4"
             >
               <motion.p 
-                className="font-heading text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-12 text-black"
+                className="font-heading text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-12 text-pure-white"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
@@ -170,10 +170,10 @@ export const TestimonialsSection = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                <p className="font-semibold text-xl text-black">
+                <p className="font-semibold text-xl text-pure-white">
                   {testimonials[currentIndex].name}
                 </p>
-                <p className="text-black/70 text-sm mt-1">
+                <p className="text-pure-white/70 text-sm mt-1">
                   {testimonials[currentIndex].role}
                 </p>
               </motion.div>
