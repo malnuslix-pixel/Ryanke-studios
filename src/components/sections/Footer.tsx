@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Instagram, Facebook, ArrowUp, Phone, Mail, MapPin } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
 
@@ -23,20 +24,20 @@ const footerLinks = [
   {
     title: 'Services',
     links: [
-      { name: 'Corporate Photography', href: '#services' },
-      { name: 'Family Photoshoots', href: '#services' },
-      { name: 'Event Coverage', href: '#services' },
-      { name: 'Product Photography', href: '#services' },
-      { name: 'Videography', href: '#services' },
+      { name: 'Corporate Photography', href: '/services' },
+      { name: 'Family Photoshoots', href: '/services' },
+      { name: 'Event Coverage', href: '/services' },
+      { name: 'Product Photography', href: '/services' },
+      { name: 'Videography', href: '/services' },
     ],
   },
   {
     title: 'Quick Links',
     links: [
-      { name: 'About Us', href: '#about' },
-      { name: 'Portfolio', href: '#portfolio' },
-      { name: 'Pricing', href: '#pricing' },
-      { name: 'Contact', href: '#contact' },
+      { name: 'About Us', href: '/about' },
+      { name: 'Portfolio', href: '/portfolio' },
+      { name: 'Pricing', href: '/pricing' },
+      { name: 'Contact', href: '/contact' },
     ],
   },
 ];
@@ -89,10 +90,10 @@ export const Footer = () => {
               <ul className="space-y-3">
                 {column.links.map((link) => (
                   <li key={link.name}>
-                    <a href={link.href} onClick={(e) => { e.preventDefault(); scrollToSection(link.href); }}
+                    <Link to={link.href}
                       className="text-primary-foreground/70 hover:text-accent transition-colors text-sm cursor-pointer">
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
