@@ -9,8 +9,8 @@ interface PageHeaderProps {
 export const PageHeader = ({ title, subtitle, description }: PageHeaderProps) => {
   return (
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/50 via-background to-background" />
+      {/* Background gradient - darker for logo visibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/40 to-background" />
       
       {/* Decorative elements */}
       <motion.div

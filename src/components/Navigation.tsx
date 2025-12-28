@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
 
@@ -17,6 +17,7 @@ export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,6 +35,19 @@ export const Navigation = () => {
   const isHomePage = location.pathname === '/';
   const showTransparentBg = isHomePage && !isScrolled;
 
+  // Handle nav link click - scroll to top
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    // Scroll to top with smooth animation
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Navigate after a brief delay for visual feedback
+    setTimeout(() => {
+      navigate(href);
+    }, 100);
+  };
+
   return (
     <>
       <motion.header
@@ -42,18 +56,21 @@ export const Navigation = () => {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           showTransparentBg
-            ? 'bg-transparent py-5'
+            ? 'bg-primary/40 backdrop-blur-md py-5'
             : 'bg-background/95 backdrop-blur-xl border-b border-border/50 py-3'
         }`}
       >
         <div className="container mx-auto px-6 lg:px-12">
           <nav className="flex items-center justify-between">
             {/* Logo */}
-            <Link to="/">
+            <a 
+              href="/"
+              onClick={(e) => handleNavClick(e, '/')}
+            >
               <motion.div
                 className="flex items-center"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <img 
                   src={ryankeyLogo} 
@@ -61,24 +78,28 @@ export const Navigation = () => {
                   className="h-10 md:h-12 w-auto"
                 />
               </motion.div>
-            </Link>
+            </a>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.href;
                 return (
-                  <Link key={link.href} to={link.href}>
+                  <a 
+                    key={link.href} 
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                  >
                     <motion.span
                       className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-300 ${
                         isActive 
                           ? 'text-accent' 
                           : showTransparentBg
-                            ? 'text-pure-white/80 hover:text-pure-white'
+                            ? 'text-pure-white/90 hover:text-accent'
                             : 'text-muted-foreground hover:text-foreground'
                       }`}
-                      whileHover={{ y: -2 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ y: -3, scale: 1.05 }}
+                      whileTap={{ scale: 0.92 }}
                     >
                       {link.label}
                       {isActive && (
@@ -89,7 +110,7 @@ export const Navigation = () => {
                         />
                       )}
                     </motion.span>
-                  </Link>
+                  </a>
                 );
               })}
             </div>
@@ -100,10 +121,11 @@ export const Navigation = () => {
                 href="tel:+254702340700"
                 className={`flex items-center gap-2 text-sm font-medium transition-colors ${
                   showTransparentBg 
-                    ? 'text-pure-white/80 hover:text-accent' 
+                    ? 'text-pure-white/90 hover:text-accent' 
                     : 'text-muted-foreground hover:text-accent'
                 }`}
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <Phone size={16} />
                 <span className="hidden xl:inline">+254 702 340 700</span>
@@ -113,8 +135,8 @@ export const Navigation = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground text-sm font-semibold tracking-wide rounded-md hover:bg-accent/90 transition-all duration-300"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.92 }}
               >
                 Book Now
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -123,12 +145,39 @@ export const Navigation = () => {
 
             {/* Mobile Menu Button */}
             <motion.button
-              className={`lg:hidden p-2 ${showTransparentBg ? 'text-pure-white' : 'text-foreground'}`}
+              className={`lg:hidden p-2 rounded-lg transition-colors ${
+                showTransparentBg 
+                  ? 'text-pure-white hover:bg-white/10' 
+                  : 'text-foreground hover:bg-muted'
+              }`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <AnimatePresence mode="wait">
+                {isMobileMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X size={24} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu size={24} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.button>
           </nav>
         </div>
@@ -154,18 +203,24 @@ export const Navigation = () => {
               {navLinks.map((link, index) => {
                 const isActive = location.pathname === link.href;
                 return (
-                  <Link key={link.href} to={link.href}>
+                  <a 
+                    key={link.href} 
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                  >
                     <motion.span
                       className={`font-heading text-3xl font-semibold transition-colors ${
                         isActive ? 'text-accent' : 'text-foreground hover:text-accent'
                       }`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
+                      whileHover={{ scale: 1.1, x: 10 }}
+                      whileTap={{ scale: 0.95 }}
                       transition={{ delay: 0.1 + index * 0.05 }}
                     >
                       {link.label}
                     </motion.span>
-                  </Link>
+                  </a>
                 );
               })}
               
@@ -175,23 +230,27 @@ export const Navigation = () => {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
               >
-                <a
+                <motion.a
                   href="tel:+254702340700"
                   className="flex items-center gap-2 text-accent font-semibold"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   <Phone size={20} />
                   +254 702 340 700
-                </a>
+                </motion.a>
                 
-                <a
+                <motion.a
                   href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-md"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   Book Now
                   <ArrowUpRight className="w-5 h-5" />
-                </a>
+                </motion.a>
               </motion.div>
             </motion.nav>
           </motion.div>
