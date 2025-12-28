@@ -33,6 +33,7 @@ const FacebookIcon = ({ className = "w-8 h-8" }: { className?: string }) => (
 );
 
 interface SocialPlatform {
+  id: string;
   name: string;
   icon: React.ReactNode;
   mainLink: string;
@@ -44,6 +45,7 @@ interface SocialPlatform {
 
 const socialPlatforms: SocialPlatform[] = [
   {
+    id: 'instagram',
     name: 'Instagram',
     icon: <InstagramIcon className="w-8 h-8" />,
     mainLink: 'https://www.instagram.com/ryankey_studios?igsh=NTZ2bXdjc3JwY240',
@@ -59,6 +61,7 @@ const socialPlatforms: SocialPlatform[] = [
     ],
   },
   {
+    id: 'whatsapp',
     name: 'WhatsApp',
     icon: <WhatsAppIcon className="w-8 h-8" />,
     mainLink: 'https://wa.me/254718445264',
@@ -70,6 +73,7 @@ const socialPlatforms: SocialPlatform[] = [
     ],
   },
   {
+    id: 'tiktok',
     name: 'TikTok',
     icon: <TikTokIcon className="w-8 h-8" />,
     mainLink: 'https://www.tiktok.com/@_ryankey_?_r=1&_t=ZM-92TLZOki7bw',
@@ -83,6 +87,7 @@ const socialPlatforms: SocialPlatform[] = [
     ],
   },
   {
+    id: 'facebook',
     name: 'Facebook',
     icon: <FacebookIcon className="w-8 h-8" />,
     mainLink: 'https://www.facebook.com/share/1BKdQC3xD3/',
@@ -148,7 +153,8 @@ export const PortfolioSection = () => {
           {socialPlatforms.map((platform, index) => (
             <ScrollReveal key={platform.name} delay={index * 0.1}>
               <motion.div
-                className="group relative"
+                id={platform.id}
+                className="group relative scroll-mt-32"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
