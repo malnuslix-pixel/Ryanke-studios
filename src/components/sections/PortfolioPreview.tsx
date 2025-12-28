@@ -1,18 +1,79 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ScrollReveal } from '../ScrollReveal';
-import { ArrowRight, Instagram, Play } from 'lucide-react';
-import portfolio1 from '@/assets/portfolio-1.jpg';
-import portfolio2 from '@/assets/portfolio-2.jpg';
-import portfolio3 from '@/assets/portfolio-3.jpg';
-import portfolio4 from '@/assets/portfolio-4.jpg';
+import { ArrowRight } from 'lucide-react';
 
-const portfolioItems = [
-  { src: portfolio1, title: 'Corporate Portraits', category: 'Brand' },
-  { src: portfolio2, title: 'Family Sessions', category: 'Lifestyle' },
-  { src: portfolio3, title: 'Event Coverage', category: 'Events' },
-  { src: portfolio4, title: 'Product Shots', category: 'Commercial' },
+// Ultra Modern Instagram Icon
+const InstagramIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect x="2" y="2" width="20" height="20" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="18" cy="6" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+// Ultra Modern TikTok Icon
+const TikTokIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"/>
+  </svg>
+);
+
+// Ultra Modern WhatsApp Icon
+const WhatsAppIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.31a8.188 8.188 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.25zM8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01z"/>
+  </svg>
+);
+
+// Ultra Modern Facebook Icon
+const FacebookIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.52 1.49-3.92 3.77-3.92 1.09 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/>
+  </svg>
+);
+
+interface SocialPlatform {
+  name: string;
+  icon: React.ReactNode;
+  mainLink: string;
+  color: string;
+  glowColor: string;
+}
+
+const socialPlatforms: SocialPlatform[] = [
+  {
+    name: 'Instagram',
+    icon: <InstagramIcon className="w-6 h-6" />,
+    mainLink: 'https://www.instagram.com/ryankey_studios',
+    color: 'from-pink-500 via-purple-500 to-orange-400',
+    glowColor: 'shadow-pink-500/50',
+  },
+  {
+    name: 'TikTok',
+    icon: <TikTokIcon className="w-6 h-6" />,
+    mainLink: 'https://www.tiktok.com/@_ryankey_',
+    color: 'from-gray-900 via-pink-500 to-cyan-400',
+    glowColor: 'shadow-cyan-500/50',
+  },
+  {
+    name: 'WhatsApp',
+    icon: <WhatsAppIcon className="w-6 h-6" />,
+    mainLink: 'https://wa.me/254718445264',
+    color: 'from-green-400 to-green-600',
+    glowColor: 'shadow-green-500/50',
+  },
+  {
+    name: 'Facebook',
+    icon: <FacebookIcon className="w-6 h-6" />,
+    mainLink: 'https://www.facebook.com/share/1BKdQC3xD3/',
+    color: 'from-blue-500 to-blue-700',
+    glowColor: 'shadow-blue-500/50',
+  },
 ];
+
+// Duplicate for seamless marquee loop
+const doubledPlatforms = [...socialPlatforms, ...socialPlatforms, ...socialPlatforms, ...socialPlatforms];
 
 export const PortfolioPreview = () => {
   return (
@@ -34,6 +95,12 @@ export const PortfolioPreview = () => {
                 <span className="text-accent ml-3">Work</span>
               </h2>
             </ScrollReveal>
+
+            <ScrollReveal delay={0.15}>
+              <p className="text-muted-foreground mt-6 max-w-xl">
+                Connect with us across all platforms. Explore our work, get inspired, and stay updated with our latest projects.
+              </p>
+            </ScrollReveal>
           </div>
 
           <ScrollReveal delay={0.2}>
@@ -50,59 +117,144 @@ export const PortfolioPreview = () => {
           </ScrollReveal>
         </div>
 
-        {/* Portfolio Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {portfolioItems.map((item, index) => (
-            <ScrollReveal key={item.title} delay={index * 0.1}>
+        {/* Social Media Marquee */}
+        <ScrollReveal delay={0.25}>
+          <div className="relative">
+            {/* Gradient overlays for fade effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            
+            {/* Marquee container */}
+            <div className="overflow-hidden py-4">
               <motion.div
-                className="group relative aspect-[3/4] overflow-hidden cursor-pointer"
-                whileHover={{ y: -8 }}
-                transition={{ duration: 0.3 }}
+                className="flex gap-6"
+                animate={{ x: ['0%', '-50%'] }}
+                transition={{
+                  x: {
+                    duration: 25,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  },
+                }}
               >
-                <motion.img
-                  src={item.src}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <span className="text-accent text-xs font-semibold tracking-wider uppercase">
-                    {item.category}
-                  </span>
-                  <h3 className="font-heading text-xl font-semibold text-pure-white mt-1">
-                    {item.title}
-                  </h3>
-                </div>
+                {doubledPlatforms.map((platform, index) => (
+                  <motion.a
+                    key={`${platform.name}-${index}`}
+                    href={platform.mainLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex-shrink-0"
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className={`relative flex items-center gap-4 px-8 py-5 bg-card border border-border rounded-2xl overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-2xl ${platform.glowColor}`}>
+                      {/* Gradient background on hover */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`} />
+                      
+                      {/* Icon */}
+                      <motion.div
+                        className={`relative z-10 w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br ${platform.color} text-white shadow-lg ${platform.glowColor}`}
+                        whileHover={{ rotate: 10 }}
+                      >
+                        {platform.icon}
+                        {/* Pulse effect */}
+                        <span className="absolute inset-0 rounded-xl animate-ping opacity-20 bg-current" style={{ animationDuration: '2s' }} />
+                      </motion.div>
+                      
+                      {/* Platform name */}
+                      <div className="relative z-10">
+                        <span className="font-heading text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
+                          {platform.name}
+                        </span>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground group-hover:text-accent/80 transition-colors">
+                          <span>View</span>
+                          <motion.span
+                            animate={{ x: [0, 3, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                          >
+                            →
+                          </motion.span>
+                        </div>
+                      </div>
+                      
+                      {/* Corner decorations */}
+                      <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-tr-lg" />
+                      <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-lg" />
+                    </div>
+                  </motion.a>
+                ))}
               </motion.div>
-            </ScrollReveal>
-          ))}
-        </div>
+            </div>
+          </div>
+        </ScrollReveal>
 
-        {/* Social Links */}
-        <ScrollReveal delay={0.4}>
-          <div className="flex flex-wrap justify-center gap-6 mt-12 pt-12 border-t border-border/50">
-            <motion.a
-              href="https://www.instagram.com/ryankey_studios"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Instagram className="w-5 h-5" />
-              <span className="text-sm font-medium">Follow on Instagram</span>
-            </motion.a>
-            <motion.a
-              href="https://www.tiktok.com/@_ryankey_"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors"
-              whileHover={{ scale: 1.05 }}
-            >
-              <Play className="w-5 h-5" />
-              <span className="text-sm font-medium">Watch on TikTok</span>
-            </motion.a>
+        {/* Second marquee row - reverse direction */}
+        <ScrollReveal delay={0.3}>
+          <div className="relative mt-4">
+            {/* Gradient overlays */}
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            
+            {/* Reverse marquee */}
+            <div className="overflow-hidden py-4">
+              <motion.div
+                className="flex gap-6"
+                animate={{ x: ['-50%', '0%'] }}
+                transition={{
+                  x: {
+                    duration: 30,
+                    repeat: Infinity,
+                    ease: 'linear',
+                  },
+                }}
+              >
+                {doubledPlatforms.map((platform, index) => (
+                  <motion.a
+                    key={`reverse-${platform.name}-${index}`}
+                    href={platform.mainLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex-shrink-0"
+                    whileHover={{ scale: 1.05, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <div className={`relative flex items-center gap-4 px-8 py-5 bg-card border border-border rounded-2xl overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-2xl ${platform.glowColor}`}>
+                      {/* Gradient background on hover */}
+                      <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`} />
+                      
+                      {/* Icon */}
+                      <motion.div
+                        className={`relative z-10 w-12 h-12 flex items-center justify-center rounded-xl bg-gradient-to-br ${platform.color} text-white shadow-lg ${platform.glowColor}`}
+                        whileHover={{ rotate: -10 }}
+                      >
+                        {platform.icon}
+                        <span className="absolute inset-0 rounded-xl animate-ping opacity-20 bg-current" style={{ animationDuration: '2.5s' }} />
+                      </motion.div>
+                      
+                      {/* Platform name */}
+                      <div className="relative z-10">
+                        <span className="font-heading text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
+                          {platform.name}
+                        </span>
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground group-hover:text-accent/80 transition-colors">
+                          <span>Follow</span>
+                          <motion.span
+                            animate={{ x: [0, 3, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                          >
+                            →
+                          </motion.span>
+                        </div>
+                      </div>
+                      
+                      {/* Corner decorations */}
+                      <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-tr-lg" />
+                      <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-lg" />
+                    </div>
+                  </motion.a>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </ScrollReveal>
       </div>
