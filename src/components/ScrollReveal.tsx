@@ -13,24 +13,24 @@ interface ScrollRevealProps {
 
 const variants: Record<string, Variants> = {
   up: {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 80, filter: 'blur(4px)' },
+    visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
   },
   down: {
-    hidden: { opacity: 0, y: -60 },
-    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: -80, filter: 'blur(4px)' },
+    visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
   },
   left: {
-    hidden: { opacity: 0, x: -60 },
-    visible: { opacity: 1, x: 0 },
+    hidden: { opacity: 0, x: -80, filter: 'blur(4px)' },
+    visible: { opacity: 1, x: 0, filter: 'blur(0px)' },
   },
   right: {
-    hidden: { opacity: 0, x: 60 },
-    visible: { opacity: 1, x: 0 },
+    hidden: { opacity: 0, x: 80, filter: 'blur(4px)' },
+    visible: { opacity: 1, x: 0, filter: 'blur(0px)' },
   },
   scale: {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: { opacity: 1, scale: 1 },
+    hidden: { opacity: 0, scale: 0.85, filter: 'blur(4px)' },
+    visible: { opacity: 1, scale: 1, filter: 'blur(0px)' },
   },
 };
 
