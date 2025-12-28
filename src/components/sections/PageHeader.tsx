@@ -1,14 +1,14 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import pageHeroBg from '@/assets/page-hero-bg.jpg';
 
 interface PageHeaderProps {
   title: string;
   subtitle: string;
   description?: string;
+  heroImage?: string;
 }
 
-export const PageHeader = ({ title, subtitle, description }: PageHeaderProps) => {
+export const PageHeader = ({ title, subtitle, description, heroImage }: PageHeaderProps) => {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -25,13 +25,17 @@ export const PageHeader = ({ title, subtitle, description }: PageHeaderProps) =>
         style={{ y }}
         className="absolute inset-0"
       >
-        <img 
-          src={pageHeroBg} 
-          alt="" 
-          className="w-full h-[120%] object-cover"
-        />
+        {heroImage ? (
+          <img 
+            src={heroImage} 
+            alt="" 
+            className="w-full h-[120%] object-cover object-top"
+          />
+        ) : (
+          <div className="w-full h-[120%] bg-primary" />
+        )}
         {/* Dark overlay for logo visibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/70 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/95 via-primary/80 to-background" />
       </motion.div>
       
       {/* Decorative elements */}

@@ -33,7 +33,7 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.1 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-primary"
         >
           {/* Animated Background */}
           <div className="absolute inset-0 overflow-hidden">
