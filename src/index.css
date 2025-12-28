@@ -425,6 +425,63 @@
   }
 }
 
+/* Custom cursor - hide default on desktop */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* Enhanced hover effects */
+.interactive-hover {
+  @apply transition-all duration-300 ease-out;
+}
+
+.interactive-hover:hover {
+  @apply transform scale-[1.02] shadow-lg;
+}
+
+/* Enhanced parallax */
+.parallax-enhanced {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+  
+  .container {
+    @apply px-4;
+  }
+  
+  h1 {
+    @apply text-3xl;
+  }
+  
+  h2 {
+    @apply text-2xl;
+  }
+  
+  h3 {
+    @apply text-lg;
+  }
+}
+
+/* Touch-friendly tap areas */
+@media (pointer: coarse) {
+  button, a, input, select, textarea {
+    min-height: 44px;
+  }
+}
+
+/* Smooth transitions for all */
+* {
+  @apply transition-colors duration-200;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
