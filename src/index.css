@@ -135,6 +135,8 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Smooth scrolling with better performance */
+    scroll-padding-top: 80px;
   }
 
   body {
@@ -143,6 +145,15 @@
     font-size: 16px;
     line-height: 1.7;
     overflow-x: hidden;
+    /* Smoother touch scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Extra small breakpoint for very small phones */
+  @media (min-width: 375px) {
+    :root {
+      --xs-breakpoint: true;
+    }
   }
 
   /* Standardized heading hierarchy - mobile-first with better scaling */
