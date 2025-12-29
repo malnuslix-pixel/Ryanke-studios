@@ -28,42 +28,63 @@ const services = [
 
 export const ServicesPreview = () => {
   return (
-    <section className="relative py-24 lg:py-40 bg-secondary/50">
-      <div className="container mx-auto px-6 lg:px-12">
+    <section className="relative py-16 sm:py-24 lg:py-40 bg-secondary/50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         {/* Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-16">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
-              <span className="w-8 h-0.5 bg-accent" />
+            <motion.span 
+              className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent"
+              whileHover={{ scale: 1.05 }}
+            >
+              <motion.span 
+                className="w-8 h-0.5 bg-accent"
+                whileHover={{ width: 48 }}
+              />
               Our Services
-              <span className="w-8 h-0.5 bg-accent" />
-            </span>
+              <motion.span 
+                className="w-8 h-0.5 bg-accent"
+                whileHover={{ width: 48 }}
+              />
+            </motion.span>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
               Professional Services for
-              <span className="block text-accent mt-2">Every Vision</span>
+              <motion.span 
+                className="block text-accent mt-2"
+                whileHover={{ scale: 1.02 }}
+              >
+                Every Vision
+              </motion.span>
             </h2>
           </ScrollReveal>
         </div>
 
         {/* Services Grid */}
-        <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {services.map((service) => (
+        <StaggerContainer className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
+          {services.map((service, index) => (
             <StaggerItem key={service.title}>
               <motion.div
-                className="group card-luxury p-8 h-full text-center"
-                whileHover={{ y: -8 }}
+                className="group card-luxury p-4 sm:p-8 h-full text-center cursor-pointer"
+                whileHover={{ y: -10, scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
               >
-                <div className="w-16 h-16 mx-auto flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all duration-300 mb-6">
-                  <service.icon className="w-7 h-7 text-accent group-hover:text-accent-foreground transition-colors" />
-                </div>
-                <h3 className="font-heading text-xl font-semibold mb-3 text-foreground group-hover:text-accent transition-colors">
+                <motion.div 
+                  className="w-12 h-12 sm:w-16 sm:h-16 mx-auto flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all duration-300 mb-4 sm:mb-6"
+                  whileHover={{ rotate: 5, scale: 1.1 }}
+                >
+                  <service.icon className="w-5 h-5 sm:w-7 sm:h-7 text-accent group-hover:text-accent-foreground transition-colors" />
+                </motion.div>
+                <h3 className="font-heading text-sm sm:text-xl font-semibold mb-2 sm:mb-3 text-foreground group-hover:text-accent transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-body-text text-sm leading-relaxed">
+                <p className="text-body-text text-xs sm:text-sm leading-relaxed hidden sm:block">
                   {service.description}
                 </p>
               </motion.div>
@@ -77,11 +98,16 @@ export const ServicesPreview = () => {
             <Link to="/services">
               <motion.span
                 className="inline-flex items-center gap-2 btn-outline-luxury"
-                whileHover={{ scale: 1.02, gap: '12px' }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: 1.05, gap: '14px' }}
+                whileTap={{ scale: 0.95 }}
               >
                 Explore All Services
-                <ArrowRight className="w-5 h-5" />
+                <motion.span
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <ArrowRight className="w-5 h-5" />
+                </motion.span>
               </motion.span>
             </Link>
           </div>
