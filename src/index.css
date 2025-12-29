@@ -128,10 +128,13 @@
 @layer base {
   * {
     @apply border-border;
+    -webkit-tap-highlight-color: transparent;
   }
 
   html {
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -139,48 +142,49 @@
     font-family: 'Montserrat', system-ui, sans-serif;
     font-size: 16px;
     line-height: 1.7;
+    overflow-x: hidden;
   }
 
-  /* Standardized heading hierarchy with clear size/weight differences */
+  /* Standardized heading hierarchy - mobile-first with better scaling */
   h1 {
     font-family: 'Poppins', system-ui, sans-serif;
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1];
   }
 
   h2 {
     font-family: 'Poppins', system-ui, sans-serif;
-    @apply text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15];
   }
 
   h3 {
     font-family: 'Poppins', system-ui, sans-serif;
-    @apply text-xl md:text-2xl font-semibold tracking-tight leading-snug;
+    @apply text-lg sm:text-xl md:text-2xl font-semibold tracking-tight leading-snug;
   }
 
   h4 {
     font-family: 'Poppins', system-ui, sans-serif;
-    @apply text-lg md:text-xl font-semibold tracking-tight leading-snug;
+    @apply text-base sm:text-lg md:text-xl font-semibold tracking-tight leading-snug;
   }
 
   h5, h6 {
     font-family: 'Poppins', system-ui, sans-serif;
-    @apply text-base md:text-lg font-medium tracking-tight;
+    @apply text-sm sm:text-base md:text-lg font-medium tracking-tight;
   }
 
   /* Body text with proper contrast */
   p {
-    @apply text-base md:text-lg leading-relaxed;
+    @apply text-sm sm:text-base md:text-lg leading-relaxed;
     color: hsl(var(--body-text));
   }
 
   /* List items with proper visibility */
   li {
-    @apply text-base leading-relaxed;
+    @apply text-sm sm:text-base leading-relaxed;
     color: hsl(var(--body-text));
   }
 
   ul, ol {
-    @apply space-y-2;
+    @apply space-y-1.5 sm:space-y-2;
   }
 
   ul li {
@@ -194,14 +198,15 @@
     @apply bg-gradient-to-r from-accent via-wine-light to-accent bg-clip-text text-transparent;
   }
 
-  /* Premium button styles - solid background with clear hover/active states */
+  /* Premium button styles - mobile-optimized */
   .btn-luxury {
-    @apply relative overflow-hidden px-8 py-4 text-sm font-semibold tracking-widest uppercase rounded-md;
+    @apply relative overflow-hidden px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 text-xs sm:text-sm font-semibold tracking-wider sm:tracking-widest uppercase rounded-md;
     @apply bg-accent text-accent-foreground;
     @apply transition-all duration-300 ease-out;
     @apply hover:shadow-wine hover:brightness-110;
     @apply active:scale-95 active:brightness-90;
     @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+    @apply touch-manipulation;
   }
 
   .btn-luxury::before {
@@ -213,24 +218,26 @@
     @apply opacity-100;
   }
 
-  /* CTA button - prominent solid style */
+  /* CTA button - mobile-optimized */
   .btn-cta {
-    @apply inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md;
-    @apply bg-accent text-accent-foreground font-semibold text-base;
+    @apply inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 rounded-md;
+    @apply bg-accent text-accent-foreground font-semibold text-sm sm:text-base;
     @apply transition-all duration-300 ease-out;
     @apply hover:bg-wine-light hover:shadow-wine hover:scale-[1.02];
     @apply active:scale-95;
     @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+    @apply touch-manipulation;
   }
 
-  /* Outline luxury button */
+  /* Outline luxury button - mobile-optimized */
   .btn-outline-luxury {
-    @apply relative px-8 py-4 text-sm font-semibold tracking-widest uppercase rounded-md;
+    @apply relative px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 text-xs sm:text-sm font-semibold tracking-wider sm:tracking-widest uppercase rounded-md;
     @apply bg-transparent text-foreground border-2 border-foreground/30;
     @apply transition-all duration-300 ease-out;
     @apply hover:border-accent hover:text-accent hover:bg-accent/5;
     @apply active:scale-95;
     @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
+    @apply touch-manipulation;
   }
 
   /* Text link with underline animation */
@@ -246,6 +253,16 @@
 
   .link-underline:hover::after {
     @apply origin-left scale-x-100;
+  }
+  
+  /* Smooth touch interactions */
+  .touch-action-pan {
+    touch-action: pan-y;
+  }
+  
+  /* Container responsive padding */
+  .container-mobile {
+    @apply px-4 sm:px-6 md:px-8 lg:px-12;
   }
 
   /* Scroll reveal animations */

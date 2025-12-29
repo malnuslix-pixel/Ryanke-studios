@@ -1,36 +1,39 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 interface PageTransitionProps {
   children: ReactNode;
   className?: string;
 }
 
+// Optimized page variants with reduced motion support
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 20,
-    filter: 'blur(4px)',
+    y: 15,
   },
   enter: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
   },
   exit: {
     opacity: 0,
     y: -10,
-    filter: 'blur(4px)',
   },
 };
 
 const pageTransition = {
   type: 'tween',
-  ease: [0.22, 1, 0.36, 1],
-  duration: 0.5,
+  ease: [0.25, 0.46, 0.45, 0.94], // Smooth cubic bezier
+  duration: 0.4,
 };
 
 export const PageTransition = ({ children, className = '' }: PageTransitionProps) => {
+  // Scroll to top on mount for mobile
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
   return (
     <motion.div
       initial="initial"
@@ -38,7 +41,7 @@ export const PageTransition = ({ children, className = '' }: PageTransitionProps
       exit="exit"
       variants={pageVariants}
       transition={pageTransition}
-      className={className}
+      className={`will-change-transform ${className}`}
     >
       {children}
     </motion.div>

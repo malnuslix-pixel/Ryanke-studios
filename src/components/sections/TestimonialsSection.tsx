@@ -73,7 +73,7 @@ export const TestimonialsSection = () => {
     <section
       id="testimonials"
       ref={containerRef}
-      className="relative py-24 lg:py-40 text-primary-foreground overflow-hidden"
+      className="relative py-16 sm:py-24 lg:py-40 text-primary-foreground overflow-hidden"
     >
       {/* Background Cover Image */}
       <div 
@@ -86,7 +86,7 @@ export const TestimonialsSection = () => {
       {/* Background Decorations */}
       <motion.div
         style={{ y: decorY, rotate: decorRotate }}
-        className="absolute right-0 top-0 w-1/2 h-full opacity-5"
+        className="absolute right-0 top-0 w-1/2 h-full opacity-5 hidden sm:block"
       >
         <Quote className="w-full h-full text-white" />
       </motion.div>
@@ -98,7 +98,7 @@ export const TestimonialsSection = () => {
           opacity: [0.1, 0.2, 0.1]
         }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-10 top-1/4 w-32 h-32 rounded-full bg-accent/20 blur-2xl"
+        className="absolute left-5 sm:left-10 top-1/4 w-20 sm:w-32 h-20 sm:h-32 rounded-full bg-accent/20 blur-2xl"
       />
       <motion.div
         animate={{ 
@@ -106,24 +106,24 @@ export const TestimonialsSection = () => {
           opacity: [0.05, 0.15, 0.05]
         }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute right-20 bottom-1/3 w-48 h-48 rounded-full bg-accent/20 blur-3xl"
+        className="absolute right-10 sm:right-20 bottom-1/3 w-32 sm:w-48 h-32 sm:h-48 rounded-full bg-accent/20 blur-3xl"
       />
 
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Section Header */}
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-16">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
-              <span className="w-8 h-0.5 bg-accent" />
+            <span className="inline-flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-accent">
+              <span className="w-6 sm:w-8 h-0.5 bg-accent" />
               Testimonials
-              <span className="w-8 h-0.5 bg-accent" />
+              <span className="w-6 sm:w-8 h-0.5 bg-accent" />
             </span>
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 sm:mt-6">
               What Our Clients
-              <span className="block text-accent mt-2">Say About Us</span>
+              <span className="block text-accent mt-1 sm:mt-2">Say About Us</span>
             </h2>
           </ScrollReveal>
         </div>
@@ -137,30 +137,30 @@ export const TestimonialsSection = () => {
           >
             {/* Quote Icon */}
             <motion.div 
-              className="absolute -top-8 left-0 lg:-left-12"
+              className="absolute -top-4 sm:-top-8 left-0 lg:-left-12"
               animate={{ 
                 scale: isHovered ? 1.1 : 1,
                 rotate: isHovered ? 10 : 0
               }}
               transition={{ duration: 0.3 }}
             >
-              <Quote className="w-16 h-16 text-accent/30" />
+              <Quote className="w-10 h-10 sm:w-16 sm:h-16 text-accent/30" />
             </motion.div>
 
             {/* Testimonial Content */}
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -30, scale: 0.95 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="text-center py-12 px-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="text-center py-8 sm:py-12 px-2 sm:px-4"
             >
               <motion.p 
-                className="font-heading text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-12 text-pure-white"
+                className="font-heading text-base sm:text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-8 sm:mb-12 text-pure-white"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
+                transition={{ delay: 0.15 }}
               >
                 "{testimonials[currentIndex].content}"
               </motion.p>
@@ -168,59 +168,57 @@ export const TestimonialsSection = () => {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.3 }}
               >
-                <p className="font-semibold text-xl text-pure-white">
+                <p className="font-semibold text-lg sm:text-xl text-pure-white">
                   {testimonials[currentIndex].name}
                 </p>
-                <p className="text-pure-white/70 text-sm mt-1">
+                <p className="text-pure-white/70 text-xs sm:text-sm mt-1">
                   {testimonials[currentIndex].role}
                 </p>
               </motion.div>
 
               {/* Rating Stars with Animation */}
               <motion.div 
-                className="flex justify-center gap-1 mt-4"
+                className="flex justify-center gap-0.5 sm:gap-1 mt-3 sm:mt-4"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5 }}
+                transition={{ delay: 0.4 }}
               >
                 {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, rotate: -180 }}
                     animate={{ opacity: 1, rotate: 0 }}
-                    transition={{ delay: 0.6 + i * 0.1, duration: 0.4 }}
+                    transition={{ delay: 0.45 + i * 0.08, duration: 0.3 }}
                   >
-                    <Star className="w-5 h-5 text-accent fill-accent" />
+                    <Star className="w-4 h-4 sm:w-5 sm:h-5 text-accent fill-accent" />
                   </motion.div>
                 ))}
               </motion.div>
             </motion.div>
 
             {/* Navigation */}
-            <div className="flex items-center justify-center gap-4 mt-8">
+            <div className="flex items-center justify-center gap-3 sm:gap-4 mt-6 sm:mt-8">
               <motion.button
                 onClick={prevTestimonial}
-                className="w-14 h-14 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent hover:bg-accent/10 transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-primary"
-                whileHover={{ scale: 1.1, rotate: -5 }}
+                className="w-11 h-11 sm:w-14 sm:h-14 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent hover:bg-accent/10 transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-primary touch-manipulation"
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronLeft size={24} />
+                <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
               </motion.button>
 
               {/* Dots */}
-              <div className="flex gap-3">
+              <div className="flex gap-2 sm:gap-3">
                 {testimonials.map((_, index) => (
                   <motion.button
                     key={index}
                     onClick={() => setCurrentIndex(index)}
-                    className={`h-3 rounded-full transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-accent ${
+                    className={`h-2.5 sm:h-3 rounded-full transition-all duration-400 focus:outline-none focus:ring-2 focus:ring-accent touch-manipulation ${
                       index === currentIndex
-                        ? 'bg-accent w-10'
-                        : 'bg-primary-foreground/30 hover:bg-primary-foreground/50 w-3'
+                        ? 'bg-accent w-7 sm:w-10'
+                        : 'bg-primary-foreground/30 hover:bg-primary-foreground/50 w-2.5 sm:w-3'
                     }`}
-                    whileHover={{ scale: 1.2 }}
                     whileTap={{ scale: 0.9 }}
                   />
                 ))}
@@ -228,11 +226,10 @@ export const TestimonialsSection = () => {
 
               <motion.button
                 onClick={nextTestimonial}
-                className="w-14 h-14 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent hover:bg-accent/10 transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-primary"
-                whileHover={{ scale: 1.1, rotate: 5 }}
+                className="w-11 h-11 sm:w-14 sm:h-14 flex items-center justify-center border-2 border-primary-foreground/30 hover:border-accent hover:text-accent hover:bg-accent/10 transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-primary touch-manipulation"
                 whileTap={{ scale: 0.9 }}
               >
-                <ChevronRight size={24} />
+                <ChevronRight size={20} className="sm:w-6 sm:h-6" />
               </motion.button>
             </div>
           </motion.div>
