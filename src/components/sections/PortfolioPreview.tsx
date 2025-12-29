@@ -123,41 +123,40 @@ const doubledPlatforms = [...socialPlatforms, ...socialPlatforms, ...socialPlatf
 
 export const PortfolioPreview = () => {
   return (
-    <section className="relative py-24 lg:py-40 overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-12">
+    <section className="relative py-16 sm:py-24 lg:py-40 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
           <div className="max-w-2xl">
             <ScrollReveal>
-              <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
-                <span className="w-8 h-0.5 bg-accent" />
+              <span className="inline-flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-accent">
+                <span className="w-6 sm:w-8 h-0.5 bg-accent" />
                 Portfolio
               </span>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
-              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
+              <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 sm:mt-6">
                 Our Featured
-                <span className="text-accent ml-3">Work</span>
+                <span className="text-accent ml-2 sm:ml-3">Work</span>
               </h2>
             </ScrollReveal>
 
             <ScrollReveal delay={0.15}>
-              <p className="text-muted-foreground mt-6 max-w-xl">
+              <p className="text-sm sm:text-base text-muted-foreground mt-4 sm:mt-6 max-w-xl">
                 Connect with us across all platforms. Explore our work, get inspired, and stay updated with our latest projects.
               </p>
             </ScrollReveal>
           </div>
 
           <ScrollReveal delay={0.2}>
-            <Link to="/portfolio">
+            <Link to="/portfolio" className="inline-block">
               <motion.span
                 className="inline-flex items-center gap-2 btn-outline-luxury"
-                whileHover={{ scale: 1.02, gap: '12px' }}
                 whileTap={{ scale: 0.98 }}
               >
                 View Full Portfolio
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
               </motion.span>
             </Link>
           </ScrollReveal>
@@ -167,13 +166,13 @@ export const PortfolioPreview = () => {
         <ScrollReveal delay={0.25}>
           <div className="relative">
             {/* Gradient overlays for fade effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
             
             {/* Marquee container */}
-            <div className="overflow-hidden py-4">
+            <div className="overflow-hidden py-3 sm:py-4">
               <motion.div
-                className="flex gap-6"
+                className="flex gap-3 sm:gap-6"
                 animate={{ x: ['0%', '-50%'] }}
                 transition={{
                   x: {
@@ -187,45 +186,40 @@ export const PortfolioPreview = () => {
                   <Link
                     key={`${platform.name}-${index}`}
                     to={platform.portfolioLink}
+                    className="touch-manipulation"
                   >
                     <motion.div
                       className="group relative flex-shrink-0"
-                      whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <div className={`relative flex items-center gap-4 px-8 py-5 bg-card border border-border rounded-2xl overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-2xl ${platform.glowColor}`}>
+                      <div className={`relative flex items-center gap-3 sm:gap-4 px-4 sm:px-8 py-3 sm:py-5 bg-card border border-border rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-xl ${platform.glowColor}`}>
                         {/* Gradient background on hover */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`} />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-15 transition-opacity duration-300`} />
                         
                         {/* Colored Icon */}
                         <motion.div
-                          className="relative z-10 w-12 h-12 flex items-center justify-center rounded-xl bg-background/80 shadow-lg"
-                          whileHover={{ rotate: 10 }}
+                          className="relative z-10 w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg sm:rounded-xl bg-background/80 shadow-lg"
                         >
-                          {platform.coloredIcon}
+                          <span className="scale-75 sm:scale-100">{platform.coloredIcon}</span>
                           {/* Pulse effect */}
-                          <span className={`absolute inset-0 rounded-xl animate-ping opacity-20 bg-gradient-to-br ${platform.color}`} style={{ animationDuration: '2s' }} />
+                          <span className={`absolute inset-0 rounded-lg sm:rounded-xl animate-ping opacity-20 bg-gradient-to-br ${platform.color}`} style={{ animationDuration: '2s' }} />
                         </motion.div>
                         
                         {/* Platform name */}
                         <div className="relative z-10">
-                          <span className="font-heading text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
+                          <span className="font-heading text-sm sm:text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
                             {platform.name}
                           </span>
                           <div className="flex items-center gap-1 text-xs text-muted-foreground group-hover:text-accent/80 transition-colors">
-                            <span>View Portfolio</span>
-                            <motion.span
-                              animate={{ x: [0, 3, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity }}
-                            >
-                              →
-                            </motion.span>
+                            <span className="hidden sm:inline">View Portfolio</span>
+                            <span className="sm:hidden">View</span>
+                            <span>→</span>
                           </div>
                         </div>
                         
-                        {/* Corner decorations */}
-                        <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-tr-lg" />
-                        <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-lg" />
+                        {/* Corner decorations - hidden on mobile */}
+                        <div className="hidden sm:block absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-tr-lg" />
+                        <div className="hidden sm:block absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-bl-lg" />
                       </div>
                     </motion.div>
                   </Link>
@@ -237,15 +231,15 @@ export const PortfolioPreview = () => {
 
         {/* Second marquee row - reverse direction */}
         <ScrollReveal delay={0.3}>
-          <div className="relative mt-4">
+          <div className="relative mt-3 sm:mt-4">
             {/* Gradient overlays */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
             
             {/* Reverse marquee */}
-            <div className="overflow-hidden py-4">
+            <div className="overflow-hidden py-3 sm:py-4">
               <motion.div
-                className="flex gap-6"
+                className="flex gap-3 sm:gap-6"
                 animate={{ x: ['-50%', '0%'] }}
                 transition={{
                   x: {
@@ -259,44 +253,38 @@ export const PortfolioPreview = () => {
                   <Link
                     key={`reverse-${platform.name}-${index}`}
                     to={platform.portfolioLink}
+                    className="touch-manipulation"
                   >
                     <motion.div
                       className="group relative flex-shrink-0"
-                      whileHover={{ scale: 1.05, y: -5 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <div className={`relative flex items-center gap-4 px-8 py-5 bg-card border border-border rounded-2xl overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-2xl ${platform.glowColor}`}>
+                      <div className={`relative flex items-center gap-3 sm:gap-4 px-4 sm:px-8 py-3 sm:py-5 bg-card border border-border rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 hover:border-accent/50 hover:shadow-xl ${platform.glowColor}`}>
                         {/* Gradient background on hover */}
-                        <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-15 transition-opacity duration-500`} />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-15 transition-opacity duration-300`} />
                         
                         {/* Colored Icon */}
                         <motion.div
-                          className="relative z-10 w-12 h-12 flex items-center justify-center rounded-xl bg-background/80 shadow-lg"
-                          whileHover={{ rotate: -10 }}
+                          className="relative z-10 w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center rounded-lg sm:rounded-xl bg-background/80 shadow-lg"
                         >
-                          {platform.coloredIcon}
-                          <span className={`absolute inset-0 rounded-xl animate-ping opacity-20 bg-gradient-to-br ${platform.color}`} style={{ animationDuration: '2.5s' }} />
+                          <span className="scale-75 sm:scale-100">{platform.coloredIcon}</span>
+                          <span className={`absolute inset-0 rounded-lg sm:rounded-xl animate-ping opacity-20 bg-gradient-to-br ${platform.color}`} style={{ animationDuration: '2.5s' }} />
                         </motion.div>
                         
                         {/* Platform name */}
                         <div className="relative z-10">
-                          <span className="font-heading text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
+                          <span className="font-heading text-sm sm:text-lg font-semibold text-foreground group-hover:text-accent transition-colors">
                             {platform.name}
                           </span>
                           <div className="flex items-center gap-1 text-xs text-muted-foreground group-hover:text-accent/80 transition-colors">
                             <span>Explore</span>
-                            <motion.span
-                              animate={{ x: [0, 3, 0] }}
-                              transition={{ duration: 1.5, repeat: Infinity }}
-                            >
-                              →
-                            </motion.span>
+                            <span>→</span>
                           </div>
                         </div>
                         
-                        {/* Corner decorations */}
-                        <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-tr-lg" />
-                        <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-bl-lg" />
+                        {/* Corner decorations - hidden on mobile */}
+                        <div className="hidden sm:block absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-tr-lg" />
+                        <div className="hidden sm:block absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-bl-lg" />
                       </div>
                     </motion.div>
                   </Link>
