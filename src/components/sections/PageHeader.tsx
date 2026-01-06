@@ -15,24 +15,29 @@ export const PageHeader = ({ title, subtitle, description, heroImage }: PageHead
     offset: ['start start', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  // Enhanced parallax effect - more dramatic movement
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
     <section ref={containerRef} className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
-      {/* Hero Background Image with Parallax */}
+      {/* Hero Background Image with Enhanced Parallax */}
       <motion.div 
-        style={{ y }}
+        style={{ y, scale }}
         className="absolute inset-0"
       >
         {heroImage ? (
-          <img 
+          <motion.img 
             src={heroImage} 
             alt="" 
-            className="w-full h-[120%] object-cover object-top"
+            className="w-full h-[140%] object-cover object-center"
+            initial={{ scale: 1.1 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           />
         ) : (
-          <div className="w-full h-[120%] bg-primary" />
+          <div className="w-full h-[140%] bg-primary" />
         )}
         {/* Dark overlay for logo visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-primary/95 via-primary/80 to-background" />
