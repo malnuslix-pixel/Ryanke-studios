@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Phone, ArrowUpRight, Sparkles } from 'lucide-react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
 
 const navLinks = [
@@ -47,8 +47,7 @@ export const Navigation = () => {
   }, [location.pathname]);
 
   // Handle nav link click with smooth transition
-  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const handleNavClick = useCallback((href: string) => {
     setIsMobileMenuOpen(false);
     
     // Small delay for mobile menu to close smoothly
@@ -56,7 +55,6 @@ export const Navigation = () => {
     
     setTimeout(() => {
       navigate(href);
-      window.scrollTo({ top: 0, behavior: 'instant' });
     }, delay);
   }, [navigate, isMobileMenuOpen]);
 
@@ -85,9 +83,8 @@ export const Navigation = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <nav className="flex items-center justify-between">
             {/* Logo with hover glow */}
-            <a 
-              href="/"
-              onClick={(e) => handleNavClick(e, '/')}
+            <Link 
+              to="/"
               className="touch-manipulation relative group"
             >
               <motion.div
@@ -103,7 +100,7 @@ export const Navigation = () => {
                   className="h-8 sm:h-10 md:h-12 w-auto relative z-10"
                 />
               </motion.div>
-            </a>
+            </Link>
 
             {/* Desktop Navigation with animated underlines and hovers */}
             <div className="hidden lg:flex items-center gap-1">
@@ -111,10 +108,9 @@ export const Navigation = () => {
                 const isActive = location.pathname === link.href;
                 const isHovered = hoveredLink === link.href;
                 return (
-                  <a 
+                  <Link 
                     key={link.href} 
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
+                    to={link.href}
                     onMouseEnter={() => setHoveredLink(link.href)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="relative"
@@ -150,7 +146,7 @@ export const Navigation = () => {
                         style={{ originX: 0 }}
                       />
                     </motion.span>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -190,7 +186,6 @@ export const Navigation = () => {
                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
                   style={{ opacity: 0.3 }}
                 />
-                <Sparkles className="w-4 h-4 relative z-10" />
                 <span className="relative z-10">Book Now</span>
                 <ArrowUpRight className="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </motion.a>
@@ -276,10 +271,8 @@ export const Navigation = () => {
               {navLinks.map((link, index) => {
                 const isActive = location.pathname === link.href;
                 return (
-                  <motion.a 
-                    key={link.href} 
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
+                  <motion.div
+                    key={link.href}
                     className="overflow-hidden touch-manipulation w-full text-center group"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -289,18 +282,23 @@ export const Navigation = () => {
                       ease: [0.25, 0.46, 0.45, 0.94] 
                     }}
                   >
-                    <motion.span
-                      className={`font-heading text-2xl xs:text-3xl sm:text-4xl font-bold tracking-tight transition-all duration-300 block py-2 relative ${
-                        isActive ? 'text-accent' : 'text-pure-white'
-                      }`}
-                      whileHover={{ scale: 1.05, x: 10, color: 'hsl(345, 65%, 45%)' }}
-                      whileTap={{ scale: 0.97, x: 8 }}
+                    <Link 
+                      to={link.href}
+                      onClick={() => handleNavClick(link.href)}
                     >
-                      {/* Hover gradient underline */}
-                      <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-accent to-wine-light group-hover:w-1/2 transition-all duration-300" />
-                      {link.label}
-                    </motion.span>
-                  </motion.a>
+                      <motion.span
+                        className={`font-heading text-2xl xs:text-3xl sm:text-4xl font-bold tracking-tight transition-all duration-300 block py-2 relative ${
+                          isActive ? 'text-accent' : 'text-pure-white'
+                        }`}
+                        whileHover={{ scale: 1.05, x: 10, color: 'hsl(345, 65%, 45%)' }}
+                        whileTap={{ scale: 0.97, x: 8 }}
+                      >
+                        {/* Hover gradient underline */}
+                        <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-gradient-to-r from-accent to-wine-light group-hover:w-1/2 transition-all duration-300" />
+                        {link.label}
+                      </motion.span>
+                    </Link>
+                  </motion.div>
                 );
               })}
               
@@ -334,7 +332,6 @@ export const Navigation = () => {
                     animate={{ x: ['-100%', '100%'] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                   />
-                  <Sparkles className="w-4 h-4 xs:w-5 xs:h-5 relative z-10" />
                   <span className="relative z-10">Book Now</span>
                   <ArrowUpRight className="w-4 h-4 xs:w-5 xs:h-5 relative z-10" />
                 </motion.a>

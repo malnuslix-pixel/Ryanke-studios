@@ -8,27 +8,29 @@ export const useSmoothScroll = () => {
     // Check if user prefers reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    // Initialize Lenis with mobile-optimized settings
+    // Initialize Lenis with enhanced smooth scrolling
     const lenis = new Lenis({
-      duration: prefersReducedMotion ? 0.5 : 1.0,
+      duration: prefersReducedMotion ? 0.5 : 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      // Reduced multiplier for smoother touch scrolling on mobile
-      touchMultiplier: 1.5,
-      // Infinite scroll disabled for better mobile performance
+      wheelMultiplier: 0.8,
+      touchMultiplier: 1.2,
       infinite: false,
+      autoResize: true,
     });
 
     lenisRef.current = lenis;
 
+    let rafId: number;
+    
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    const rafId = requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     // Handle resize for responsive behavior
     const handleResize = () => {
@@ -37,9 +39,17 @@ export const useSmoothScroll = () => {
 
     window.addEventListener('resize', handleResize, { passive: true });
 
+    // Handle popstate for back/forward navigation
+    const handlePopstate = () => {
+      lenis.scrollTo(0, { immediate: true });
+    };
+    
+    window.addEventListener('popstate', handlePopstate);
+
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('popstate', handlePopstate);
       lenis.destroy();
       lenisRef.current = null;
     };

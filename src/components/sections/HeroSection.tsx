@@ -144,10 +144,10 @@ export const HeroSection = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <motion.a
-            href="#portfolio"
+            href="/portfolio"
             onClick={(e) => {
               e.preventDefault();
-              document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' });
+              window.location.href = '/portfolio';
             }}
             className="btn-luxury group w-full sm:w-auto"
             whileHover={{ scale: 1.05, boxShadow: '0 20px 60px -10px hsl(345 65% 35% / 0.5)' }}
