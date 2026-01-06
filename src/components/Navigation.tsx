@@ -103,12 +103,12 @@ export const Navigation = () => {
                     onClick={(e) => handleNavClick(e, link.href)}
                   >
                     <motion.span
-                      className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-colors duration-300 ${
+                      className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 ${
                         isActive 
                           ? 'text-accent' 
                           : 'text-pure-white/90 hover:text-accent'
                       }`}
-                      whileHover={{ y: -3, scale: 1.05, color: 'hsl(345 65% 45%)' }}
+                      whileHover={{ y: -4, scale: 1.08 }}
                       whileTap={{ scale: 0.92 }}
                     >
                       {link.label}
@@ -129,8 +129,8 @@ export const Navigation = () => {
             <div className="hidden lg:flex items-center gap-4">
               <motion.a
                 href="tel:+254702340700"
-                className="flex items-center gap-2 text-sm font-medium text-pure-white/90 hover:text-accent transition-colors"
-                whileHover={{ scale: 1.08, y: -2 }}
+                className="flex items-center gap-2 text-sm font-medium text-pure-white/90 hover:text-accent transition-all duration-300"
+                whileHover={{ scale: 1.1, y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <motion.span
@@ -145,8 +145,8 @@ export const Navigation = () => {
                 href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground text-sm font-semibold tracking-wide rounded-md hover:bg-accent/90 transition-all duration-300"
-                whileHover={{ scale: 1.05, y: -2 }}
+                className="group flex items-center gap-2 px-5 py-2.5 bg-accent text-accent-foreground text-sm font-semibold tracking-wide rounded-md hover:bg-wine-light hover:shadow-wine transition-all duration-300"
+                whileHover={{ scale: 1.08, y: -3 }}
                 whileTap={{ scale: 0.92 }}
               >
                 Book Now

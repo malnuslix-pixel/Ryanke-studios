@@ -21,6 +21,8 @@ import brand4 from '@/assets/gallery/brand-4.jpg';
 import corporate from '@/assets/gallery/corporate.jpg';
 import creative from '@/assets/gallery/creative.jpg';
 import lifestyle from '@/assets/gallery/lifestyle.jpg';
+import lifestyle2 from '@/assets/gallery/lifestyle-2.jpg';
+import lifestyle3 from '@/assets/gallery/lifestyle-3.jpg';
 
 type Category = 'All' | 'Corporate' | 'Events' | 'Family' | 'Brands' | 'Portraits' | 'Creative' | 'Lifestyle';
 
@@ -145,6 +147,20 @@ const galleryItems = [
     title: 'She Sparkles Brand',
     description: 'Event brand photography capturing authentic moments at empowerment events.',
     category: 'Brands'
+  },
+  {
+    id: 18,
+    image: lifestyle2,
+    title: 'Elegant Duo',
+    description: 'Sophisticated couples photography featuring bold colors and stylish formal attire.',
+    category: 'Lifestyle'
+  },
+  {
+    id: 19,
+    image: lifestyle3,
+    title: 'Casual Vibes',
+    description: 'Relaxed lifestyle photography capturing genuine joy and authentic connection between couples.',
+    category: 'Lifestyle'
   },
 ];
 
@@ -329,10 +345,10 @@ export const Gallery3DCarousel = () => {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
                     selectedCategory === category
-                      ? 'bg-accent text-accent-foreground shadow-lg'
-                      : 'bg-primary/10 text-foreground hover:bg-accent/20'
+                      ? 'bg-accent text-accent-foreground shadow-lg shadow-wine'
+                      : 'bg-primary/10 text-foreground hover:bg-accent/20 hover:shadow-md'
                   }`}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.08, y: -3 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   {category}
@@ -341,8 +357,8 @@ export const Gallery3DCarousel = () => {
             </div>
           </ScrollReveal>
 
-          {/* 3D Carousel Container */}
-          <div className="relative h-[500px] sm:h-[600px] lg:h-[700px] perspective-1000">
+          {/* 3D Carousel Container - adjusted height for desktop */}
+          <div className="relative h-[550px] sm:h-[650px] lg:h-[750px] xl:h-[800px] perspective-1000">
             {/* Main carousel */}
             <div className="relative h-full flex items-center justify-center">
               <AnimatePresence mode="wait" custom={direction}>
@@ -415,17 +431,20 @@ export const Gallery3DCarousel = () => {
                       </motion.div>
                     </motion.div>
                     
-                    {/* Description panel */}
+                    {/* Description panel - positioned below with proper spacing on desktop */}
                     <motion.div 
-                      className="mt-6 sm:mt-8 text-center px-4"
+                      className="mt-6 sm:mt-8 lg:mt-10 text-center px-4 lg:px-12"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                     >
-                      <h3 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 text-foreground">
+                      <motion.h3 
+                        className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 text-foreground"
+                        whileHover={{ scale: 1.02 }}
+                      >
                         {filteredItems[currentIndex]?.title}
-                      </h3>
-                      <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                      </motion.h3>
+                      <p className="text-sm sm:text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-16 lg:mb-0">
                         {filteredItems[currentIndex]?.description}
                       </p>
                     </motion.div>
@@ -469,12 +488,12 @@ export const Gallery3DCarousel = () => {
               </div>
             </div>
 
-            {/* Navigation controls */}
-            <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-4 sm:gap-6">
+            {/* Navigation controls - repositioned for desktop to avoid overlap */}
+            <div className="absolute -bottom-4 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 left-0 right-0 lg:left-4 lg:right-4 flex items-center justify-center lg:justify-between gap-4 sm:gap-6 z-20">
               <motion.button
                 onClick={prevSlide}
-                className="p-3 sm:p-4 bg-primary/80 backdrop-blur-sm rounded-full text-pure-white hover:bg-accent hover:text-accent-foreground transition-colors touch-manipulation"
-                whileHover={{ scale: 1.1 }}
+                className="p-3 sm:p-4 bg-primary/90 backdrop-blur-sm rounded-full text-pure-white hover:bg-accent hover:text-accent-foreground transition-all duration-300 touch-manipulation shadow-xl hover:shadow-wine"
+                whileHover={{ scale: 1.15, x: -5 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Previous image"
               >
@@ -483,8 +502,8 @@ export const Gallery3DCarousel = () => {
               
               <motion.button
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="p-3 sm:p-4 bg-accent rounded-full text-accent-foreground transition-colors touch-manipulation"
-                whileHover={{ scale: 1.1 }}
+                className="p-3 sm:p-4 bg-accent rounded-full text-accent-foreground transition-all duration-300 touch-manipulation shadow-xl hover:shadow-wine lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:-bottom-20"
+                whileHover={{ scale: 1.15, rotate: isAutoPlaying ? 0 : 180 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label={isAutoPlaying ? 'Pause auto-scroll' : 'Start auto-scroll'}
               >
@@ -497,8 +516,8 @@ export const Gallery3DCarousel = () => {
               
               <motion.button
                 onClick={nextSlide}
-                className="p-3 sm:p-4 bg-primary/80 backdrop-blur-sm rounded-full text-pure-white hover:bg-accent hover:text-accent-foreground transition-colors touch-manipulation"
-                whileHover={{ scale: 1.1 }}
+                className="p-3 sm:p-4 bg-primary/90 backdrop-blur-sm rounded-full text-pure-white hover:bg-accent hover:text-accent-foreground transition-all duration-300 touch-manipulation shadow-xl hover:shadow-wine"
+                whileHover={{ scale: 1.15, x: 5 }}
                 whileTap={{ scale: 0.9 }}
                 aria-label="Next image"
               >

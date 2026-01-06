@@ -209,12 +209,12 @@
     @apply bg-gradient-to-r from-accent via-wine-light to-accent bg-clip-text text-transparent;
   }
 
-  /* Premium button styles - mobile-optimized */
+  /* Premium button styles - mobile-optimized with enhanced hover */
   .btn-luxury {
     @apply relative overflow-hidden px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 text-xs sm:text-sm font-semibold tracking-wider sm:tracking-widest uppercase rounded-md;
     @apply bg-accent text-accent-foreground;
     @apply transition-all duration-300 ease-out;
-    @apply hover:shadow-wine hover:brightness-110;
+    @apply hover:shadow-wine hover:brightness-110 hover:-translate-y-1;
     @apply active:scale-95 active:brightness-90;
     @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
     @apply touch-manipulation;
@@ -229,23 +229,23 @@
     @apply opacity-100;
   }
 
-  /* CTA button - mobile-optimized */
+  /* CTA button - mobile-optimized with enhanced interactions */
   .btn-cta {
     @apply inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 rounded-md;
     @apply bg-accent text-accent-foreground font-semibold text-sm sm:text-base;
     @apply transition-all duration-300 ease-out;
-    @apply hover:bg-wine-light hover:shadow-wine hover:scale-[1.02];
+    @apply hover:bg-wine-light hover:shadow-wine hover:scale-[1.02] hover:-translate-y-1;
     @apply active:scale-95;
     @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
     @apply touch-manipulation;
   }
 
-  /* Outline luxury button - mobile-optimized */
+  /* Outline luxury button - mobile-optimized with enhanced interactions */
   .btn-outline-luxury {
     @apply relative px-5 py-3 sm:px-6 sm:py-3.5 md:px-8 md:py-4 text-xs sm:text-sm font-semibold tracking-wider sm:tracking-widest uppercase rounded-md;
     @apply bg-transparent text-foreground border-2 border-foreground/30;
     @apply transition-all duration-300 ease-out;
-    @apply hover:border-accent hover:text-accent hover:bg-accent/5;
+    @apply hover:border-accent hover:text-accent hover:bg-accent/5 hover:-translate-y-1;
     @apply active:scale-95;
     @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2;
     @apply touch-manipulation;
@@ -327,7 +327,7 @@
     @apply relative overflow-hidden;
   }
 
-  /* Luxury card hover */
+  /* Luxury card hover - enhanced */
   .card-luxury {
     @apply relative bg-card border border-border/50 overflow-hidden;
     @apply transition-all duration-500 ease-out;
@@ -337,7 +337,7 @@
   .card-luxury:hover {
     @apply border-accent/30;
     box-shadow: var(--shadow-elevated);
-    transform: translateY(-4px);
+    transform: translateY(-8px);
   }
 
   /* Decorative line */
@@ -356,7 +356,7 @@
     @apply flex-1 h-px bg-gradient-to-r from-transparent via-border to-transparent;
   }
 
-  /* Image hover zoom */
+  /* Image hover zoom - enhanced */
   .img-zoom {
     @apply overflow-hidden;
   }
@@ -451,6 +451,7 @@
   .bg-gradient-dark {
     background: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 8%) 100%);
   }
+
   /* 3D Perspective for carousel */
   .perspective-1000 {
     perspective: 1000px;
@@ -480,6 +481,59 @@
   .page-enter-active {
     @apply opacity-100 translate-y-0 transition-all duration-500 ease-out;
   }
+
+  /* Interactive hover lift effect */
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-2 shadow-xl;
+  }
+
+  /* Interactive scale effect */
+  .hover-scale-subtle {
+    @apply transition-transform duration-300;
+  }
+
+  .hover-scale-subtle:hover {
+    @apply scale-[1.02];
+  }
+
+  /* Premium shadow on hover */
+  .shadow-wine {
+    box-shadow: 0 10px 40px -10px hsl(345 65% 35% / 0.5);
+  }
+
+  /* Image ken burns effect */
+  .ken-burns {
+    @apply transition-transform duration-[10s] ease-linear;
+    animation: kenBurns 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes kenBurns {
+    0% {
+      transform: scale(1) translate(0, 0);
+    }
+    100% {
+      transform: scale(1.1) translate(-2%, -2%);
+    }
+  }
+
+  /* Tilt effect on hover */
+  .tilt-on-hover {
+    @apply transition-transform duration-300 ease-out;
+    transform-style: preserve-3d;
+  }
+
+  .tilt-on-hover:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(10px);
+  }
+
+  /* Magnetic button effect base */
+  .magnetic {
+    @apply transition-transform duration-200 ease-out;
+  }
 }
 
 /* Custom scrollbar */
@@ -498,5 +552,5 @@
 
 /* Selection color */
 ::selection {
-  @apply bg-accent/20 text-foreground;
+  @apply bg-accent/30 text-foreground;
 }

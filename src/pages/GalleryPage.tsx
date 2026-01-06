@@ -3,7 +3,7 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { Gallery3DCarousel } from '@/components/sections/Gallery3DCarousel';
 import { CTASection } from '@/components/sections/CTASection';
-import portfolioHero from '@/assets/portfolio-hero.jpg';
+import galleryHero from '@/assets/gallery-hero.jpg';
 
 const GalleryPage = () => {
   useSmoothScroll();
@@ -14,7 +14,7 @@ const GalleryPage = () => {
         title="Gallery"
         subtitle="Visual Masterpieces"
         description="Immerse yourself in our stunning collection of professional photography showcasing our finest work."
-        heroImage={portfolioHero}
+        heroImage={galleryHero}
       />
       <Gallery3DCarousel />
       <CTASection />
