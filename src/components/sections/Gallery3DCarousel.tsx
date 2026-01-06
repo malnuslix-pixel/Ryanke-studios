@@ -249,6 +249,9 @@ export const Gallery3DCarousel = () => {
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [animationIndex, setAnimationIndex] = useState(0);
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   // Filter items based on category
   const filteredItems = useMemo(() => {
@@ -293,25 +296,113 @@ export const Gallery3DCarousel = () => {
     setLightboxIndex(index);
     setLightboxOpen(true);
     setZoomLevel(1);
+    setPanPosition({ x: 0, y: 0 });
   };
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setLightboxOpen(false);
     setZoomLevel(1);
-  };
+    setPanPosition({ x: 0, y: 0 });
+  }, []);
 
-  const nextLightbox = () => {
+  const nextLightbox = useCallback(() => {
     setLightboxIndex((prev) => (prev + 1) % filteredItems.length);
     setZoomLevel(1);
-  };
+    setPanPosition({ x: 0, y: 0 });
+  }, [filteredItems.length]);
 
-  const prevLightbox = () => {
+  const prevLightbox = useCallback(() => {
     setLightboxIndex((prev) => (prev - 1 + filteredItems.length) % filteredItems.length);
     setZoomLevel(1);
-  };
+    setPanPosition({ x: 0, y: 0 });
+  }, [filteredItems.length]);
 
   const toggleZoom = () => {
-    setZoomLevel((prev) => (prev === 1 ? 2 : prev === 2 ? 3 : 1));
+    if (zoomLevel === 1) {
+      setZoomLevel(2);
+    } else if (zoomLevel === 2) {
+      setZoomLevel(3);
+    } else {
+      setZoomLevel(1);
+      setPanPosition({ x: 0, y: 0 });
+    }
+  };
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          prevLightbox();
+          break;
+        case 'ArrowRight':
+          nextLightbox();
+          break;
+        case '+':
+        case '=':
+          if (zoomLevel < 3) setZoomLevel(prev => Math.min(prev + 1, 3));
+          break;
+        case '-':
+          if (zoomLevel > 1) {
+            setZoomLevel(prev => Math.max(prev - 1, 1));
+            if (zoomLevel === 2) setPanPosition({ x: 0, y: 0 });
+          }
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen, closeLightbox, prevLightbox, nextLightbox, zoomLevel]);
+
+  // Handle mouse drag for panning when zoomed
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (zoomLevel > 1) {
+      setIsDragging(true);
+      setDragStart({ x: e.clientX - panPosition.x, y: e.clientY - panPosition.y });
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && zoomLevel > 1) {
+      setPanPosition({
+        x: e.clientX - dragStart.x,
+        y: e.clientY - dragStart.y,
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Handle touch events for mobile panning
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (zoomLevel > 1 && e.touches.length === 1) {
+      setIsDragging(true);
+      setDragStart({ 
+        x: e.touches[0].clientX - panPosition.x, 
+        y: e.touches[0].clientY - panPosition.y 
+      });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (isDragging && zoomLevel > 1 && e.touches.length === 1) {
+      setPanPosition({
+        x: e.touches[0].clientX - dragStart.x,
+        y: e.touches[0].clientY - dragStart.y,
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
   };
 
   const currentVariant = animationVariants[animationIndex];
@@ -592,21 +683,41 @@ export const Gallery3DCarousel = () => {
       </section>
 
       {/* Lightbox Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {lightboxOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center select-none"
             onClick={closeLightbox}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
           >
+            {/* Keyboard hint */}
+            <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs flex items-center gap-3">
+              <span className="hidden sm:flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-[10px]">←</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-[10px]">→</kbd>
+                Navigate
+              </span>
+              <span className="hidden sm:flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-[10px]">ESC</kbd>
+                Close
+              </span>
+              <span>{zoomLevel}x zoom</span>
+            </div>
+
             {/* Close button */}
             <motion.button
               className="absolute top-4 right-4 z-50 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
-              onClick={closeLightbox}
+              onClick={(e) => {
+                e.stopPropagation();
+                closeLightbox();
+              }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              aria-label="Close lightbox (Escape)"
             >
               <X className="w-6 h-6" />
             </motion.button>
@@ -620,21 +731,17 @@ export const Gallery3DCarousel = () => {
               }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              aria-label={zoomLevel > 1 ? "Zoom out" : "Zoom in"}
             >
               {zoomLevel > 1 ? <ZoomOut className="w-6 h-6" /> : <ZoomIn className="w-6 h-6" />}
             </motion.button>
-
-            {/* Zoom level indicator */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm">
-              {zoomLevel}x zoom
-            </div>
 
             {/* Image counter */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm">
               {lightboxIndex + 1} / {filteredItems.length}
             </div>
 
-            {/* Navigation */}
+            {/* Navigation - Left Arrow */}
             <motion.button
               className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
               onClick={(e) => {
@@ -643,10 +750,12 @@ export const Gallery3DCarousel = () => {
               }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              aria-label="Previous image (Left Arrow)"
             >
               <ChevronLeft className="w-6 h-6" />
             </motion.button>
 
+            {/* Navigation - Right Arrow */}
             <motion.button
               className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
               onClick={(e) => {
@@ -655,14 +764,21 @@ export const Gallery3DCarousel = () => {
               }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              aria-label="Next image (Right Arrow)"
             >
               <ChevronRight className="w-6 h-6" />
             </motion.button>
 
-            {/* Image */}
+            {/* Image Container with Pan Support */}
             <motion.div
-              className="relative max-w-[90vw] max-h-[85vh] overflow-auto"
+              className={`relative max-w-[90vw] max-h-[85vh] overflow-hidden ${zoomLevel > 1 ? 'cursor-grab' : 'cursor-zoom-in'} ${isDragging ? 'cursor-grabbing' : ''}`}
               onClick={(e) => e.stopPropagation()}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -672,14 +788,15 @@ export const Gallery3DCarousel = () => {
                 key={lightboxIndex}
                 src={filteredItems[lightboxIndex]?.image}
                 alt={filteredItems[lightboxIndex]?.title}
-                className="max-w-full max-h-[85vh] object-contain cursor-zoom-in"
+                className="max-w-full max-h-[85vh] object-contain select-none"
+                draggable={false}
                 style={{ 
-                  transform: `scale(${zoomLevel})`,
-                  transition: 'transform 0.3s ease'
+                  transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
+                  transition: isDragging ? 'none' : 'transform 0.3s ease',
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleZoom();
+                  if (!isDragging) toggleZoom();
                 }}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
