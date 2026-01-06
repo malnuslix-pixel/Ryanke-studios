@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Pause, Play, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from 'lucide-react';
 import { ScrollReveal } from '../ScrollReveal';
 
 // Import gallery images
@@ -242,7 +242,6 @@ const animationVariants = [
 
 export const Gallery3DCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [direction, setDirection] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -252,6 +251,9 @@ export const Gallery3DCarousel = () => {
   const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [initialPinchDistance, setInitialPinchDistance] = useState<number | null>(null);
+  const [initialZoom, setInitialZoom] = useState(1);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   // Filter items based on category
   const filteredItems = useMemo(() => {
@@ -271,12 +273,6 @@ export const Gallery3DCarousel = () => {
     setAnimationIndex((prev) => (prev + 1) % animationVariants.length);
   }, [filteredItems.length]);
 
-  // Slow auto-scroll (8 seconds)
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const interval = setInterval(nextSlide, 8000);
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, nextSlide]);
 
   // Reset index when category changes
   useEffect(() => {
@@ -381,9 +377,23 @@ export const Gallery3DCarousel = () => {
     setIsDragging(false);
   };
 
-  // Handle touch events for mobile panning
+  // Calculate distance between two touch points
+  const getTouchDistance = (touches: React.TouchList) => {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  // Handle touch events for mobile panning and pinch-to-zoom
   const handleTouchStart = (e: React.TouchEvent) => {
-    if (zoomLevel > 1 && e.touches.length === 1) {
+    if (e.touches.length === 2) {
+      // Pinch gesture start
+      e.preventDefault();
+      const distance = getTouchDistance(e.touches);
+      setInitialPinchDistance(distance);
+      setInitialZoom(zoomLevel);
+    } else if (zoomLevel > 1 && e.touches.length === 1) {
+      // Single finger pan
       setIsDragging(true);
       setDragStart({ 
         x: e.touches[0].clientX - panPosition.x, 
@@ -393,7 +403,19 @@ export const Gallery3DCarousel = () => {
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (isDragging && zoomLevel > 1 && e.touches.length === 1) {
+    if (e.touches.length === 2 && initialPinchDistance !== null) {
+      // Pinch gesture
+      e.preventDefault();
+      const distance = getTouchDistance(e.touches);
+      const scale = distance / initialPinchDistance;
+      const newZoom = Math.min(Math.max(initialZoom * scale, 1), 4);
+      setZoomLevel(newZoom);
+      
+      if (newZoom <= 1) {
+        setPanPosition({ x: 0, y: 0 });
+      }
+    } else if (isDragging && zoomLevel > 1 && e.touches.length === 1) {
+      // Single finger pan
       setPanPosition({
         x: e.touches[0].clientX - dragStart.x,
         y: e.touches[0].clientY - dragStart.y,
@@ -403,6 +425,7 @@ export const Gallery3DCarousel = () => {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
+    setInitialPinchDistance(null);
   };
 
   const currentVariant = animationVariants[animationIndex];
@@ -592,20 +615,6 @@ export const Gallery3DCarousel = () => {
               </motion.button>
               
               <motion.button
-                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="p-3 sm:p-4 bg-accent rounded-full text-accent-foreground transition-all duration-300 touch-manipulation shadow-xl hover:shadow-wine lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:-bottom-20"
-                whileHover={{ scale: 1.15, rotate: isAutoPlaying ? 0 : 180 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label={isAutoPlaying ? 'Pause auto-scroll' : 'Start auto-scroll'}
-              >
-                {isAutoPlaying ? (
-                  <Pause className="w-5 h-5 sm:w-6 sm:h-6" />
-                ) : (
-                  <Play className="w-5 h-5 sm:w-6 sm:h-6" />
-                )}
-              </motion.button>
-              
-              <motion.button
                 onClick={nextSlide}
                 className="p-3 sm:p-4 bg-primary/90 backdrop-blur-sm rounded-full text-pure-white hover:bg-accent hover:text-accent-foreground transition-all duration-300 touch-manipulation shadow-xl hover:shadow-wine"
                 whileHover={{ scale: 1.15, x: 5 }}
@@ -617,66 +626,68 @@ export const Gallery3DCarousel = () => {
             </div>
           </div>
 
-          {/* Marquee-style thumbnail navigation */}
+          {/* Marquee-style thumbnail navigation - continuous scroll */}
           <ScrollReveal delay={0.2}>
             <div className="mt-12 sm:mt-16 relative overflow-hidden">
               {/* Gradient fade edges */}
-              <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-              <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
               
-              <motion.div 
-                className="flex gap-3 sm:gap-4"
-                animate={isAutoPlaying ? {
-                  x: [0, -100 * filteredItems.length],
-                } : {}}
-                transition={isAutoPlaying ? {
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: filteredItems.length * 4,
-                    ease: "linear",
-                  },
-                } : {}}
-                style={{ width: 'fit-content' }}
-              >
-                {/* Duplicate items for seamless loop */}
-                {[...filteredItems, ...filteredItems].map((item, index) => (
-                  <motion.button
-                    key={`${item.id}-${index}`}
-                    onClick={() => {
-                      const actualIndex = index % filteredItems.length;
-                      setDirection(actualIndex > currentIndex ? 1 : -1);
-                      setCurrentIndex(actualIndex);
-                      setAnimationIndex((prev) => (prev + 1) % animationVariants.length);
-                    }}
-                    className={`flex-shrink-0 relative rounded-lg overflow-hidden snap-center transition-all duration-300 touch-manipulation group ${
-                      index % filteredItems.length === currentIndex 
-                        ? 'ring-2 ring-accent ring-offset-2 ring-offset-background scale-105' 
-                        : 'opacity-60 hover:opacity-100'
-                    }`}
-                    whileHover={{ scale: 1.08, y: -5 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-20 h-14 sm:w-24 sm:h-16 lg:w-28 lg:h-20 object-cover"
-                    />
-                    {/* Hover overlay with title */}
-                    <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="text-[10px] sm:text-xs text-pure-white font-medium text-center px-1 line-clamp-2">
-                        {item.title}
-                      </span>
-                    </div>
-                    {index % filteredItems.length === currentIndex && (
-                      <motion.div 
-                        className="absolute inset-0 bg-accent/20"
-                        layoutId="activeThumbnail"
+              <div className="flex marquee-container">
+                <motion.div 
+                  className="flex gap-4 sm:gap-5 marquee-track"
+                  animate={{
+                    x: [0, -((112 + 20) * filteredItems.length)],
+                  }}
+                  transition={{
+                    x: {
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      duration: filteredItems.length * 3,
+                      ease: "linear",
+                    },
+                  }}
+                  style={{ width: 'fit-content' }}
+                >
+                  {/* Triple items for seamless loop */}
+                  {[...filteredItems, ...filteredItems, ...filteredItems].map((item, index) => (
+                    <motion.button
+                      key={`${item.id}-${index}`}
+                      onClick={() => {
+                        const actualIndex = index % filteredItems.length;
+                        setDirection(actualIndex > currentIndex ? 1 : -1);
+                        setCurrentIndex(actualIndex);
+                        setAnimationIndex((prev) => (prev + 1) % animationVariants.length);
+                      }}
+                      className={`flex-shrink-0 relative rounded-xl overflow-hidden transition-all duration-300 touch-manipulation group ${
+                        index % filteredItems.length === currentIndex 
+                          ? 'ring-2 ring-accent ring-offset-2 ring-offset-background' 
+                          : 'opacity-70 hover:opacity-100'
+                      }`}
+                      whileHover={{ scale: 1.05, y: -4 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-24 h-16 sm:w-28 sm:h-20 lg:w-32 lg:h-22 object-cover"
                       />
-                    )}
-                  </motion.button>
-                ))}
-              </motion.div>
+                      {/* Hover overlay with title */}
+                      <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-pure-white font-medium text-center px-1 line-clamp-2">
+                          {item.title}
+                        </span>
+                      </div>
+                      {index % filteredItems.length === currentIndex && (
+                        <motion.div 
+                          className="absolute inset-0 bg-accent/20"
+                          layoutId="activeThumbnail"
+                        />
+                      )}
+                    </motion.button>
+                  ))}
+                </motion.div>
+              </div>
             </div>
           </ScrollReveal>
         </div>
@@ -705,7 +716,8 @@ export const Gallery3DCarousel = () => {
                 <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-[10px]">ESC</kbd>
                 Close
               </span>
-              <span>{zoomLevel}x zoom</span>
+              <span className="sm:hidden">Pinch to zoom</span>
+              <span>{zoomLevel.toFixed(1)}x</span>
             </div>
 
             {/* Close button */}
@@ -769,7 +781,7 @@ export const Gallery3DCarousel = () => {
               <ChevronRight className="w-6 h-6" />
             </motion.button>
 
-            {/* Image Container with Pan Support */}
+            {/* Image Container with Pan and Pinch-to-Zoom Support */}
             <motion.div
               className={`relative max-w-[90vw] max-h-[85vh] overflow-hidden ${zoomLevel > 1 ? 'cursor-grab' : 'cursor-zoom-in'} ${isDragging ? 'cursor-grabbing' : ''}`}
               onClick={(e) => e.stopPropagation()}
@@ -783,8 +795,10 @@ export const Gallery3DCarousel = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               transition={{ type: 'spring', damping: 25 }}
+              style={{ touchAction: 'none' }}
             >
               <motion.img
+                ref={imageRef}
                 key={lightboxIndex}
                 src={filteredItems[lightboxIndex]?.image}
                 alt={filteredItems[lightboxIndex]?.title}
@@ -792,7 +806,7 @@ export const Gallery3DCarousel = () => {
                 draggable={false}
                 style={{ 
                   transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
-                  transition: isDragging ? 'none' : 'transform 0.3s ease',
+                  transition: isDragging || initialPinchDistance !== null ? 'none' : 'transform 0.3s ease',
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
