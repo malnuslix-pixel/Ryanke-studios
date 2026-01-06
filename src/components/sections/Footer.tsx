@@ -63,6 +63,7 @@ const footerLinks = [
     links: [
       { name: 'About Us', href: '/about' },
       { name: 'Portfolio', href: '/portfolio' },
+      { name: 'Gallery', href: '/gallery' },
       { name: 'Pricing', href: '/pricing' },
       { name: 'Contact', href: '/contact' },
     ],

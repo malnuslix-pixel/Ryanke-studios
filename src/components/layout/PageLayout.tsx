@@ -3,6 +3,7 @@ import { Navigation } from '../Navigation';
 import { Footer } from '../sections/Footer';
 import { WhatsAppWidget } from '../WhatsAppWidget';
 import { PageTransition } from '../PageTransition';
+import { ScrollProgressBar } from '../ScrollProgressBar';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface PageLayoutProps {
 export const PageLayout = ({ children }: PageLayoutProps) => {
   return (
     <>
+      <ScrollProgressBar />
       <div className="grain-overlay" />
       <Navigation />
       <PageTransition>

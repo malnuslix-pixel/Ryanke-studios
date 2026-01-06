@@ -24,8 +24,8 @@ const pageVariants = {
 
 const pageTransition = {
   type: 'tween',
-  ease: [0.22, 1, 0.36, 1], // Expo-like ease for smooth feel
-  duration: 0.5,
+  ease: [0.16, 1, 0.3, 1], // Ultra smooth premium ease
+  duration: 0.6,
 };
 
 const reducedMotionTransition = {

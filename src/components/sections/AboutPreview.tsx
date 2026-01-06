@@ -2,12 +2,12 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ScrollReveal } from '../ScrollReveal';
 import { ArrowRight } from 'lucide-react';
-import brianAbuga from '@/assets/brian-abuga.jpeg';
+import ceoBrian from '@/assets/ceo-brian.jpg';
 
 const stats = [
-  { value: '2021', label: 'Established' },
-  { value: '500+', label: 'Projects' },
-  { value: '1000+', label: 'Happy Clients' },
+  { value: '5000+', label: 'Clients Served' },
+  { value: '1000+', label: 'Projects' },
+  { value: '100+', label: 'Brands' },
 ];
 
 export const AboutPreview = () => {
@@ -32,7 +32,7 @@ export const AboutPreview = () => {
               />
               <div className="relative overflow-hidden aspect-[3/4]">
                 <motion.img 
-                  src={brianAbuga} 
+                  src={ceoBrian} 
                   alt="Brian Abuga - Founder of Ryankey Studios"
                   className="w-full h-full object-cover object-top"
                   whileHover={{ scale: 1.08 }}
