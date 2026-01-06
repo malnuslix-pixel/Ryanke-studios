@@ -67,7 +67,7 @@ const galleryItems = [
   {
     id: 6,
     image: lifestyle,
-    title: 'Elegant Couples',
+    title: 'Couple Moments',
     description: 'Sophisticated couple photography showcasing timeless elegance and romantic connection.',
     category: 'Portraits'
   },
@@ -95,8 +95,8 @@ const galleryItems = [
   {
     id: 10,
     image: moments4,
-    title: 'Romantic Moments',
-    description: 'Capturing romantic outdoor moments with artistic composition and natural beauty.',
+    title: 'Memorable Moments',
+    description: 'Capturing memorable outdoor moments with artistic composition and natural beauty.',
     category: 'Lifestyle'
   },
   {

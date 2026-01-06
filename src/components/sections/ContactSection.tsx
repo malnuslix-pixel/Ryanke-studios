@@ -1,8 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { ScrollReveal } from '../ScrollReveal';
-import { Mail, Phone, MapPin, Clock, MessageCircle } from 'lucide-react';
-import brianAbuga2 from '@/assets/brian-abuga-2.png';
+import { Mail, Phone, MapPin, Clock, MessageCircle, Send, Sparkles } from 'lucide-react';
 
 export const ContactSection = () => {
   const containerRef = useRef(null);
@@ -13,33 +12,92 @@ export const ContactSection = () => {
 
   const decorY = useTransform(scrollYProgress, [0, 1], [100, -100]);
 
+  // Form state
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    service: '',
+    date: '',
+    duration: '',
+    details: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    const message = `Hello Ryankey Studios! 👋
+
+*New Booking Request*
+
+📋 *Client Details:*
+• Name: ${formData.name || 'Not provided'}
+• Phone: ${formData.phone || 'Not provided'}
+
+📸 *Session Details:*
+• Service: ${formData.service || 'Not selected'}
+• Date: ${formData.date || 'Flexible'}
+• Duration: ${formData.duration || 'Not selected'}
+
+💬 *Additional Details:*
+${formData.details || 'No additional details'}
+
+Looking forward to hearing from you! 🎬`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/254718445264?text=${encodedMessage}`, '_blank');
+  };
+
   return (
     <section
       id="contact"
       ref={containerRef}
       className="relative py-24 lg:py-40 overflow-hidden"
     >
+      {/* Morphing Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-morph opacity-50" />
+      
       {/* Background Decorations */}
       <motion.div
         style={{ y: decorY }}
-        className="absolute -left-40 top-1/3 w-80 h-80 rounded-full bg-accent/5 blur-3xl"
+        className="absolute -left-40 top-1/3 w-80 h-80 rounded-full bg-accent/10 blur-3xl animate-pulse-slow"
+      />
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [-50, 50]) }}
+        className="absolute -right-40 bottom-1/4 w-96 h-96 rounded-full bg-accent/5 blur-3xl animate-pulse-slow"
       />
 
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left Content */}
           <div className="space-y-8">
             <ScrollReveal>
-              <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
-                <span className="w-8 h-0.5 bg-accent" />
+              <motion.span 
+                className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent"
+                whileHover={{ x: 5, scale: 1.02 }}
+              >
+                <motion.span 
+                  className="w-8 h-0.5 bg-accent"
+                  animate={{ scaleX: [0.5, 1, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <Sparkles className="w-4 h-4 animate-pulse" />
                 Get in Touch
-              </span>
+              </motion.span>
             </ScrollReveal>
 
             <ScrollReveal delay={0.1}>
               <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight">
                 Let's Create
-                <span className="block text-accent mt-2">Something Beautiful</span>
+                <motion.span 
+                  className="block text-accent mt-2"
+                  whileHover={{ scale: 1.02, x: 10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  Something Beautiful
+                </motion.span>
               </h2>
             </ScrollReveal>
 
@@ -55,13 +113,16 @@ export const ContactSection = () => {
               <div className="space-y-6 pt-4">
                 <motion.a
                   href="tel:+254702340700"
-                  className="flex items-center gap-4 group"
+                  className="flex items-center gap-4 group p-3 rounded-xl hover:bg-accent/5 transition-all duration-300"
                   whileHover={{ x: 8, scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all duration-300">
+                  <motion.div 
+                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl group-hover:bg-accent group-hover:border-accent transition-all duration-300 group-hover:shadow-glow"
+                    whileHover={{ rotate: 10 }}
+                  >
                     <Phone className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
-                  </div>
+                  </motion.div>
                   <div>
                     <p className="text-sm text-muted-foreground">Phone (Calls Only)</p>
                     <p className="font-semibold text-foreground group-hover:text-accent transition-colors">
@@ -72,12 +133,16 @@ export const ContactSection = () => {
 
                 <motion.a
                   href="mailto:ryankeyimages@gmail.com"
-                  className="flex items-center gap-4 group"
-                  whileHover={{ x: 5 }}
+                  className="flex items-center gap-4 group p-3 rounded-xl hover:bg-accent/5 transition-all duration-300"
+                  whileHover={{ x: 8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 group-hover:bg-accent group-hover:border-accent transition-all">
+                  <motion.div 
+                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl group-hover:bg-accent group-hover:border-accent transition-all group-hover:shadow-glow"
+                    whileHover={{ rotate: -10 }}
+                  >
                     <Mail className="w-5 h-5 text-accent group-hover:text-accent-foreground transition-colors" />
-                  </div>
+                  </motion.div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
                     <p className="font-semibold text-foreground group-hover:text-accent transition-colors">
@@ -87,12 +152,17 @@ export const ContactSection = () => {
                 </motion.a>
 
                 <motion.div
-                  className="flex items-center gap-4 group"
-                  whileHover={{ x: 5 }}
+                  className="flex items-center gap-4 group p-3 rounded-xl hover:bg-accent/5 transition-all duration-300"
+                  whileHover={{ x: 8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20">
+                  <motion.div 
+                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl"
+                    animate={{ y: [0, -3, 0] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
                     <MapPin className="w-5 h-5 text-accent" />
-                  </div>
+                  </motion.div>
                   <div>
                     <p className="text-sm text-muted-foreground">Studio Location</p>
                     <p className="font-semibold text-foreground">
@@ -102,12 +172,17 @@ export const ContactSection = () => {
                 </motion.div>
 
                 <motion.div
-                  className="flex items-center gap-4 group"
-                  whileHover={{ x: 5 }}
+                  className="flex items-center gap-4 group p-3 rounded-xl hover:bg-accent/5 transition-all duration-300"
+                  whileHover={{ x: 8, scale: 1.02 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <div className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20">
+                  <motion.div 
+                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl"
+                    animate={{ rotate: [0, 10, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
                     <Clock className="w-5 h-5 text-accent" />
-                  </div>
+                  </motion.div>
                   <div>
                     <p className="text-sm text-muted-foreground">Business Hours</p>
                     <p className="font-semibold text-foreground">
@@ -124,114 +199,173 @@ export const ContactSection = () => {
                 href="https://wa.me/254718445264"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-cta"
-                whileHover={{ scale: 1.02 }}
+                className="btn-cta group"
+                whileHover={{ scale: 1.05, y: -3 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <MessageCircle className="w-5 h-5" />
+                <motion.span
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <MessageCircle className="w-5 h-5" />
+                </motion.span>
                 <span>Chat on WhatsApp</span>
               </motion.a>
             </ScrollReveal>
           </div>
 
-          {/* Right Content - Booking Form */}
+          {/* Right Content - Premium Booking Form */}
           <ScrollReveal delay={0.2} direction="right">
             <div className="relative">
-              {/* Decorative Frame */}
-              <div className="absolute -inset-4 border-2 border-accent/20 -rotate-1" />
-
-              <div className="relative bg-card p-8 lg:p-12 space-y-6 rounded-lg">
-                <h3 className="font-heading text-xl md:text-2xl font-semibold mb-6 text-foreground">Book a Session</h3>
+              {/* Gradient Border Effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-accent via-wine-light to-accent rounded-2xl opacity-30 blur-sm animate-gradient-border" />
+              
+              {/* Glass Background Form */}
+              <motion.div 
+                className="relative glass-form p-8 lg:p-12 space-y-6 rounded-2xl"
+                whileHover={{ y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="flex items-center gap-3 mb-8">
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Sparkles className="w-6 h-6 text-accent" />
+                  </motion.div>
+                  <h3 className="font-heading text-xl md:text-2xl font-semibold text-foreground">Book a Session</h3>
+                </div>
                 
+                {/* Glowing Input - Name */}
                 <div className="space-y-2">
                   <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Your Name
                   </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 bg-transparent border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors rounded-md"
-                    placeholder="John Doe"
-                  />
+                  <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      className="input-glow w-full"
+                      placeholder="Brian Abuga"
+                    />
+                  </motion.div>
                 </div>
 
+                {/* Glowing Input - Phone */}
                 <div className="space-y-2">
                   <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Phone / WhatsApp
                   </label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-3 bg-transparent border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors rounded-md"
-                    placeholder="0712 345 678"
-                  />
+                  <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="input-glow w-full"
+                      placeholder="0712 345 678"
+                    />
+                  </motion.div>
                 </div>
 
+                {/* Service Select */}
                 <div className="space-y-2">
                   <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Event / Project Type
                   </label>
-                  <select className="w-full px-4 py-3 bg-background border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer rounded-md">
-                    <option value="">Select a service</option>
-                    <option value="portrait">Portrait Session</option>
-                    <option value="family">Family Photoshoot</option>
-                    <option value="corporate">Corporate Photography</option>
-                    <option value="event">Event Coverage</option>
-                    <option value="product">Product Photography</option>
-                    <option value="video">Videography</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                    <select 
+                      name="service"
+                      value={formData.service}
+                      onChange={handleInputChange}
+                      className="input-glow w-full appearance-none cursor-pointer"
+                    >
+                      <option value="">Select a service</option>
+                      <option value="Portrait Session">Portrait Session</option>
+                      <option value="Family Photoshoot">Family Photoshoot</option>
+                      <option value="Corporate Photography">Corporate Photography</option>
+                      <option value="Event Coverage">Event Coverage</option>
+                      <option value="Product Photography">Product Photography</option>
+                      <option value="Videography">Videography</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </motion.div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
+                  {/* Date */}
                   <div className="space-y-2">
                     <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                       Preferred Date
                     </label>
-                    <input
-                      type="date"
-                      className="w-full px-4 py-3 bg-background border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors rounded-md"
-                    />
+                    <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                      <input
+                        type="date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleInputChange}
+                        className="input-glow w-full"
+                      />
+                    </motion.div>
                   </div>
+                  
+                  {/* Duration */}
                   <div className="space-y-2">
                     <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                       Duration
                     </label>
-                    <select className="w-full px-4 py-3 bg-background border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors appearance-none cursor-pointer rounded-md">
-                      <option value="">Select duration</option>
-                      <option value="45min">45 minutes</option>
-                      <option value="1.5hr">1.5 hours</option>
-                      <option value="2hr">2 hours</option>
-                      <option value="3hr">3 hours</option>
-                      <option value="full-day">Full Day</option>
-                    </select>
+                    <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                      <select 
+                        name="duration"
+                        value={formData.duration}
+                        onChange={handleInputChange}
+                        className="input-glow w-full appearance-none cursor-pointer"
+                      >
+                        <option value="">Select duration</option>
+                        <option value="45 minutes">45 minutes</option>
+                        <option value="1.5 hours">1.5 hours</option>
+                        <option value="2 hours">2 hours</option>
+                        <option value="3 hours">3 hours</option>
+                        <option value="Full Day">Full Day</option>
+                      </select>
+                    </motion.div>
                   </div>
                 </div>
 
+                {/* Details Textarea */}
                 <div className="space-y-2">
                   <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
                     Additional Details
                   </label>
-                  <textarea
-                    rows={3}
-                    className="w-full px-4 py-3 bg-transparent border-2 border-border text-foreground focus:border-accent focus:outline-none transition-colors resize-none rounded-md"
-                    placeholder="Tell us about your project..."
-                  />
+                  <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                    <textarea
+                      rows={3}
+                      name="details"
+                      value={formData.details}
+                      onChange={handleInputChange}
+                      className="input-glow w-full resize-none"
+                      placeholder="Tell us about your project..."
+                    />
+                  </motion.div>
                 </div>
 
-                <motion.a
-                  href="https://wa.me/254718445264"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full btn-cta text-center block"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
+                {/* Submit Button */}
+                <motion.button
+                  onClick={handleSubmit}
+                  className="w-full btn-cta group flex items-center justify-center gap-3"
+                  whileHover={{ scale: 1.02, boxShadow: '0 20px 60px -10px hsl(345 65% 35% / 0.5)' }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  Send Booking Request
-                </motion.a>
+                  <Send className="w-5 h-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <span>Send Booking Request</span>
+                </motion.button>
 
                 <p className="text-xs md:text-sm text-muted-foreground text-center">
                   *Form opens WhatsApp with your details. 50% deposit required to confirm booking.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </ScrollReveal>
         </div>
