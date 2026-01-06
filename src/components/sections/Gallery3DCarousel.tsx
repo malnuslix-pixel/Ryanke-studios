@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from 'lucide-react';
 import { ScrollReveal } from '../ScrollReveal';
 
@@ -240,6 +240,9 @@ const animationVariants = [
   },
 ];
 
+// Swipe threshold for navigation
+const SWIPE_THRESHOLD = 50;
+
 export const Gallery3DCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -253,7 +256,12 @@ export const Gallery3DCarousel = () => {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [initialPinchDistance, setInitialPinchDistance] = useState<number | null>(null);
   const [initialZoom, setInitialZoom] = useState(1);
+  const [isHovering, setIsHovering] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
+  
+  // Swipe gesture state
+  const swipeX = useMotionValue(0);
+  const swipeOpacity = useTransform(swipeX, [-100, 0, 100], [0.5, 1, 0.5]);
 
   // Filter items based on category
   const filteredItems = useMemo(() => {
@@ -293,12 +301,16 @@ export const Gallery3DCarousel = () => {
     setLightboxOpen(true);
     setZoomLevel(1);
     setPanPosition({ x: 0, y: 0 });
+    // Prevent body scroll when lightbox is open
+    document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = useCallback(() => {
     setLightboxOpen(false);
     setZoomLevel(1);
     setPanPosition({ x: 0, y: 0 });
+    // Restore body scroll
+    document.body.style.overflow = '';
   }, []);
 
   const nextLightbox = useCallback(() => {
@@ -428,6 +440,17 @@ export const Gallery3DCarousel = () => {
     setInitialPinchDistance(null);
   };
 
+  // Handle swipe gesture for lightbox navigation
+  const handleSwipeEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+    if (zoomLevel > 1) return; // Don't navigate when zoomed
+    
+    if (info.offset.x > SWIPE_THRESHOLD) {
+      prevLightbox();
+    } else if (info.offset.x < -SWIPE_THRESHOLD) {
+      nextLightbox();
+    }
+  };
+
   const currentVariant = animationVariants[animationIndex];
 
   return (
@@ -496,17 +519,24 @@ export const Gallery3DCarousel = () => {
                     {/* Main image container */}
                     <motion.div 
                       className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl cursor-pointer"
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.02, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)' }}
                       transition={{ duration: 0.3 }}
                       onClick={() => openLightbox(currentIndex)}
+                      onHoverStart={() => setIsHovering(true)}
+                      onHoverEnd={() => setIsHovering(false)}
                     >
                       {/* Decorative frame */}
-                      <div className="absolute -inset-2 bg-gradient-to-br from-accent/30 via-transparent to-accent/30 rounded-3xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <motion.div 
+                        className="absolute -inset-2 bg-gradient-to-br from-accent/30 via-transparent to-accent/30 rounded-3xl blur-sm transition-opacity duration-500"
+                        animate={{ opacity: isHovering ? 1 : 0 }}
+                      />
                       
-                      <img
+                      <motion.img
                         src={filteredItems[currentIndex]?.image}
                         alt={filteredItems[currentIndex]?.title}
                         className="w-full h-full object-cover"
+                        animate={{ scale: isHovering ? 1.05 : 1 }}
+                        transition={{ duration: 0.5 }}
                       />
                       
                       {/* Gradient overlay */}
@@ -514,10 +544,19 @@ export const Gallery3DCarousel = () => {
                       
                       {/* View larger hint */}
                       <motion.div
-                        className="absolute inset-0 flex items-center justify-center bg-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute inset-0 flex items-center justify-center bg-primary/30"
                         initial={{ opacity: 0 }}
+                        animate={{ opacity: isHovering ? 1 : 0 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <ZoomIn className="w-12 h-12 text-pure-white" />
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: isHovering ? 1 : 0 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                          className="p-4 bg-accent/90 rounded-full"
+                        >
+                          <ZoomIn className="w-8 h-8 text-accent-foreground" />
+                        </motion.div>
                       </motion.div>
                       
                       {/* Category badge */}
@@ -526,6 +565,7 @@ export const Gallery3DCarousel = () => {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
+                        whileHover={{ scale: 1.1 }}
                       >
                         <span className="text-xs sm:text-sm font-semibold text-accent-foreground">
                           {filteredItems[currentIndex]?.category}
@@ -693,20 +733,50 @@ export const Gallery3DCarousel = () => {
         </div>
       </section>
 
-      {/* Lightbox Modal */}
+      {/* Enhanced Lightbox Modal */}
       <AnimatePresence mode="wait">
         {lightboxOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center select-none"
             onClick={closeLightbox}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
           >
+            {/* Animated background particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[...Array(20)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-accent/20 rounded-full"
+                  initial={{ 
+                    x: Math.random() * window.innerWidth, 
+                    y: Math.random() * window.innerHeight,
+                    scale: Math.random() * 2 + 0.5
+                  }}
+                  animate={{ 
+                    y: [null, Math.random() * window.innerHeight],
+                    opacity: [0, 1, 0]
+                  }}
+                  transition={{ 
+                    duration: Math.random() * 10 + 10, 
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                />
+              ))}
+            </div>
+
             {/* Keyboard hint */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs flex items-center gap-3">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="absolute top-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-xs flex items-center gap-3"
+            >
               <span className="hidden sm:flex items-center gap-1">
                 <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-[10px]">←</kbd>
                 <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-[10px]">→</kbd>
@@ -716,18 +786,22 @@ export const Gallery3DCarousel = () => {
                 <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-[10px]">ESC</kbd>
                 Close
               </span>
-              <span className="sm:hidden">Pinch to zoom</span>
+              <span className="sm:hidden">Swipe to navigate</span>
               <span>{zoomLevel.toFixed(1)}x</span>
-            </div>
+            </motion.div>
 
-            {/* Close button */}
+            {/* Close button - Enhanced */}
             <motion.button
-              className="absolute top-4 right-4 z-50 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
+              className="absolute top-4 right-4 z-50 p-3 bg-accent/80 backdrop-blur-sm rounded-full text-accent-foreground hover:bg-accent transition-colors shadow-lg"
               onClick={(e) => {
                 e.stopPropagation();
                 closeLightbox();
               }}
-              whileHover={{ scale: 1.1 }}
+              initial={{ opacity: 0, scale: 0, rotate: -180 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              exit={{ opacity: 0, scale: 0, rotate: 180 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              whileHover={{ scale: 1.2, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               aria-label="Close lightbox (Escape)"
             >
@@ -741,6 +815,9 @@ export const Gallery3DCarousel = () => {
                 e.stopPropagation();
                 toggleZoom();
               }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               aria-label={zoomLevel > 1 ? "Zoom out" : "Zoom in"}
@@ -749,39 +826,50 @@ export const Gallery3DCarousel = () => {
             </motion.button>
 
             {/* Image counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white text-sm"
+            >
               {lightboxIndex + 1} / {filteredItems.length}
-            </div>
+            </motion.div>
 
             {/* Navigation - Left Arrow */}
             <motion.button
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-50 p-2 sm:p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-accent hover:text-accent-foreground transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 prevLightbox();
               }}
-              whileHover={{ scale: 1.1 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              whileHover={{ scale: 1.2, x: -5 }}
               whileTap={{ scale: 0.9 }}
               aria-label="Previous image (Left Arrow)"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </motion.button>
 
             {/* Navigation - Right Arrow */}
             <motion.button
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-colors"
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-50 p-2 sm:p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-accent hover:text-accent-foreground transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
                 nextLightbox();
               }}
-              whileHover={{ scale: 1.1 }}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              whileHover={{ scale: 1.2, x: 5 }}
               whileTap={{ scale: 0.9 }}
               aria-label="Next image (Right Arrow)"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </motion.button>
 
-            {/* Image Container with Pan and Pinch-to-Zoom Support */}
+            {/* Image Container with Pan, Pinch-to-Zoom, and Swipe Support */}
             <motion.div
               className={`relative max-w-[90vw] max-h-[85vh] overflow-hidden ${zoomLevel > 1 ? 'cursor-grab' : 'cursor-zoom-in'} ${isDragging ? 'cursor-grabbing' : ''}`}
               onClick={(e) => e.stopPropagation()}
@@ -791,42 +879,69 @@ export const Gallery3DCarousel = () => {
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25 }}
-              style={{ touchAction: 'none' }}
+              drag={zoomLevel === 1 ? "x" : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={handleSwipeEnd}
+              initial={{ scale: 0.5, opacity: 0, rotateY: -30 }}
+              animate={{ scale: 1, opacity: 1, rotateY: 0 }}
+              exit={{ scale: 0.5, opacity: 0, rotateY: 30 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              style={{ touchAction: zoomLevel > 1 ? 'none' : 'pan-y', x: swipeX, opacity: swipeOpacity }}
             >
-              <motion.img
-                ref={imageRef}
-                key={lightboxIndex}
-                src={filteredItems[lightboxIndex]?.image}
-                alt={filteredItems[lightboxIndex]?.title}
-                className="max-w-full max-h-[85vh] object-contain select-none"
-                draggable={false}
-                style={{ 
-                  transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
-                  transition: isDragging || initialPinchDistance !== null ? 'none' : 'transform 0.3s ease',
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (!isDragging) toggleZoom();
-                }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-              />
+              <AnimatePresence mode="wait">
+                <motion.img
+                  ref={imageRef}
+                  key={lightboxIndex}
+                  src={filteredItems[lightboxIndex]?.image}
+                  alt={filteredItems[lightboxIndex]?.title}
+                  className="max-w-full max-h-[85vh] object-contain select-none rounded-lg"
+                  draggable={false}
+                  style={{ 
+                    transform: `scale(${zoomLevel}) translate(${panPosition.x / zoomLevel}px, ${panPosition.y / zoomLevel}px)`,
+                    transition: isDragging || initialPinchDistance !== null ? 'none' : 'transform 0.3s ease',
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!isDragging) toggleZoom();
+                  }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                  whileHover={zoomLevel === 1 ? { scale: 1.02 } : {}}
+                />
+              </AnimatePresence>
+              
+              {/* Zoom indicator overlay */}
+              {zoomLevel === 1 && (
+                <motion.div 
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  <div className="p-3 bg-accent/50 rounded-full backdrop-blur-sm">
+                    <ZoomIn className="w-6 h-6 text-white" />
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
 
             {/* Image info */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 text-center text-white max-w-lg px-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="absolute bottom-16 left-1/2 -translate-x-1/2 text-center text-white max-w-lg px-4"
+            >
               <h3 className="font-heading text-xl font-bold mb-1">
                 {filteredItems[lightboxIndex]?.title}
               </h3>
               <p className="text-sm text-white/70">
                 {filteredItems[lightboxIndex]?.description}
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

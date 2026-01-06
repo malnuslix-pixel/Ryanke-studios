@@ -6,7 +6,7 @@ interface ScrollRevealProps {
   className?: string;
   delay?: number;
   duration?: number;
-  direction?: 'up' | 'down' | 'left' | 'right' | 'scale';
+  direction?: 'up' | 'down' | 'left' | 'right' | 'scale' | 'fade' | 'blur';
   once?: boolean;
   amount?: number;
 }
@@ -31,6 +31,14 @@ const variants: Record<string, Variants> = {
   scale: {
     hidden: { opacity: 0, scale: 0.9 },
     visible: { opacity: 1, scale: 1 },
+  },
+  fade: {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  },
+  blur: {
+    hidden: { opacity: 0, filter: 'blur(10px)' },
+    visible: { opacity: 1, filter: 'blur(0px)' },
   },
 };
 
@@ -107,13 +115,72 @@ export const StaggerItem = ({
 }: {
   children: ReactNode;
   className?: string;
-  direction?: 'up' | 'down' | 'left' | 'right' | 'scale';
+  direction?: 'up' | 'down' | 'left' | 'right' | 'scale' | 'fade' | 'blur';
 }) => {
   return (
     <motion.div
       variants={variants[direction]}
       transition={{
         duration: 0.6,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Responsive loading animation wrapper
+export const LoadingReveal = ({
+  children,
+  className = '',
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
+      animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 30, filter: 'blur(10px)' }}
+      transition={{
+        duration: 0.8,
+        delay,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Parallax scroll effect
+export const ParallaxReveal = ({
+  children,
+  className = '',
+  offset = 50,
+}: {
+  children: ReactNode;
+  className?: string;
+  offset?: number;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: false, amount: 0.3 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ y: offset }}
+      animate={isInView ? { y: 0 } : { y: offset }}
+      transition={{
+        duration: 1.2,
         ease: [0.16, 1, 0.3, 1],
       }}
       className={className}
