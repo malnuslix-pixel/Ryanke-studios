@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
 import { ParallaxSection } from '../ParallaxSection';
-import brianAbuga from '@/assets/brian-abuga.jpeg';
+import ceoBrian from '@/assets/ceo-brian.jpg';
 
 const stats = [
   { value: '2021', label: 'Established' },
@@ -55,7 +55,7 @@ export const AboutSection = () => {
               
               <div className="relative overflow-hidden">
                 <img 
-                  src={brianAbuga} 
+                  src={ceoBrian} 
                   alt="Brian Abuga - Founder of Ryankey Studios"
                   className="w-full h-[500px] lg:h-[600px] object-cover object-top"
                 />
