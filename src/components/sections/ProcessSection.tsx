@@ -53,9 +53,9 @@ export const ProcessSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
               From Vision to
-              <span className="block text-accent italic mt-2">Masterpiece</span>
+              <span className="block text-accent mt-2">Masterpiece</span>
             </h2>
           </ScrollReveal>
 
@@ -85,27 +85,40 @@ export const ProcessSection = () => {
                 delay={index * 0.1}
                 direction={index % 2 === 0 ? 'left' : 'right'}
               >
-                <div
+                <motion.div
                   className={`relative flex flex-col md:flex-row items-start gap-8 ${
                     index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                   }`}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5 }}
+                  style={{ willChange: 'transform, opacity' }}
                 >
                   {/* Number Circle */}
-                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 w-16 h-16 flex items-center justify-center bg-background border-2 border-accent z-10">
-                    <span className="font-serif text-xl font-medium text-accent">
+                  <motion.div 
+                    className="absolute left-8 md:left-1/2 -translate-x-1/2 w-16 h-16 flex items-center justify-center bg-background border-2 border-accent z-10"
+                    whileHover={{ scale: 1.1, rotate: 5 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <span className="font-heading text-xl font-bold text-accent">
                       {step.number}
                     </span>
-                  </div>
+                  </motion.div>
 
                   {/* Content */}
                   <div
                     className={`pl-24 md:pl-0 md:w-1/2 ${
                       index % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16'
                     }`}
+                    style={{ backfaceVisibility: 'hidden', transform: 'translateZ(0)' }}
                   >
-                    <h3 className="font-serif text-2xl lg:text-3xl font-medium mb-4">
+                    <motion.h3 
+                      className="font-heading text-2xl lg:text-3xl font-bold mb-4"
+                      whileHover={{ x: index % 2 === 0 ? -5 : 5 }}
+                    >
                       {step.title}
-                    </h3>
+                    </motion.h3>
                     <p className="text-muted-foreground leading-relaxed">
                       {step.description}
                     </p>
@@ -113,7 +126,7 @@ export const ProcessSection = () => {
 
                   {/* Empty space for layout */}
                   <div className="hidden md:block md:w-1/2" />
-                </div>
+                </motion.div>
               </ScrollReveal>
             ))}
           </div>

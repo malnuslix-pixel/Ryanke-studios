@@ -1,7 +1,18 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { format } from 'date-fns';
 import { ScrollReveal } from '../ScrollReveal';
-import { Mail, Phone, MapPin, Clock, MessageCircle, Send, Sparkles } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, MessageCircle, Send, Sparkles, CalendarIcon, AlertCircle, Check } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
+
+interface FormErrors {
+  name?: string;
+  phone?: string;
+  service?: string;
+  date?: string;
+}
 
 export const ContactSection = () => {
   const containerRef = useRef(null);
@@ -17,34 +28,109 @@ export const ContactSection = () => {
     name: '',
     phone: '',
     service: '',
-    date: '',
+    date: undefined as Date | undefined,
     duration: '',
     details: ''
   });
 
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
+  const validateField = (name: string, value: string | Date | undefined): string | undefined => {
+    switch (name) {
+      case 'name':
+        if (!value || (typeof value === 'string' && value.trim().length < 2)) {
+          return 'Name must be at least 2 characters';
+        }
+        if (typeof value === 'string' && value.trim().length > 50) {
+          return 'Name must be less than 50 characters';
+        }
+        break;
+      case 'phone':
+        if (!value || (typeof value === 'string' && !/^[\d\s+()-]{10,15}$/.test(value.replace(/\s/g, '')))) {
+          return 'Please enter a valid phone number';
+        }
+        break;
+      case 'service':
+        if (!value) {
+          return 'Please select a service';
+        }
+        break;
+      case 'date':
+        if (!value) {
+          return 'Please select a date';
+        }
+        break;
+    }
+    return undefined;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    if (touched[name]) {
+      const error = validateField(name, value);
+      setErrors(prev => ({ ...prev, [name]: error }));
+    }
+  };
+
+  const handleBlur = (name: string) => {
+    setTouched(prev => ({ ...prev, [name]: true }));
+    const value = formData[name as keyof typeof formData];
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error }));
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setFormData(prev => ({ ...prev, date }));
+    setIsCalendarOpen(false);
+    if (touched.date || date) {
+      setTouched(prev => ({ ...prev, date: true }));
+      const error = validateField('date', date);
+      setErrors(prev => ({ ...prev, date: error }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+    
+    newErrors.name = validateField('name', formData.name);
+    newErrors.phone = validateField('phone', formData.phone);
+    newErrors.service = validateField('service', formData.service);
+    newErrors.date = validateField('date', formData.date);
+
+    setErrors(newErrors);
+    setTouched({ name: true, phone: true, service: true, date: true });
+
+    return !Object.values(newErrors).some(error => error !== undefined);
   };
 
   const handleSubmit = () => {
-    const message = `Hello Ryankey Studios! 👋
+    if (!validateForm()) {
+      return;
+    }
+
+    const formattedDate = formData.date ? format(formData.date, 'EEEE, MMMM do, yyyy') : 'Flexible';
+    
+    const message = `Hello Ryankey Studios!
 
 *New Booking Request*
 
-📋 *Client Details:*
-• Name: ${formData.name || 'Not provided'}
-• Phone: ${formData.phone || 'Not provided'}
+*Client Details:*
+- Name: ${formData.name}
+- Phone: ${formData.phone}
 
-📸 *Session Details:*
-• Service: ${formData.service || 'Not selected'}
-• Date: ${formData.date || 'Flexible'}
-• Duration: ${formData.duration || 'Not selected'}
+*Session Details:*
+- Service: ${formData.service}
+- Date: ${formattedDate}
+- Duration: ${formData.duration || 'Not selected'}
 
-💬 *Additional Details:*
+*Additional Details:*
 ${formData.details || 'No additional details'}
 
-Looking forward to hearing from you! 🎬`;
+Looking forward to hearing from you!`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/254718445264?text=${encodedMessage}`, '_blank');
@@ -238,48 +324,80 @@ Looking forward to hearing from you! 🎬`;
                 
                 {/* Glowing Input - Name */}
                 <div className="space-y-2">
-                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
-                    Your Name
+                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground flex items-center gap-2">
+                    Your Name <span className="text-accent">*</span>
                   </label>
-                  <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                  <motion.div 
+                    className={cn("input-glow-wrapper", errors.name && touched.name && "ring-2 ring-red-500/50")}
+                    whileFocus={{ scale: 1.01 }}
+                  >
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      onBlur={() => handleBlur('name')}
                       className="input-glow w-full"
-                      placeholder="Brian Abuga"
+                      placeholder="Alex Johnson"
                     />
                   </motion.div>
+                  {errors.name && touched.name && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs text-red-400 flex items-center gap-1"
+                    >
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.name}
+                    </motion.p>
+                  )}
                 </div>
 
                 {/* Glowing Input - Phone */}
                 <div className="space-y-2">
-                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
-                    Phone / WhatsApp
+                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground flex items-center gap-2">
+                    Phone / WhatsApp <span className="text-accent">*</span>
                   </label>
-                  <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                  <motion.div 
+                    className={cn("input-glow-wrapper", errors.phone && touched.phone && "ring-2 ring-red-500/50")}
+                    whileFocus={{ scale: 1.01 }}
+                  >
                     <input
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
+                      onBlur={() => handleBlur('phone')}
                       className="input-glow w-full"
-                      placeholder="0712 345 678"
+                      placeholder="+254 712 345 678"
                     />
                   </motion.div>
+                  {errors.phone && touched.phone && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs text-red-400 flex items-center gap-1"
+                    >
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.phone}
+                    </motion.p>
+                  )}
                 </div>
 
                 {/* Service Select */}
                 <div className="space-y-2">
-                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
-                    Event / Project Type
+                  <label className="text-sm md:text-base font-medium tracking-wide text-foreground flex items-center gap-2">
+                    Event / Project Type <span className="text-accent">*</span>
                   </label>
-                  <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
+                  <motion.div 
+                    className={cn("input-glow-wrapper", errors.service && touched.service && "ring-2 ring-red-500/50")}
+                    whileFocus={{ scale: 1.01 }}
+                  >
                     <select 
                       name="service"
                       value={formData.service}
                       onChange={handleInputChange}
+                      onBlur={() => handleBlur('service')}
                       className="input-glow w-full appearance-none cursor-pointer"
                     >
                       <option value="">Select a service</option>
@@ -292,23 +410,64 @@ Looking forward to hearing from you! 🎬`;
                       <option value="Other">Other</option>
                     </select>
                   </motion.div>
+                  {errors.service && touched.service && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs text-red-400 flex items-center gap-1"
+                    >
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.service}
+                    </motion.p>
+                  )}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-4">
-                  {/* Date */}
+                  {/* Modern Calendar Date Picker */}
                   <div className="space-y-2">
-                    <label className="text-sm md:text-base font-medium tracking-wide text-foreground">
-                      Preferred Date
+                    <label className="text-sm md:text-base font-medium tracking-wide text-foreground flex items-center gap-2">
+                      Preferred Date <span className="text-accent">*</span>
                     </label>
-                    <motion.div className="input-glow-wrapper" whileFocus={{ scale: 1.01 }}>
-                      <input
-                        type="date"
-                        name="date"
-                        value={formData.date}
-                        onChange={handleInputChange}
-                        className="input-glow w-full"
-                      />
-                    </motion.div>
+                    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                      <PopoverTrigger asChild>
+                        <motion.button
+                          type="button"
+                          className={cn(
+                            "input-glow w-full flex items-center justify-between gap-2 text-left",
+                            !formData.date && "text-muted-foreground",
+                            errors.date && touched.date && "ring-2 ring-red-500/50"
+                          )}
+                          whileHover={{ scale: 1.01 }}
+                          whileTap={{ scale: 0.99 }}
+                        >
+                          <span className="flex items-center gap-2">
+                            <CalendarIcon className="w-4 h-4 text-accent" />
+                            {formData.date ? format(formData.date, 'PPP') : 'Pick a date'}
+                          </span>
+                          {formData.date && <Check className="w-4 h-4 text-green-500" />}
+                        </motion.button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-card border-accent/20" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={formData.date}
+                          onSelect={handleDateSelect}
+                          disabled={(date) => date < new Date()}
+                          initialFocus
+                          className="p-3 pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    {errors.date && touched.date && (
+                      <motion.p 
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-xs text-red-400 flex items-center gap-1"
+                      >
+                        <AlertCircle className="w-3 h-3" />
+                        {errors.date}
+                      </motion.p>
+                    )}
                   </div>
                   
                   {/* Duration */}

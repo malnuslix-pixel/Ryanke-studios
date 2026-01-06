@@ -526,32 +526,58 @@ export const Gallery3DCarousel = () => {
             </div>
           </div>
 
-          {/* Thumbnail navigation */}
+          {/* Marquee-style thumbnail navigation */}
           <ScrollReveal delay={0.2}>
-            <div className="mt-12 sm:mt-16">
-              <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-4 px-4 snap-x snap-mandatory scrollbar-hide">
-                {filteredItems.map((item, index) => (
+            <div className="mt-12 sm:mt-16 relative overflow-hidden">
+              {/* Gradient fade edges */}
+              <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+              
+              <motion.div 
+                className="flex gap-3 sm:gap-4"
+                animate={isAutoPlaying ? {
+                  x: [0, -100 * filteredItems.length],
+                } : {}}
+                transition={isAutoPlaying ? {
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    duration: filteredItems.length * 4,
+                    ease: "linear",
+                  },
+                } : {}}
+                style={{ width: 'fit-content' }}
+              >
+                {/* Duplicate items for seamless loop */}
+                {[...filteredItems, ...filteredItems].map((item, index) => (
                   <motion.button
-                    key={item.id}
+                    key={`${item.id}-${index}`}
                     onClick={() => {
-                      setDirection(index > currentIndex ? 1 : -1);
-                      setCurrentIndex(index);
+                      const actualIndex = index % filteredItems.length;
+                      setDirection(actualIndex > currentIndex ? 1 : -1);
+                      setCurrentIndex(actualIndex);
                       setAnimationIndex((prev) => (prev + 1) % animationVariants.length);
                     }}
-                    className={`flex-shrink-0 relative rounded-lg overflow-hidden snap-center transition-all duration-300 touch-manipulation ${
-                      index === currentIndex 
+                    className={`flex-shrink-0 relative rounded-lg overflow-hidden snap-center transition-all duration-300 touch-manipulation group ${
+                      index % filteredItems.length === currentIndex 
                         ? 'ring-2 ring-accent ring-offset-2 ring-offset-background scale-105' 
                         : 'opacity-60 hover:opacity-100'
                     }`}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.08, y: -5 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     <img
                       src={item.image}
                       alt={item.title}
-                      className="w-16 h-12 sm:w-20 sm:h-14 lg:w-24 lg:h-16 object-cover"
+                      className="w-20 h-14 sm:w-24 sm:h-16 lg:w-28 lg:h-20 object-cover"
                     />
-                    {index === currentIndex && (
+                    {/* Hover overlay with title */}
+                    <div className="absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <span className="text-[10px] sm:text-xs text-pure-white font-medium text-center px-1 line-clamp-2">
+                        {item.title}
+                      </span>
+                    </div>
+                    {index % filteredItems.length === currentIndex && (
                       <motion.div 
                         className="absolute inset-0 bg-accent/20"
                         layoutId="activeThumbnail"
@@ -559,7 +585,7 @@ export const Gallery3DCarousel = () => {
                     )}
                   </motion.button>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </ScrollReveal>
         </div>

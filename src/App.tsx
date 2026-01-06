@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useNavigationType } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
@@ -16,16 +16,38 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Scroll to top on route change - with improved handling
+// Enhanced scroll management with back/forward support
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, key } = useLocation();
+  const navigationType = useNavigationType();
   
-  useEffect(() => {
-    // Use requestAnimationFrame for smoother scroll behavior
-    requestAnimationFrame(() => {
+  useLayoutEffect(() => {
+    // Handle scroll restoration based on navigation type
+    if (navigationType === 'POP') {
+      // For back/forward navigation, let browser handle scroll or reset
+      const scrollPosition = sessionStorage.getItem(`scroll-${key}`);
+      if (scrollPosition) {
+        window.scrollTo(0, parseInt(scrollPosition, 10));
+      }
+    } else {
+      // For push navigation, scroll to top instantly
       window.scrollTo({ top: 0, behavior: 'instant' });
-    });
-  }, [pathname]);
+    }
+  }, [pathname, key, navigationType]);
+
+  // Save scroll position before leaving
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem(`scroll-${key}`, String(window.scrollY));
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      sessionStorage.setItem(`scroll-${key}`, String(window.scrollY));
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [key]);
   
   return null;
 };
