@@ -30,12 +30,13 @@ export const PageHeader = ({ title, subtitle, description, heroImage }: PageHead
         style={{ y, scale }}
         className="absolute inset-0 z-0"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-background z-10" />
         {heroImage ? (
           <motion.img 
             src={typeof heroImage === 'string' ? heroImage : (heroImage as any)?.src || heroImage} 
             alt="" 
             className="w-full h-full object-cover"
+            fetchPriority="high"
+            decoding="async"
             initial={{ scale: 1.1 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
