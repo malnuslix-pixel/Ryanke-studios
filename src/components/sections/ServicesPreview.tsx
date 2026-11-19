@@ -4,35 +4,36 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
-import { Camera, Users, Building, Film, ArrowRight } from 'lucide-react';
+import { Camera, Users, Building, Film, Plane, ArrowRight } from 'lucide-react';
 
 const iconMap: Record<string, any> = {
   Building,
   Users,
   Camera,
   Film,
+  Plane,
 };
 
 const defaultServices = [
   {
     icon: Building,
     title: 'Corporate & Brand',
-    description: 'Professional corporate imagery that commands attention.',
-  },
-  {
-    icon: Users,
-    title: 'Family & Lifestyle',
-    description: 'Capture warmth and connection with natural photography.',
-  },
-  {
-    icon: Camera,
-    title: 'Event Photography',
-    description: 'Document your special events with creative storytelling.',
+    description: 'Executive imagery and brand campaigns that command trust.',
   },
   {
     icon: Film,
-    title: 'Videography',
-    description: 'Cinematic video production for your visual story.',
+    title: 'Documentary & Film',
+    description: 'Impactful long-form visual storytelling for NGOs and brands.',
+  },
+  {
+    icon: Plane,
+    title: 'Drone & Aerial',
+    description: '4K aerial cinematography for estates, events, and landscapes.',
+  },
+  {
+    icon: Users,
+    title: 'Events & Family',
+    description: 'Preserving special milestones and heartfelt family connections.',
   },
 ];
 

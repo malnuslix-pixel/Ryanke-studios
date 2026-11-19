@@ -11,9 +11,9 @@ import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import galleryHero from '@/assets/gallery-hero.jpg';
 
-type Category = 'All' | 'Corporate' | 'Events' | 'Family' | 'Brands' | 'Portraits' | 'Creative' | 'Lifestyle';
+type Category = 'All' | 'Corporate' | 'Events' | 'Family' | 'Brands' | 'Portraits' | 'Documentary' | 'Drone & Aerial' | 'Creative' | 'Lifestyle';
 
-const categories: Category[] = ['All', 'Corporate', 'Events', 'Family', 'Brands', 'Portraits', 'Creative', 'Lifestyle'];
+const categories: Category[] = ['All', 'Corporate', 'Events', 'Family', 'Brands', 'Portraits', 'Documentary', 'Drone & Aerial', 'Creative', 'Lifestyle'];
 
 interface GalleryItem {
   id: number | string;
@@ -43,6 +43,8 @@ const defaultGalleryItems: GalleryItem[] = [
   { id: 17, image_url: '/gallery/lifestyle-2.jpg', title: 'Urban Elegance', description: 'Modern metropolitan storytelling and style.', category: 'Lifestyle' },
   { id: 18, image_url: '/gallery/lifestyle-3.jpg', title: 'Outdoor Splendor', description: 'Natural light photography in scenic environments.', category: 'Lifestyle' },
   { id: 19, image_url: '/gallery/photo-retouch.jpg', title: 'Master Retouching', description: 'Ultra-fine skin and tone post-production artistry.', category: 'Creative' },
+  { id: 20, image_url: '/gallery/creative.jpg', title: 'Aerial Panorama', description: 'High-altitude panoramic cinematography for real estate & events.', category: 'Drone & Aerial' },
+  { id: 21, image_url: '/gallery/corporate.jpg', title: 'Voices of Impact Documentary', description: 'In-depth human interest and NGO documentary storytelling.', category: 'Documentary' },
 ];
 
 const GalleryPage = () => {

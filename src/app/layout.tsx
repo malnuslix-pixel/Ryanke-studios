@@ -25,11 +25,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Ryankey Studios | Your Dream Studios - Professional Photography & Videography Nairobi',
-  description: "Ryankey Studios is Nairobi's premier creative photography and videography studio. We specialize in corporate, family, events, and product photography",
+  title: 'Ryankey Studios | Professional Photography, Videography, Drone & Documentaries Nairobi',
+  description: "Ryankey Studios is Nairobi's premier creative studio specializing in corporate photography, family shoots, documentary filmmaking, drone cinematography, and events.",
   keywords: [
     'photography studio nairobi',
     'videography kenya',
+    'documentary filmmaking nairobi',
+    'drone services kenya',
+    'aerial photography nairobi',
     'wedding photography',
     'corporate photography',
     'family photoshoot',

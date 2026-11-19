@@ -415,6 +415,8 @@ Looking forward to hearing from you!`;
                       <option value="Family Photoshoot">Family Photoshoot</option>
                       <option value="Corporate Photography">Corporate Photography</option>
                       <option value="Event Coverage">Event Coverage</option>
+                      <option value="Documentary & Impact Storytelling">Documentary & Impact Storytelling</option>
+                      <option value="Aerial & Drone Cinematography">Aerial & Drone Cinematography</option>
                       <option value="Product Photography">Product Photography</option>
                       <option value="Videography">Videography</option>
                       <option value="Other">Other</option>

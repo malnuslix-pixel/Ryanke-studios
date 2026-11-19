@@ -100,7 +100,7 @@ export const HeroSection = () => {
             >
               <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
             </motion.span>
-            {heroData?.subheadline || 'Your Dream Studios'}
+            {heroData?.subheadline || 'Photography • Videography • Drone • Documentaries'}
             <motion.span
               whileInView={{ rotate: [0, -10, 10, 0] }}
               viewport={{ once: true }}
@@ -148,7 +148,7 @@ export const HeroSection = () => {
           transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-2xl mx-auto text-sm sm:text-lg md:text-xl text-pure-white/80 leading-relaxed mb-8 sm:mb-12 px-2"
         >
-          {heroData?.description || 'Ryankey Studios specializes in high-quality visual storytelling for individuals, families, brands, and institutions across Nairobi and its environs.'}
+          {heroData?.description || 'Ryankey Studios specializes in high-quality visual storytelling, documentary filmmaking, drone cinematography, and creative photography across Nairobi and beyond.'}
         </motion.p>
 
         {/* CTA Buttons */}

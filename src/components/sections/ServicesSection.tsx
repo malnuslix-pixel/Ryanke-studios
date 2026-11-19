@@ -43,15 +43,15 @@ const defaultServices = [
   },
   {
     icon: Film,
-    title: 'Videography Services',
-    description: 'Cinematic video production that brings your story to life through the power of motion.',
-    features: ['Brand Videos', 'Social Media Reels', 'Documentary Style'],
+    title: 'Documentary & Visual Storytelling',
+    description: 'Compelling long-form and impact documentaries for NGOs, corporates, heritage, and human interest stories.',
+    features: ['NGO & Community Impact', 'Corporate Heritage Stories', 'Multi-Camera Interviews', 'Cinematic Scoring & Color'],
   },
   {
     icon: Plane,
-    title: 'Drone Services',
-    description: 'Stunning aerial perspectives that add a breathtaking dimension to your visual content.',
-    features: ['Aerial Photography', 'Drone Videography', 'Property Tours'],
+    title: 'Drone & Aerial Cinematography',
+    description: 'Stunning 4K aerial perspectives that deliver majestic scale for properties, landscapes, and large events.',
+    features: ['4K UHD Aerial Filming', 'Real Estate & Resort Flyovers', 'Large Events & Festivals', 'Land & Site Progress Surveys'],
   },
   {
     icon: Palette,

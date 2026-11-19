@@ -87,13 +87,39 @@ const defaultPackages = [
     ],
     popular: false,
   },
+  {
+    name: 'Aerial & Drone Coverage',
+    price: 'From Ksh 18,000',
+    description: '4K aerial videography & photography',
+    features: [
+      'Licensed professional drone pilot',
+      '4K UHD aerial video & high-res stills',
+      'Real estate, events, or landscapes',
+      'Color-graded clips + raw delivery',
+      'Safe outdoor flight operations',
+    ],
+    popular: false,
+  },
+  {
+    name: 'Documentary Production',
+    price: 'Custom Quote',
+    description: 'In-depth impact & corporate storytelling',
+    features: [
+      'Concept development & narrative outline',
+      'Multi-camera 4K interviews & B-roll',
+      'Professional audio recording & sound mix',
+      'Broadcast color grading & subtitles',
+      'Full-length documentary + social reels',
+    ],
+    popular: false,
+  },
 ];
 
 const notes = [
   'We request a redeemable, unrefundable 50% deposit on booking of a slot',
+  'Drone & Documentary productions include tailored pre-production briefing',
   'Extra photo from any package is charged Ksh 400',
-  'We highly recommend punctuality',
-  'Custom packages available upon request',
+  'Custom corporate, NGO, and travel packages available upon request',
 ];
 
 export const PricingSection = () => {
