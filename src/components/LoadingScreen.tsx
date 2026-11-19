@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
@@ -71,7 +73,7 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
             className="relative z-10 mb-8"
           >
             <motion.img
-              src={ryankeyLogo}
+              src={(ryankeyLogo as any)?.src || ryankeyLogo}
               alt="Ryankey Studios"
               className="h-20 md:h-24 w-auto"
               animate={{

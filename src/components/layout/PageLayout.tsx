@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode } from 'react';
 import { Navigation } from '../Navigation';
 import { Footer } from '../sections/Footer';

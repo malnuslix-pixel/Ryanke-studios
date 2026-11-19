@@ -1,5 +1,7 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ScrollReveal } from '../ScrollReveal';
 import { ArrowRight, MessageCircle } from 'lucide-react';
 
@@ -60,7 +62,7 @@ export const CTASection = () => {
                 <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                 Book via WhatsApp
               </motion.a>
-              <Link to="/contact" className="w-full sm:w-auto">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <motion.span
                   className="w-full inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 border-2 border-primary-foreground/30 text-primary-foreground font-semibold text-sm sm:text-base tracking-wide rounded-md hover:border-accent hover:text-accent transition-all duration-300 touch-manipulation"
                   whileTap={{ scale: 0.98 }}

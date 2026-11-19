@@ -1,5 +1,8 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowUp, Phone, Mail, MapPin } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
 
@@ -71,6 +74,25 @@ const footerLinks = [
 ];
 
 export const Footer = () => {
+  const [siteSettings, setSiteSettings] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/settings')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && (data.phone_call || data.email)) {
+          setSiteSettings(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const phoneCall = siteSettings?.phone_call || '+254 702 340 700';
+  const email = siteSettings?.email || 'ryankeyimages@gmail.com';
+  const address1 = siteSettings?.address_line1 || 'Nexus Business Centre,';
+  const address2 = siteSettings?.address_line2 || 'Ruiru Bypass (Kamakis)';
+  const whatsappUrl = siteSettings?.whatsapp_url || 'https://wa.me/254718445264';
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -80,7 +102,7 @@ export const Footer = () => {
       <div className="container mx-auto px-6 lg:px-12 py-16">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8">
           <div className="lg:col-span-4 space-y-6">
-            <img src={ryankeyLogo} alt="Ryankey Studios" className="h-14 w-auto" />
+            <img src={(ryankeyLogo as any)?.src || ryankeyLogo} alt="Ryankey Studios" className="h-14 w-auto" />
             <p className="text-sm font-semibold text-accent tracking-wider uppercase">Your Dream Studios</p>
             <p className="text-primary-foreground/70 leading-relaxed max-w-sm text-sm">
               Ryankey Studios is a creative photography and videography studio specializing in high-quality visual storytelling. Established 2021.
@@ -108,7 +130,7 @@ export const Footer = () => {
               <ul className="space-y-3">
                 {column.links.map((link) => (
                   <li key={link.name}>
-                    <Link to={link.href}
+                    <Link href={link.href}
                       className="text-primary-foreground/70 hover:text-accent transition-colors text-sm cursor-pointer">
                       {link.name}
                     </Link>
@@ -122,18 +144,18 @@ export const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-accent" />
-                <a href="tel:+254702340700" className="text-primary-foreground/70 hover:text-accent transition-colors text-sm">+254 702 340 700 (Calls)</a>
+                <a href={`tel:${phoneCall.replace(/\s/g, '')}`} className="text-primary-foreground/70 hover:text-accent transition-colors text-sm">{phoneCall} (Calls)</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-accent" />
-                <a href="mailto:ryankeyimages@gmail.com" className="text-primary-foreground/70 hover:text-accent transition-colors text-sm">ryankeyimages@gmail.com</a>
+                <a href={`mailto:${email}`} className="text-primary-foreground/70 hover:text-accent transition-colors text-sm">{email}</a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
-                <span className="text-primary-foreground/70 text-sm">Nexus Business Centre,<br />Ruiru Bypass (Kamakis)</span>
+                <span className="text-primary-foreground/70 text-sm">{address1}<br />{address2}</span>
               </li>
             </ul>
-            <motion.a href="https://wa.me/254718445264" target="_blank" rel="noopener noreferrer"
+            <motion.a href={whatsappUrl} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-accent text-accent-foreground text-sm font-semibold tracking-wide hover:bg-accent/90 transition-colors rounded-lg"
               whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }}>
               <WhatsAppColoredIcon className="w-4 h-4" />
@@ -145,7 +167,12 @@ export const Footer = () => {
       <div className="border-t border-primary-foreground/10">
         <div className="container mx-auto px-6 lg:px-12 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-primary-foreground/50 text-sm">© {new Date().getFullYear()} Ryankey Studios. All rights reserved.</p>
+            <p className="text-primary-foreground/50 text-sm">
+              © {new Date().getFullYear()} Ryankey Studios. All rights reserved. •{' '}
+              <Link href="/admin" className="hover:text-accent transition-colors">
+                Studio Portal
+              </Link>
+            </p>
             <motion.button onClick={scrollToTop} className="flex items-center gap-2 text-sm text-primary-foreground/50 hover:text-accent transition-colors" whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
               Back to top <ArrowUp size={16} />
             </motion.button>

@@ -1,10 +1,12 @@
+'use client';
+
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { ScrollReveal } from '../ScrollReveal';
 import { ChevronLeft, ChevronRight, Quote, Star } from 'lucide-react';
 import testimonialsBg from '@/assets/testimonials-bg.png';
 
-const testimonials = [
+const defaultTestimonials = [
   {
     id: 1,
     name: 'Grace Wanjiku',
@@ -50,6 +52,32 @@ const testimonials = [
 ];
 
 export const TestimonialsSection = () => {
+  const [liveTestimonials, setLiveTestimonials] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/testimonials')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const activeOnly = data.filter((t: any) => t.is_active);
+          if (activeOnly.length > 0) {
+            setLiveTestimonials(
+              activeOnly.map((t: any) => ({
+                id: t.id,
+                name: t.name,
+                role: t.role,
+                content: t.content,
+                rating: t.rating || 5,
+              }))
+            );
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const testimonials = liveTestimonials.length > 0 ? liveTestimonials : defaultTestimonials;
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef(null);
@@ -78,7 +106,7 @@ export const TestimonialsSection = () => {
       {/* Background Cover Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${testimonialsBg})` }}
+        style={{ backgroundImage: `url(${(testimonialsBg as any)?.src || testimonialsBg})` }}
       />
       {/* Dark Overlay for readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" />

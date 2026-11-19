@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { format } from 'date-fns';
@@ -107,12 +109,31 @@ export const ContactSection = () => {
     return !Object.values(newErrors).some(error => error !== undefined);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateForm()) {
       return;
     }
 
     const formattedDate = formData.date ? format(formData.date, 'EEEE, MMMM do, yyyy') : 'Flexible';
+
+    // Persist booking to Supabase database via API
+    try {
+      fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          client_name: formData.name,
+          client_phone: formData.phone,
+          service: formData.service,
+          preferred_date: formData.date ? formData.date.toISOString() : null,
+          duration: formData.duration,
+          details: formData.details,
+          source: 'form',
+        }),
+      }).catch((e) => console.error('Booking sync notice:', e));
+    } catch (e) {
+      // Non-blocking for WhatsApp redirection
+    }
     
     const message = `Hello Ryankey Studios!
 

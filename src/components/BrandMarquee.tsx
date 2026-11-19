@@ -1,8 +1,11 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ScrollReveal } from './ScrollReveal';
 
 // Notable Kenyan brands for a photography studio
-const brands = [
+const defaultBrands = [
   'Safaricom',
   'Kenya Airways',
   'Equity Bank',
@@ -14,6 +17,24 @@ const brands = [
 ];
 
 export const BrandMarquee = () => {
+  const [liveBrands, setLiveBrands] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/brands')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const activeOnly = data.filter((b: any) => b.is_active);
+          if (activeOnly.length > 0) {
+            setLiveBrands(activeOnly.map((b: any) => b.name));
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const brands = liveBrands.length > 0 ? liveBrands : defaultBrands;
+
   return (
     <section className="py-16 md:py-20 border-y border-border/50 overflow-hidden bg-secondary/20">
       <ScrollReveal>

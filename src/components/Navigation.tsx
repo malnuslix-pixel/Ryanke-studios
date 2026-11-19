@@ -1,6 +1,9 @@
+'use client';
+
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
 
@@ -18,8 +21,8 @@ export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +47,7 @@ export const Navigation = () => {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   // Handle nav link click with smooth transition
   const handleNavClick = useCallback((href: string) => {
@@ -54,9 +57,9 @@ export const Navigation = () => {
     const delay = isMobileMenuOpen ? 200 : 0;
     
     setTimeout(() => {
-      navigate(href);
+      router.push(href);
     }, delay);
-  }, [navigate, isMobileMenuOpen]);
+  }, [router, isMobileMenuOpen]);
 
   return (
     <>
@@ -84,7 +87,7 @@ export const Navigation = () => {
           <nav className="flex items-center justify-between">
             {/* Logo with hover glow */}
             <Link 
-              to="/"
+              href="/"
               className="touch-manipulation relative group"
             >
               <motion.div
@@ -95,7 +98,7 @@ export const Navigation = () => {
                 {/* Glow effect behind logo */}
                 <div className="absolute -inset-2 bg-accent/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <img 
-                  src={ryankeyLogo} 
+                  src={(ryankeyLogo as any)?.src || ryankeyLogo} 
                   alt="Ryankey Studios" 
                   className="h-8 sm:h-10 md:h-12 w-auto relative z-10"
                 />
@@ -105,12 +108,12 @@ export const Navigation = () => {
             {/* Desktop Navigation with animated underlines and hovers */}
             <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => {
-                const isActive = location.pathname === link.href;
+                const isActive = pathname === link.href;
                 const isHovered = hoveredLink === link.href;
                 return (
                   <Link 
                     key={link.href} 
-                    to={link.href}
+                    href={link.href}
                     onMouseEnter={() => setHoveredLink(link.href)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="relative"
@@ -269,7 +272,7 @@ export const Navigation = () => {
               className="flex flex-col items-center justify-center min-h-[100dvh] gap-4 xs:gap-5 sm:gap-6 px-6 py-16 sm:py-20 overflow-y-auto relative z-10"
             >
               {navLinks.map((link, index) => {
-                const isActive = location.pathname === link.href;
+                const isActive = pathname === link.href;
                 return (
                   <motion.div
                     key={link.href}
@@ -283,7 +286,7 @@ export const Navigation = () => {
                     }}
                   >
                     <Link 
-                      to={link.href}
+                      href={link.href}
                       onClick={() => handleNavClick(link.href)}
                     >
                       <motion.span

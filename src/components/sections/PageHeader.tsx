@@ -1,3 +1,5 @@
+'use client';
+
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 
@@ -5,7 +7,7 @@ interface PageHeaderProps {
   title: string;
   subtitle: string;
   description?: string;
-  heroImage?: string;
+  heroImage?: any;
 }
 
 export const PageHeader = ({ title, subtitle, description, heroImage }: PageHeaderProps) => {
@@ -31,7 +33,7 @@ export const PageHeader = ({ title, subtitle, description, heroImage }: PageHead
         <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-background z-10" />
         {heroImage ? (
           <motion.img 
-            src={heroImage} 
+            src={typeof heroImage === 'string' ? heroImage : (heroImage as any)?.src || heroImage} 
             alt="" 
             className="w-full h-full object-cover"
             initial={{ scale: 1.1 }}

@@ -1,8 +1,11 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
 import { Check, Star } from 'lucide-react';
 
-const packages = [
+const defaultPackages = [
   {
     name: 'Basic Package',
     price: 'Ksh 2,500',
@@ -57,27 +60,30 @@ const packages = [
   {
     name: 'Grand Luxe Package',
     price: 'Ksh 15,000',
-    description: 'The ultimate experience',
+    description: 'For those who want it all',
     features: [
-      '3 hours studio session',
-      '30 high-resolution edited images',
-      '2 outfits/gowns provided by the studio',
-      'Professional full make-up and hairstyling',
-      'Premium editing',
-      'Digital delivery via email or online gallery',
-      'A2 photo mount included',
+      'Full day session',
+      '50+ edited photos',
+      'Unlimited outfits',
+      'Premium retouching',
+      'Digital + print ready',
+      '3+ locations',
+      'Behind the scenes video',
+      'Priority delivery',
     ],
     popular: false,
   },
   {
     name: 'Normal Events',
     price: 'Ksh 15,000',
-    description: 'Coverage for Baby showers, Birthdays, etc.',
+    description: 'Baby showers, birthdays & celebrations',
     features: [
-      'Full event photography coverage',
-      'Professional photo retouching',
+      'Full event coverage',
+      '100+ edited photos',
+      'Event highlights video',
+      'Same-day previews',
+      'Online gallery',
       'Digital delivery',
-      '*Videography package available separately',
     ],
     popular: false,
   },
@@ -91,6 +97,32 @@ const notes = [
 ];
 
 export const PricingSection = () => {
+  const [livePackages, setLivePackages] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/pricing')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const activeOnly = data.filter((p: any) => p.is_active);
+          if (activeOnly.length > 0) {
+            setLivePackages(
+              activeOnly.map((p: any) => ({
+                name: p.name,
+                price: p.price,
+                description: p.subtitle || '',
+                features: Array.isArray(p.features) ? p.features : [],
+                popular: p.tag === 'Popular' || p.tag === 'Best Value',
+              }))
+            );
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const packages = livePackages.length > 0 ? livePackages : defaultPackages;
+
   return (
     <section id="pricing" className="relative py-24 lg:py-40 bg-secondary/30">
       {/* Section Header */}

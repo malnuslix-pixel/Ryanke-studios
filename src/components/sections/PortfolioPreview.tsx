@@ -1,5 +1,7 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ScrollReveal } from '../ScrollReveal';
 import { ArrowRight } from 'lucide-react';
 
@@ -150,7 +152,7 @@ export const PortfolioPreview = () => {
           </div>
 
           <ScrollReveal delay={0.2}>
-            <Link to="/portfolio" className="inline-block">
+            <Link href="/portfolio" className="inline-block">
               <motion.span
                 className="inline-flex items-center gap-2 btn-outline-luxury"
                 whileTap={{ scale: 0.98 }}
@@ -185,7 +187,7 @@ export const PortfolioPreview = () => {
                 {doubledPlatforms.map((platform, index) => (
                   <Link
                     key={`${platform.name}-${index}`}
-                    to={platform.portfolioLink}
+                    href={platform.portfolioLink}
                     className="touch-manipulation"
                   >
                     <motion.div
@@ -252,7 +254,7 @@ export const PortfolioPreview = () => {
                 {doubledPlatforms.map((platform, index) => (
                   <Link
                     key={`reverse-${platform.name}-${index}`}
-                    to={platform.portfolioLink}
+                    href={platform.portfolioLink}
                     className="touch-manipulation"
                   >
                     <motion.div

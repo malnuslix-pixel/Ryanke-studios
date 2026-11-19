@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from 'lucide-react';
@@ -24,6 +26,8 @@ import lifestyle from '@/assets/gallery/lifestyle.jpg';
 import lifestyle2 from '@/assets/gallery/lifestyle-2.jpg';
 import lifestyle3 from '@/assets/gallery/lifestyle-3.jpg';
 
+
+const getImageSrc = (img: any): string => (typeof img === 'string' ? img : img?.src || img || '');
 type Category = 'All' | 'Corporate' | 'Events' | 'Family' | 'Brands' | 'Portraits' | 'Creative' | 'Lifestyle';
 
 const categories: Category[] = ['All', 'Corporate', 'Events', 'Family', 'Brands', 'Portraits', 'Creative', 'Lifestyle'];
@@ -263,11 +267,34 @@ export const Gallery3DCarousel = () => {
   const swipeX = useMotionValue(0);
   const swipeOpacity = useTransform(swipeX, [-100, 0, 100], [0.5, 1, 0.5]);
 
+  // Live database items with fallback to static gallery
+  const [dynamicItems, setDynamicItems] = useState<typeof galleryItems>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/gallery')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped = data.map((d: any) => ({
+            id: d.id,
+            image: d.image_url,
+            title: d.title,
+            description: d.description || '',
+            category: d.category,
+          }));
+          setDynamicItems(mapped);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const allItems = dynamicItems.length > 0 ? dynamicItems : galleryItems;
+
   // Filter items based on category
   const filteredItems = useMemo(() => {
-    if (selectedCategory === 'All') return galleryItems;
-    return galleryItems.filter(item => item.category === selectedCategory);
-  }, [selectedCategory]);
+    if (selectedCategory === 'All') return allItems;
+    return allItems.filter(item => item.category === selectedCategory);
+  }, [selectedCategory, allItems]);
 
   const nextSlide = useCallback(() => {
     setDirection(1);
@@ -288,7 +315,7 @@ export const Gallery3DCarousel = () => {
   }, [selectedCategory]);
 
   const getVisibleItems = () => {
-    const items = [];
+    const items: (typeof filteredItems[0] & { position: number })[] = [];
     for (let i = -2; i <= 2; i++) {
       const index = (currentIndex + i + filteredItems.length) % filteredItems.length;
       items.push({ ...filteredItems[index], position: i });
@@ -532,7 +559,7 @@ export const Gallery3DCarousel = () => {
                       />
                       
                       <motion.img
-                        src={filteredItems[currentIndex]?.image}
+                        src={getImageSrc(filteredItems[currentIndex]?.image)}
                         alt={filteredItems[currentIndex]?.title}
                         className="w-full h-full object-cover"
                         animate={{ scale: isHovering ? 1.05 : 1 }}
@@ -632,7 +659,7 @@ export const Gallery3DCarousel = () => {
                   >
                     <div className="w-48 h-32 rounded-xl overflow-hidden shadow-xl">
                       <img
-                        src={item.image}
+                        src={getImageSrc(item.image)}
                         alt={item.title}
                         className="w-full h-full object-cover"
                       />
@@ -708,7 +735,7 @@ export const Gallery3DCarousel = () => {
                       whileTap={{ scale: 0.98 }}
                     >
                       <img
-                        src={item.image}
+                        src={getImageSrc(item.image)}
                         alt={item.title}
                         className="w-24 h-16 sm:w-28 sm:h-20 lg:w-32 lg:h-22 object-cover"
                       />
@@ -893,7 +920,7 @@ export const Gallery3DCarousel = () => {
                 <motion.img
                   ref={imageRef}
                   key={lightboxIndex}
-                  src={filteredItems[lightboxIndex]?.image}
+                  src={getImageSrc(filteredItems[lightboxIndex]?.image)}
                   alt={filteredItems[lightboxIndex]?.title}
                   className="max-w-full max-h-[85vh] object-contain select-none rounded-lg"
                   draggable={false}

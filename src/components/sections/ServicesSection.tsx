@@ -1,8 +1,22 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
 import { Camera, Users, Building, Film, Sparkles, Plane, Palette, Video } from 'lucide-react';
 
-const services = [
+const iconMap: Record<string, any> = {
+  Building,
+  Users,
+  Camera,
+  Sparkles,
+  Film,
+  Plane,
+  Palette,
+  Video,
+};
+
+const defaultServices = [
   {
     icon: Building,
     title: 'Corporate & Brand Photography',
@@ -54,6 +68,31 @@ const services = [
 ];
 
 export const ServicesSection = () => {
+  const [liveServices, setLiveServices] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/services')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const activeOnly = data.filter((s: any) => s.is_active);
+          if (activeOnly.length > 0) {
+            setLiveServices(
+              activeOnly.map((s: any) => ({
+                icon: iconMap[s.icon] || Camera,
+                title: s.title,
+                description: s.description,
+                features: Array.isArray(s.features) ? s.features : [],
+              }))
+            );
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const services = liveServices.length > 0 ? liveServices : defaultServices;
+
   return (
     <section id="services" className="relative py-24 lg:py-40 bg-secondary/50">
       {/* Section Header */}

@@ -1,9 +1,24 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
 import { ChevronDown, Camera, Video, Play } from 'lucide-react';
 import heroImage from '@/assets/hero-image.jpg';
 
 export const HeroSection = () => {
+  const [heroData, setHeroData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/hero')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && (data.headline || data.hero_image_url)) {
+          setHeroData(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -22,6 +37,8 @@ export const HeroSection = () => {
     }
   };
 
+  const imageSrc = heroData?.hero_image_url || (heroImage as any)?.src || heroImage;
+
   return (
     <section
       id="home"
@@ -35,7 +52,7 @@ export const HeroSection = () => {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-background z-10" />
         <img
-          src={heroImage}
+          src={imageSrc}
           alt="Ryankey Studios professional photography"
           className="w-full h-full object-cover"
         />
@@ -85,7 +102,7 @@ export const HeroSection = () => {
             >
               <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
             </motion.span>
-            Your Dream Studios
+            {heroData?.subheadline || 'Your Dream Studios'}
             <motion.span
               animate={{ rotate: [0, -10, 10, 0] }}
               transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
@@ -132,8 +149,7 @@ export const HeroSection = () => {
           transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-2xl mx-auto text-sm sm:text-lg md:text-xl text-pure-white/80 leading-relaxed mb-8 sm:mb-12 px-2"
         >
-          Ryankey Studios specializes in high-quality visual storytelling for individuals, 
-          families, brands, and institutions across Nairobi and its environs.
+          {heroData?.description || 'Ryankey Studios specializes in high-quality visual storytelling for individuals, families, brands, and institutions across Nairobi and its environs.'}
         </motion.p>
 
         {/* CTA Buttons */}

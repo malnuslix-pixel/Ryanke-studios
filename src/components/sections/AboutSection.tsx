@@ -1,17 +1,19 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
 import { ParallaxSection } from '../ParallaxSection';
 import ceoBrian from '@/assets/ceo-brian.jpg';
 
-const stats = [
+const defaultStats = [
   { value: '2021', label: 'Established' },
   { value: '500+', label: 'Projects Completed' },
   { value: '1000+', label: 'Happy Clients' },
   { value: '5+', label: 'Brands Served' },
 ];
 
-const uniquePoints = [
+const defaultUniquePoints = [
   'Strong storytelling approach',
   'Professional yet affordable packages',
   'Fast turnaround time',
@@ -20,6 +22,31 @@ const uniquePoints = [
 ];
 
 export const AboutSection = () => {
+  const [aboutData, setAboutData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/about')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && (data.ceo_name || data.story || data.unique_points)) {
+          setAboutData(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const stats = aboutData?.stats && Array.isArray(aboutData.stats) && aboutData.stats.length > 0
+    ? aboutData.stats
+    : defaultStats;
+
+  const uniquePoints = aboutData?.unique_points && Array.isArray(aboutData.unique_points) && aboutData.unique_points.length > 0
+    ? aboutData.unique_points
+    : defaultUniquePoints;
+
+  const ceoName = aboutData?.ceo_name || 'Brian Abuga';
+  const ceoTitle = aboutData?.ceo_title || 'Founder & Lead Photographer';
+  const ceoImage = aboutData?.ceo_image_url || (ceoBrian as any)?.src || ceoBrian;
+
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -55,13 +82,13 @@ export const AboutSection = () => {
               
               <div className="relative overflow-hidden">
                 <img 
-                  src={ceoBrian} 
-                  alt="Brian Abuga - Founder of Ryankey Studios"
+                  src={ceoImage} 
+                  alt={`${ceoName} - ${ceoTitle}`}
                   className="w-full h-[500px] lg:h-[600px] object-cover object-top"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">
-                  <p className="text-pure-white font-heading font-semibold text-xl">Brian Abuga</p>
-                  <p className="text-pure-white/70 text-sm">Founder & Lead Photographer</p>
+                  <p className="text-pure-white font-heading font-semibold text-xl">{ceoName}</p>
+                  <p className="text-pure-white/70 text-sm">{ceoTitle}</p>
                 </div>
               </div>
             </div>

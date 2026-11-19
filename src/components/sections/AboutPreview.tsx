@@ -1,17 +1,40 @@
+'use client';
+
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ScrollReveal } from '../ScrollReveal';
 import { ArrowRight, X, ZoomIn } from 'lucide-react';
 import { useState, useCallback, useEffect } from 'react';
 import ceoBrian from '@/assets/ceo-brian.jpg';
 
-const stats = [
+const defaultStats = [
   { value: '5000+', label: 'Clients Served' },
   { value: '1000+', label: 'Projects' },
   { value: '100+', label: 'Brands' },
 ];
 
 export const AboutPreview = () => {
+  const [aboutData, setAboutData] = useState<any>(null);
+
+  useEffect(() => {
+    fetch('/api/admin/about')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && (data.ceo_name || data.story || data.stats)) {
+          setAboutData(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const stats = aboutData?.stats && Array.isArray(aboutData.stats) && aboutData.stats.length > 0
+    ? aboutData.stats
+    : defaultStats;
+
+  const ceoName = aboutData?.ceo_name || 'Brian Abuga';
+  const ceoTitle = aboutData?.ceo_title || 'Founder & Lead Photographer';
+  const ceoImage = aboutData?.ceo_image_url || (ceoBrian as any)?.src || ceoBrian;
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
@@ -75,8 +98,8 @@ export const AboutPreview = () => {
                 />
                 <div className="relative overflow-hidden aspect-[3/4] rounded-lg">
                   <motion.img 
-                    src={ceoBrian} 
-                    alt="Brian Abuga - Founder of Ryankey Studios"
+                    src={ceoImage} 
+                    alt={`${ceoName} - ${ceoTitle}`}
                     className="w-full h-full object-cover object-top"
                     animate={{ scale: isHovering ? 1.08 : 1 }}
                     transition={{ duration: 0.6 }}
@@ -105,8 +128,8 @@ export const AboutPreview = () => {
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
                   >
-                    <p className="text-pure-white font-heading font-semibold text-lg sm:text-xl">Brian Abuga</p>
-                    <p className="text-pure-white/70 text-xs sm:text-sm">Founder & Lead Photographer</p>
+                    <p className="text-pure-white font-heading font-semibold text-lg sm:text-xl">{ceoName}</p>
+                    <p className="text-pure-white/70 text-xs sm:text-sm">{ceoTitle}</p>
                   </motion.div>
                 </div>
               </motion.div>
@@ -172,7 +195,7 @@ export const AboutPreview = () => {
               </ScrollReveal>
 
               <ScrollReveal delay={0.4}>
-                <Link to="/about">
+                <Link href="/about">
                   <motion.span
                     className="inline-flex items-center gap-2 btn-cta"
                     whileHover={{ scale: 1.05, gap: '14px', boxShadow: '0 15px 40px -10px hsl(345 65% 35% / 0.5)' }}
@@ -275,7 +298,7 @@ export const AboutPreview = () => {
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             >
               <motion.img
-                src={ceoBrian}
+                src={(ceoBrian as any)?.src || ceoBrian}
                 alt="Brian Abuga - Founder of Ryankey Studios"
                 className="max-w-full max-h-[85vh] object-contain select-none rounded-lg"
                 draggable={false}

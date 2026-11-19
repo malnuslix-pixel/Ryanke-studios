@@ -1,9 +1,19 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
 import { Camera, Users, Building, Film, ArrowRight } from 'lucide-react';
 
-const services = [
+const iconMap: Record<string, any> = {
+  Building,
+  Users,
+  Camera,
+  Film,
+};
+
+const defaultServices = [
   {
     icon: Building,
     title: 'Corporate & Brand',
@@ -27,6 +37,29 @@ const services = [
 ];
 
 export const ServicesPreview = () => {
+  const [liveServices, setLiveServices] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/admin/services')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const activeOnly = data.filter((s: any) => s.is_active).slice(0, 4);
+          if (activeOnly.length > 0) {
+            setLiveServices(
+              activeOnly.map((s: any) => ({
+                icon: iconMap[s.icon] || Camera,
+                title: s.title,
+                description: s.description,
+              }))
+            );
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const services = liveServices.length > 0 ? liveServices : defaultServices;
   return (
     <section className="relative py-16 sm:py-24 lg:py-40 bg-secondary/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
@@ -95,7 +128,7 @@ export const ServicesPreview = () => {
         {/* CTA */}
         <ScrollReveal delay={0.3}>
           <div className="text-center">
-            <Link to="/services">
+            <Link href="/services">
               <motion.span
                 className="inline-flex items-center gap-2 btn-outline-luxury"
                 whileHover={{ scale: 1.05, gap: '14px' }}
