@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, Camera, Video, Play } from 'lucide-react';
+import { Camera, Video, Play } from 'lucide-react';
 import heroImage from '@/assets/hero-image.jpg';
 
 export const HeroSection = () => {
@@ -30,12 +30,6 @@ export const HeroSection = () => {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.3]);
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
-  const scrollToAbout = () => {
-    const element = document.querySelector('#about');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   const imageSrc = heroData?.hero_image_url || (heroImage as any)?.src || heroImage;
 
@@ -50,7 +44,6 @@ export const HeroSection = () => {
         style={{ y, scale }}
         className="absolute inset-0 z-0"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-background z-10" />
         <img
           src={imageSrc}
           alt="Ryankey Studios professional photography"
@@ -192,49 +185,7 @@ export const HeroSection = () => {
             Book via WhatsApp
           </motion.a>
         </motion.div>
-
-        {/* Location Badge */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="mt-8 sm:mt-12 inline-flex items-center gap-2 px-3 sm:px-4 py-2 bg-pure-white/10 backdrop-blur-sm rounded-full text-xs sm:text-sm text-pure-white/70 cursor-pointer"
-        >
-          <motion.span 
-            className="w-2 h-2 bg-accent rounded-full"
-            animate={{ scale: [1, 1.3, 1], opacity: [1, 0.7, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          />
-          <span className="hidden sm:inline">Serving</span> Nairobi, Ruiru, Kamakis, Kiambu & Westlands
-        </motion.div>
       </motion.div>
-
-      {/* Scroll Indicator */}
-      <motion.button
-        onClick={scrollToAbout}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        whileHover={{ scale: 1.2 }}
-        whileTap={{ scale: 0.9 }}
-        className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-pure-white/70 hover:text-accent transition-colors cursor-pointer"
-      >
-        <motion.span 
-          className="text-[10px] sm:text-xs tracking-[0.2em] uppercase"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          Scroll
-        </motion.span>
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ChevronDown size={20} />
-        </motion.div>
-      </motion.button>
 
       {/* Corner Decorations - Hidden on small mobile */}
       <div className="absolute bottom-0 left-0 w-16 sm:w-32 h-16 sm:h-32 border-l border-b border-pure-white/20 hidden sm:block" />
