@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from '@/lib/supabase/server';
+import { createServerSupabaseClient, verifyAdminAuth } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -43,9 +43,8 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const supabase = createServerSupabaseClient();
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
+    const isAuthed = await verifyAdminAuth();
+    if (!isAuthed) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -76,9 +75,8 @@ export async function PUT(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const supabase = createServerSupabaseClient();
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
+    const isAuthed = await verifyAdminAuth();
+    if (!isAuthed) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

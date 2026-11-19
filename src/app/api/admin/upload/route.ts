@@ -1,13 +1,12 @@
-import { createServerSupabaseClient, createServiceRoleClient } from '@/lib/supabase/server';
+import { createServerSupabaseClient, createServiceRoleClient, verifyAdminAuth } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
     // Auth check with regular client
     const supabase = createServerSupabaseClient();
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (!session) {
+    const isAuthed = await verifyAdminAuth();
+    if (!isAuthed) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

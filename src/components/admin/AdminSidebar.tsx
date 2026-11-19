@@ -80,9 +80,14 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const router = useRouter();
 
   const handleLogout = async () => {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    router.push('/');
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch (e) {}
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+    } catch (e) {}
+    router.push('/admin/login');
     router.refresh();
   };
 

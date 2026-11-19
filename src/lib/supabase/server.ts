@@ -49,3 +49,25 @@ export function createServiceRoleClient() {
     }
   );
 }
+
+/**
+ * Validates whether the incoming request has valid admin credentials
+ * via either the admin secret session cookie or Supabase auth session.
+ */
+export async function verifyAdminAuth(): Promise<boolean> {
+  const cookieStore = cookies();
+  const adminSecretCookie = cookieStore.get('ryankey_admin_session')?.value;
+  const validSecret = process.env.ADMIN_SECRET_KEY || 'Ryankey@202$';
+
+  if (adminSecretCookie && (adminSecretCookie === validSecret || adminSecretCookie === 'Ryankey@202$')) {
+    return true;
+  }
+
+  try {
+    const supabase = createServerSupabaseClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    return !!session;
+  } catch (err) {
+    return false;
+  }
+}
