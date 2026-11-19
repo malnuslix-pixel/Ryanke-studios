@@ -22,9 +22,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'system-ui', 'sans-serif'],
-        heading: ['Poppins', 'system-ui', 'sans-serif'],
-        display: ['Poppins', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-montserrat)', 'Montserrat', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-poppins)', 'Poppins', 'system-ui', 'sans-serif'],
+        display: ['var(--font-poppins)', 'Poppins', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

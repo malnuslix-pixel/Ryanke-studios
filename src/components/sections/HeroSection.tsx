@@ -60,8 +60,9 @@ export const HeroSection = () => {
       >
         <motion.div 
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
-          animate={{ scaleY: [0.5, 1, 0.5], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          whileInView={{ scaleY: [0.5, 1, 0.5], opacity: [0.5, 1, 0.5] }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 3, ease: "easeInOut" }}
         />
       </motion.div>
       <motion.div
@@ -70,8 +71,9 @@ export const HeroSection = () => {
       >
         <motion.div 
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
-          animate={{ scaleY: [1, 0.5, 1], opacity: [1, 0.5, 1] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          whileInView={{ scaleY: [1, 0.5, 1], opacity: [1, 0.5, 1] }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 3, ease: "easeInOut" }}
         />
       </motion.div>
 
@@ -92,15 +94,17 @@ export const HeroSection = () => {
             whileHover={{ scale: 1.05 }}
           >
             <motion.span
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              whileInView={{ rotate: [0, 10, -10, 0] }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5 }}
             >
               <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
             </motion.span>
             {heroData?.subheadline || 'Your Dream Studios'}
             <motion.span
-              animate={{ rotate: [0, -10, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+              whileInView={{ rotate: [0, -10, 10, 0] }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, delay: 0.2 }}
             >
               <Video className="w-3 h-3 sm:w-4 sm:h-4" />
             </motion.span>
@@ -166,8 +170,8 @@ export const HeroSection = () => {
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
               <motion.span
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                whileHover={{ scale: 1.25 }}
+                transition={{ duration: 0.2 }}
               >
                 <Play className="w-4 h-4" />
               </motion.span>

@@ -202,12 +202,7 @@ export const AboutPreview = () => {
                     whileTap={{ scale: 0.95 }}
                   >
                     Learn More About Us
-                    <motion.span
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <ArrowRight className="w-5 h-5" />
-                    </motion.span>
+                    <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                   </motion.span>
                 </Link>
               </ScrollReveal>

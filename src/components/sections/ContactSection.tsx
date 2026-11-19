@@ -185,12 +185,8 @@ Looking forward to hearing from you!`;
                 className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent"
                 whileHover={{ x: 5, scale: 1.02 }}
               >
-                <motion.span 
-                  className="w-8 h-0.5 bg-accent"
-                  animate={{ scaleX: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-                <Sparkles className="w-4 h-4 animate-pulse" />
+                <span className="w-8 h-0.5 bg-accent" />
+                <Sparkles className="w-4 h-4 text-accent" />
                 Get in Touch
               </motion.span>
             </ScrollReveal>
@@ -263,13 +259,11 @@ Looking forward to hearing from you!`;
                   whileHover={{ x: 8, scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <motion.div 
-                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl"
-                    animate={{ y: [0, -3, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                  <div 
+                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl group-hover:bg-accent/20 transition-colors"
                   >
                     <MapPin className="w-5 h-5 text-accent" />
-                  </motion.div>
+                  </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Studio Location</p>
                     <p className="font-semibold text-foreground">
@@ -283,13 +277,11 @@ Looking forward to hearing from you!`;
                   whileHover={{ x: 8, scale: 1.02 }}
                   transition={{ type: 'spring', stiffness: 300 }}
                 >
-                  <motion.div 
-                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl"
-                    animate={{ rotate: [0, 10, 0] }}
-                    transition={{ duration: 3, repeat: Infinity }}
+                  <div 
+                    className="w-12 h-12 flex items-center justify-center bg-accent/10 border border-accent/20 rounded-xl group-hover:bg-accent/20 transition-colors"
                   >
                     <Clock className="w-5 h-5 text-accent" />
-                  </motion.div>
+                  </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Business Hours</p>
                     <p className="font-semibold text-foreground">
@@ -311,8 +303,8 @@ Looking forward to hearing from you!`;
                 whileTap={{ scale: 0.98 }}
               >
                 <motion.span
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ duration: 0.2 }}
                 >
                   <MessageCircle className="w-5 h-5" />
                 </motion.span>
@@ -334,12 +326,9 @@ Looking forward to hearing from you!`;
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <motion.div
-                    animate={{ rotate: [0, 360] }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  >
+                  <div className="text-accent">
                     <Sparkles className="w-6 h-6 text-accent" />
-                  </motion.div>
+                  </div>
                   <h3 className="font-heading text-xl md:text-2xl font-semibold text-foreground">Book a Session</h3>
                 </div>
                 

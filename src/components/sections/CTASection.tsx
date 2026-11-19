@@ -9,21 +9,11 @@ export const CTASection = () => {
   return (
     <section className="relative py-16 sm:py-20 lg:py-32 overflow-hidden bg-primary text-primary-foreground">
       {/* Background decorations */}
-      <motion.div
-        className="absolute top-0 left-1/4 w-48 sm:w-72 lg:w-96 h-48 sm:h-72 lg:h-96 rounded-full bg-accent/10 blur-3xl"
-        animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1]
-        }}
-        transition={{ duration: 8, repeat: Infinity }}
+      <div
+        className="absolute top-0 left-1/4 w-48 sm:w-72 lg:w-96 h-48 sm:h-72 lg:h-96 rounded-full bg-accent/10 blur-3xl opacity-20 pointer-events-none"
       />
-      <motion.div
-        className="absolute bottom-0 right-1/4 w-40 sm:w-60 lg:w-80 h-40 sm:h-60 lg:h-80 rounded-full bg-accent/5 blur-3xl"
-        animate={{ 
-          scale: [1.2, 1, 1.2],
-          opacity: [0.1, 0.15, 0.1]
-        }}
-        transition={{ duration: 10, repeat: Infinity }}
+      <div
+        className="absolute bottom-0 right-1/4 w-40 sm:w-60 lg:w-80 h-40 sm:h-60 lg:h-80 rounded-full bg-accent/5 blur-3xl opacity-15 pointer-events-none"
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">

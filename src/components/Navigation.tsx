@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
@@ -97,9 +98,12 @@ export const Navigation = () => {
               >
                 {/* Glow effect behind logo */}
                 <div className="absolute -inset-2 bg-accent/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <img 
-                  src={(ryankeyLogo as any)?.src || ryankeyLogo} 
+                <Image 
+                  src={ryankeyLogo} 
                   alt="Ryankey Studios" 
+                  width={140}
+                  height={48}
+                  priority
                   className="h-8 sm:h-10 md:h-12 w-auto relative z-10"
                 />
               </motion.div>
@@ -163,8 +167,8 @@ export const Navigation = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <motion.span
-                  animate={{ rotate: [0, 10, -10, 0] }}
-                  transition={{ duration: 0.5, repeat: Infinity, repeatDelay: 3 }}
+                  whileHover={{ rotate: [0, 15, -15, 0] }}
+                  transition={{ duration: 0.5 }}
                   className="relative"
                 >
                   <Phone size={16} />
@@ -182,12 +186,9 @@ export const Navigation = () => {
                 whileHover={{ scale: 1.08, y: -3, boxShadow: '0 10px 40px -10px hsl(345 65% 35% / 0.6)' }}
                 whileTap={{ scale: 0.92 }}
               >
-                {/* Animated gradient background */}
-                <motion.span 
-                  className="absolute inset-0 bg-gradient-to-r from-accent via-wine-light to-accent"
-                  animate={{ x: ['-100%', '100%'] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  style={{ opacity: 0.3 }}
+                {/* Animated gradient background on hover */}
+                <span 
+                  className="absolute inset-0 bg-gradient-to-r from-accent via-wine-light to-accent opacity-0 group-hover:opacity-40 transition-opacity duration-300"
                 />
                 <span className="relative z-10">Book Now</span>
                 <ArrowUpRight className="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

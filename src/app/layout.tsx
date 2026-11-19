@@ -1,6 +1,22 @@
 import type { Metadata, Viewport } from 'next';
+import { Poppins, Montserrat } from 'next/font/google';
 import '@/index.css';
 import { Providers } from '@/components/Providers';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-montserrat',
+  display: 'swap',
+});
 
 export const viewport: Viewport = {
   themeColor: '#8B2346',
@@ -56,15 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap"
-        />
-      </head>
+    <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
       <body className="bg-background text-foreground font-sans antialiased">
         <Providers>{children}</Providers>
       </body>

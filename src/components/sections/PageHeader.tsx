@@ -53,8 +53,9 @@ export const PageHeader = ({ title, subtitle, description, heroImage }: PageHead
       >
         <motion.div 
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
-          animate={{ scaleY: [0.5, 1, 0.5], opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          whileInView={{ scaleY: [0.5, 1, 0.5], opacity: [0.5, 1, 0.5] }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 3, ease: "easeInOut" }}
         />
       </motion.div>
       <motion.div
@@ -63,27 +64,18 @@ export const PageHeader = ({ title, subtitle, description, heroImage }: PageHead
       >
         <motion.div 
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
-          animate={{ scaleY: [1, 0.5, 1], opacity: [1, 0.5, 1] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          whileInView={{ scaleY: [1, 0.5, 1], opacity: [1, 0.5, 1] }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 3, ease: "easeInOut" }}
         />
       </motion.div>
       
       {/* Decorative elements */}
-      <motion.div
-        className="absolute top-1/3 left-1/4 w-96 h-96 rounded-full bg-accent/10 blur-3xl"
-        animate={{ 
-          scale: [1, 1.1, 1],
-          opacity: [0.3, 0.5, 0.3]
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      <div
+        className="absolute top-1/3 left-1/4 w-96 h-96 rounded-full bg-accent/10 blur-3xl opacity-40 pointer-events-none"
       />
-      <motion.div
-        className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-accent/5 blur-3xl"
-        animate={{ 
-          scale: [1.1, 1, 1.1],
-          opacity: [0.2, 0.4, 0.2]
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      <div
+        className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-accent/5 blur-3xl opacity-30 pointer-events-none"
       />
       
       {/* Content */}
@@ -103,17 +95,9 @@ export const PageHeader = ({ title, subtitle, description, heroImage }: PageHead
               className="inline-flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-pure-white/80"
               whileHover={{ scale: 1.05 }}
             >
-              <motion.span 
-                className="w-8 sm:w-12 h-0.5 bg-accent"
-                animate={{ scaleX: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
+              <span className="w-8 sm:w-12 h-0.5 bg-accent" />
               {title}
-              <motion.span 
-                className="w-8 sm:w-12 h-0.5 bg-accent"
-                animate={{ scaleX: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
+              <span className="w-8 sm:w-12 h-0.5 bg-accent" />
             </motion.span>
           </motion.div>
 

@@ -177,12 +177,9 @@ export const PortfolioSection = () => {
                     whileTap={{ scale: 0.9 }}
                     aria-label={`Visit ${platform.name}`}
                   >
-                    <motion.div
-                      animate={{ rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    >
+                    <div className="transition-transform duration-300 group-hover:rotate-6">
                       {platform.icon}
-                    </motion.div>
+                    </div>
                     {/* Pulse ring effect */}
                     <span className="absolute inset-0 rounded-2xl animate-ping opacity-20 bg-current" style={{ animationDuration: '2s' }} />
                   </motion.a>
@@ -227,12 +224,9 @@ export const PortfolioSection = () => {
                     whileHover={{ scale: 1.02 }}
                   >
                     View on {platform.name}
-                    <motion.span
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
+                    <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">
                       →
-                    </motion.span>
+                    </span>
                   </motion.a>
 
                   {/* Corner Decorations */}

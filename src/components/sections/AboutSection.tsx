@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
 import { ParallaxSection } from '../ParallaxSection';
@@ -80,13 +81,14 @@ export const AboutSection = () => {
               <div className="absolute -inset-4 border-2 border-accent/20 -rotate-3" />
               <div className="absolute -inset-4 border-2 border-border/30 rotate-2" />
               
-              <div className="relative overflow-hidden">
-                <img 
+              <div className="relative overflow-hidden w-full h-[500px] lg:h-[600px] rounded-lg">
+                <Image 
                   src={ceoImage} 
                   alt={`${ceoName} - ${ceoTitle}`}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover object-top"
                   loading="lazy"
-                  decoding="async"
-                  className="w-full h-[500px] lg:h-[600px] object-cover object-top"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">
                   <p className="text-pure-white font-heading font-semibold text-xl">{ceoName}</p>

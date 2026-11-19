@@ -119,22 +119,12 @@ export const TestimonialsSection = () => {
         <Quote className="w-full h-full text-white" />
       </motion.div>
 
-      {/* Animated floating elements */}
-      <motion.div
-        animate={{ 
-          y: [0, -20, 0],
-          opacity: [0.1, 0.2, 0.1]
-        }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute left-5 sm:left-10 top-1/4 w-20 sm:w-32 h-20 sm:h-32 rounded-full bg-accent/20 blur-2xl"
+      {/* Decorative floating elements */}
+      <div
+        className="absolute left-5 sm:left-10 top-1/4 w-20 sm:w-32 h-20 sm:h-32 rounded-full bg-accent/20 blur-2xl opacity-20 pointer-events-none"
       />
-      <motion.div
-        animate={{ 
-          y: [0, 20, 0],
-          opacity: [0.05, 0.15, 0.05]
-        }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        className="absolute right-10 sm:right-20 bottom-1/3 w-32 sm:w-48 h-32 sm:h-48 rounded-full bg-accent/20 blur-3xl"
+      <div
+        className="absolute right-10 sm:right-20 bottom-1/3 w-32 sm:w-48 h-32 sm:h-48 rounded-full bg-accent/20 blur-3xl opacity-15 pointer-events-none"
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
