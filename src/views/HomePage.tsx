@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { LoadingScreen } from '@/components/LoadingScreen';
@@ -14,26 +14,39 @@ import { CTASection } from '@/components/sections/CTASection';
 import { PageLayout } from '@/components/layout/PageLayout';
 
 const HomePage = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   useSmoothScroll();
+
+  useEffect(() => {
+    // Only show loading screen once per session to maximize perceived speed
+    const hasVisited = typeof window !== 'undefined' && sessionStorage.getItem('ryankey_visited');
+    if (!hasVisited) {
+      setIsLoading(true);
+    }
+  }, []);
+
+  const handleLoadingComplete = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('ryankey_visited', 'true');
+    }
+    setIsLoading(false);
+  };
 
   return (
     <>
       <AnimatePresence>
-        {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+        {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       </AnimatePresence>
       
-      {!isLoading && (
-        <PageLayout>
-          <HeroSection />
-          <BrandMarquee />
-          <AboutPreview />
-          <ServicesPreview />
-          <PortfolioPreview />
-          <TestimonialsSection />
-          <CTASection />
-        </PageLayout>
-      )}
+      <PageLayout>
+        <HeroSection />
+        <BrandMarquee />
+        <AboutPreview />
+        <ServicesPreview />
+        <PortfolioPreview />
+        <TestimonialsSection />
+        <CTASection />
+      </PageLayout>
     </>
   );
 };

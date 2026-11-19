@@ -84,6 +84,8 @@ export const AboutSection = () => {
                 <img 
                   src={ceoImage} 
                   alt={`${ceoName} - ${ceoTitle}`}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-[500px] lg:h-[600px] object-cover object-top"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">

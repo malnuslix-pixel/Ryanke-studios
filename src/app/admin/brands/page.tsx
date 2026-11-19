@@ -198,6 +198,8 @@ export default function AdminBrandsPage() {
                     <img
                       src={brand.logo_url}
                       alt={brand.name}
+                      loading="lazy"
+                      decoding="async"
                       className="max-h-full max-w-full object-contain filter grayscale hover:grayscale-0 transition-all"
                     />
                   ) : (

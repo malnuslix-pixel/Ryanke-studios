@@ -13,17 +13,18 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
+    // Fast, crisp loading animation: ~400ms progress + 150ms finish
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
           setIsComplete(true);
-          setTimeout(onComplete, 500);
+          setTimeout(onComplete, 150);
           return 100;
         }
-        return prev + 2;
+        return prev + 5;
       });
-    }, 30);
+    }, 18);
 
     return () => clearInterval(timer);
   }, [onComplete]);
@@ -33,8 +34,8 @@ export const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       {!isComplete && (
         <motion.div
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.1 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-primary"
         >
           {/* Animated Background */}

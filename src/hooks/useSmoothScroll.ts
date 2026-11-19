@@ -7,18 +7,23 @@ export const useSmoothScroll = () => {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    // Check if user prefers reduced motion
+    // Check if user is on a touch/mobile device or prefers reduced motion
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    // Initialize Lenis with enhanced smooth scrolling
+    // On touch/mobile devices, disable Lenis so native hardware-accelerated 120Hz smooth inertia scrolling is preserved
+    if (isTouchDevice) {
+      return;
+    }
+
+    // Initialize Lenis with enhanced smooth scrolling for desktop
     const lenis = new Lenis({
-      duration: prefersReducedMotion ? 0.5 : 1.4,
+      duration: prefersReducedMotion ? 0.3 : 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.8,
-      touchMultiplier: 1.2,
+      wheelMultiplier: 0.9,
       infinite: false,
       autoResize: true,
     });

@@ -55,6 +55,8 @@ export const HeroSection = () => {
           src={imageSrc}
           alt="Ryankey Studios professional photography"
           className="w-full h-full object-cover"
+          fetchPriority="high"
+          decoding="async"
         />
       </motion.div>
 

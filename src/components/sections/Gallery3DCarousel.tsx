@@ -562,6 +562,7 @@ export const Gallery3DCarousel = () => {
                         src={getImageSrc(filteredItems[currentIndex]?.image)}
                         alt={filteredItems[currentIndex]?.title}
                         className="w-full h-full object-cover"
+                        decoding="async"
                         animate={{ scale: isHovering ? 1.05 : 1 }}
                         transition={{ duration: 0.5 }}
                       />
@@ -661,6 +662,8 @@ export const Gallery3DCarousel = () => {
                       <img
                         src={getImageSrc(item.image)}
                         alt={item.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -737,6 +740,8 @@ export const Gallery3DCarousel = () => {
                       <img
                         src={getImageSrc(item.image)}
                         alt={item.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-24 h-16 sm:w-28 sm:h-20 lg:w-32 lg:h-22 object-cover"
                       />
                       {/* Hover overlay with title */}

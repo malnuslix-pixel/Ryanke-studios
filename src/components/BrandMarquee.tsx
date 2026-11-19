@@ -81,7 +81,7 @@ export const BrandMarquee = () => {
             repeat: Infinity,
           }}
         >
-          {[...brands.reverse(), ...brands].map((brand, index) => (
+          {[...brands].reverse().concat(brands).map((brand, index) => (
             <motion.span
               key={`reverse-${brand}-${index}`}
               className="font-heading text-xl md:text-3xl font-medium text-muted-foreground/20 hover:text-accent/70 transition-all duration-500 cursor-default"
