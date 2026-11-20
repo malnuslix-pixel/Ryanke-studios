@@ -82,13 +82,12 @@ export const AboutSection = () => {
               <div className="absolute -inset-4 border-2 border-border/30 rotate-2" />
               
               <div className="relative overflow-hidden w-full h-[500px] lg:h-[600px] rounded-lg">
-                <Image 
-                  src={ceoImage} 
+                <img 
+                  src={typeof ceoImage === 'string' ? ceoImage : (ceoImage as any)?.src || ceoImage} 
                   alt={`${ceoName} - ${ceoTitle}`}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-top"
                   loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover object-top"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">
                   <p className="text-pure-white font-heading font-semibold text-xl">{ceoName}</p>

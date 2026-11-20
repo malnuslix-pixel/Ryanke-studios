@@ -98,13 +98,12 @@ export const Navigation = () => {
               >
                 {/* Glow effect behind logo */}
                 <div className="absolute -inset-2 bg-accent/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <Image 
-                  src={ryankeyLogo} 
+                <img 
+                  src={(ryankeyLogo as any)?.src || ryankeyLogo} 
                   alt="Ryankey Studios" 
-                  width={140}
-                  height={48}
-                  priority
                   className="h-8 sm:h-10 md:h-12 w-auto relative z-10"
+                  fetchPriority="high"
+                  decoding="async"
                 />
               </motion.div>
             </Link>
