@@ -7,8 +7,15 @@ import heroImage from '@/assets/hero-image.jpg';
 
 export const HeroSection = () => {
   const [heroData, setHeroData] = useState<any>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Detect touch/mobile device once on mount
+    const touch =
+      window.matchMedia('(pointer: coarse)').matches ||
+      'ontouchstart' in window;
+    setIsTouchDevice(touch);
+
     fetch('/api/admin/hero')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
@@ -25,11 +32,11 @@ export const HeroSection = () => {
     offset: ['start start', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '80%']);
+  // Desktop-only parallax transforms
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
   const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.3]);
-  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
 
   const imageSrc = heroData?.hero_image_url || (heroImage as any)?.src || heroImage;
 
@@ -39,23 +46,37 @@ export const HeroSection = () => {
       ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Parallax Background */}
-      <motion.div
-        style={{ y, scale }}
-        className="absolute inset-0 z-0"
-      >
-        <img
-          src={imageSrc}
-          alt="Ryankey Studios professional photography"
-          className="w-full h-full object-cover"
-          fetchPriority="high"
-          decoding="async"
-        />
-      </motion.div>
+      {/* Background Image — parallax on desktop, static on mobile */}
+      {isTouchDevice ? (
+        /* Mobile: static full-bleed image, no JS-driven transforms */
+        <div className="absolute inset-0 z-0">
+          <img
+            src={imageSrc}
+            alt="Ryankey Studios professional photography"
+            className="w-full h-full object-cover"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
+      ) : (
+        /* Desktop: cinematic parallax with GPU-promoted layer */
+        <motion.div
+          style={{ y, scale, willChange: 'transform' }}
+          className="absolute inset-0 z-0"
+        >
+          <img
+            src={imageSrc}
+            alt="Ryankey Studios professional photography"
+            className="w-full h-full object-cover"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </motion.div>
+      )}
 
       {/* Decorative Elements - Hidden on mobile for performance */}
       <motion.div
-        style={{ opacity }}
+        style={isTouchDevice ? undefined : { opacity }}
         className="absolute top-1/4 left-4 lg:left-16 z-10 hidden sm:block"
       >
         <motion.div 
@@ -66,7 +87,7 @@ export const HeroSection = () => {
         />
       </motion.div>
       <motion.div
-        style={{ opacity }}
+        style={isTouchDevice ? undefined : { opacity }}
         className="absolute top-1/4 right-4 lg:right-16 z-10 hidden sm:block"
       >
         <motion.div 
@@ -79,7 +100,7 @@ export const HeroSection = () => {
 
       {/* Content */}
       <motion.div
-        style={{ opacity, y: textY }}
+        style={isTouchDevice ? undefined : { opacity, y: textY }}
         className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-12 text-center"
       >
         {/* Pre-heading */}
