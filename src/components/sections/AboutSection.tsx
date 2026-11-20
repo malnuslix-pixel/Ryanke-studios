@@ -60,7 +60,7 @@ export const AboutSection = () => {
     <section
       id="about"
       ref={containerRef}
-      className="relative py-24 lg:py-40 overflow-hidden"
+      className="relative py-12 sm:py-20 lg:py-40 overflow-hidden"
     >
       {/* Background Decorations */}
       <motion.div
@@ -72,16 +72,16 @@ export const AboutSection = () => {
         className="absolute -left-20 bottom-1/4 w-80 h-80 rounded-full bg-secondary blur-3xl"
       />
 
-      <div className="container mx-auto px-6 lg:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-16 lg:gap-24 items-center">
           {/* Left Content - Founder Image */}
           <ScrollReveal>
             <div className="relative">
               {/* Decorative Frame */}
-              <div className="absolute -inset-4 border-2 border-accent/20 -rotate-3" />
-              <div className="absolute -inset-4 border-2 border-border/30 rotate-2" />
+              <div className="absolute -inset-2 sm:-inset-4 border-2 border-accent/20 -rotate-3" />
+              <div className="absolute -inset-2 sm:-inset-4 border-2 border-border/30 rotate-2" />
               
-              <div className="relative overflow-hidden w-full h-[500px] lg:h-[600px] rounded-lg">
+              <div className="relative overflow-hidden w-full h-[380px] sm:h-[500px] lg:h-[600px] rounded-lg">
                 <img 
                   src={typeof ceoImage === 'string' ? ceoImage : (ceoImage as any)?.src || ceoImage} 
                   alt={`${ceoName} - ${ceoTitle}`}
@@ -89,9 +89,9 @@ export const AboutSection = () => {
                   decoding="async"
                   className="w-full h-full object-cover object-top"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-6">
-                  <p className="text-pure-white font-heading font-semibold text-xl">{ceoName}</p>
-                  <p className="text-pure-white/70 text-sm">{ceoTitle}</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-4 sm:p-6">
+                  <p className="text-pure-white font-heading font-semibold text-lg sm:text-xl">{ceoName}</p>
+                  <p className="text-pure-white/70 text-xs sm:text-sm">{ceoTitle}</p>
                 </div>
               </div>
             </div>
@@ -162,14 +162,14 @@ export const AboutSection = () => {
         </div>
 
         {/* Stats Grid */}
-        <div className="mt-20 lg:mt-32">
+        <div className="mt-12 sm:mt-20 lg:mt-32">
           <ParallaxSection offset={30}>
-            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
               {stats.map((stat, index) => (
                 <StaggerItem key={stat.label}>
-                  <div className="text-center p-8 border border-border/50 bg-card hover:border-accent/30 transition-colors duration-300">
+                  <div className="text-center p-4 sm:p-8 border border-border/50 bg-card hover:border-accent/30 transition-colors duration-300 rounded-lg">
                     <motion.span
-                      className="block font-heading text-4xl lg:text-5xl font-bold text-accent mb-2"
+                      className="block font-heading text-2xl sm:text-4xl lg:text-5xl font-bold text-accent mb-1 sm:mb-2"
                       initial={{ scale: 0.5, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
                       transition={{ 
@@ -181,7 +181,7 @@ export const AboutSection = () => {
                     >
                       {stat.value}
                     </motion.span>
-                    <span className="text-sm tracking-[0.15em] uppercase text-muted-foreground">
+                    <span className="text-xs sm:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground">
                       {stat.label}
                     </span>
                   </div>

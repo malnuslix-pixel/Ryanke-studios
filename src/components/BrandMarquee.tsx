@@ -95,18 +95,18 @@ export const BrandMarquee = () => {
 
       {/* Stats Row */}
       <ScrollReveal delay={0.2}>
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16 mt-12 md:mt-16 px-6">
+        <div className="flex flex-wrap justify-center gap-6 sm:gap-12 md:gap-16 mt-8 sm:mt-12 md:mt-16 px-4">
           <motion.div 
             className="text-center group cursor-default"
             whileHover={{ scale: 1.05 }}
           >
             <motion.span 
-              className="block font-heading text-4xl md:text-5xl font-bold text-accent"
+              className="block font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-accent"
               whileHover={{ y: -5 }}
             >
               1000+
             </motion.span>
-            <span className="text-xs md:text-sm tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
+            <span className="text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
               Happy Clients
             </span>
           </motion.div>
@@ -115,12 +115,12 @@ export const BrandMarquee = () => {
             whileHover={{ scale: 1.05 }}
           >
             <motion.span 
-              className="block font-heading text-4xl md:text-5xl font-bold text-accent"
+              className="block font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-accent"
               whileHover={{ y: -5 }}
             >
               5+
             </motion.span>
-            <span className="text-xs md:text-sm tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
+            <span className="text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
               Brands Served
             </span>
           </motion.div>
@@ -129,12 +129,12 @@ export const BrandMarquee = () => {
             whileHover={{ scale: 1.05 }}
           >
             <motion.span 
-              className="block font-heading text-4xl md:text-5xl font-bold text-accent"
+              className="block font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-accent"
               whileHover={{ y: -5 }}
             >
               500+
             </motion.span>
-            <span className="text-xs md:text-sm tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
+            <span className="text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
               Projects Done
             </span>
           </motion.div>

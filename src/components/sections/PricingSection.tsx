@@ -150,12 +150,12 @@ export const PricingSection = () => {
   const packages = livePackages.length > 0 ? livePackages : defaultPackages;
 
   return (
-    <section id="pricing" className="relative py-24 lg:py-40 bg-secondary/30">
+    <section id="pricing" className="relative py-12 sm:py-20 lg:py-32 bg-secondary/30">
       {/* Section Header */}
-      <div className="container mx-auto px-6 lg:px-12 mb-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 mb-10 sm:mb-16">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+            <span className="inline-flex items-center gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-accent">
               <span className="w-8 h-0.5 bg-accent" />
               Pricing
               <span className="w-8 h-0.5 bg-accent" />
@@ -163,14 +163,14 @@ export const PricingSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 sm:mt-6">
               Studio Rate
-              <span className="block text-accent mt-2">Card</span>
+              <span className="block text-accent mt-1 sm:mt-2">Card</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <p className="text-base md:text-lg text-body-text leading-relaxed mt-6 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-body-text leading-relaxed mt-4 sm:mt-6 max-w-2xl mx-auto">
               Professional yet affordable packages tailored to your needs. 
               Custom packages are also available for brands and special requirements.
             </p>
@@ -179,12 +179,12 @@ export const PricingSection = () => {
       </div>
 
       {/* Pricing Grid */}
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {packages.map((pkg, index) => (
             <StaggerItem key={pkg.name}>
               <motion.div
-                className={`relative card-luxury p-8 h-full flex flex-col ${
+                className={`relative card-luxury p-5 sm:p-8 h-full flex flex-col ${
                   pkg.popular ? 'border-accent ring-2 ring-accent/20' : ''
                 }`}
                 whileHover={{ y: -12, scale: 1.02 }}
@@ -225,10 +225,10 @@ export const PricingSection = () => {
 
                 {/* CTA */}
                 <motion.a
-                  href="https://wa.me/254718445264?text=Hello%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(pkg.name)}"
+                  href={`https://wa.me/254718445264?text=Hello%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(pkg.name)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`mt-8 w-full py-3 text-center font-semibold text-sm md:text-base tracking-wider uppercase transition-all duration-300 block rounded-md ${
+                  className={`mt-8 w-full py-3 min-h-[44px] flex items-center justify-center text-center font-semibold text-sm md:text-base tracking-wider uppercase transition-all duration-300 rounded-md touch-manipulation ${
                     pkg.popular
                       ? 'bg-accent text-accent-foreground hover:bg-wine-light hover:shadow-wine'
                       : 'border-2 border-foreground/20 text-foreground hover:border-accent hover:text-accent hover:bg-accent/5'
@@ -245,12 +245,12 @@ export const PricingSection = () => {
 
         {/* Notes */}
         <ScrollReveal delay={0.3}>
-          <div className="mt-16 p-8 bg-card border border-border/50 rounded-lg">
+          <div className="mt-12 sm:mt-16 p-4 sm:p-8 bg-card border border-border/50 rounded-xl">
             <h4 className="font-heading font-semibold text-lg md:text-xl mb-4 text-center text-foreground">Please Note</h4>
-            <ul className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            <ul className="grid md:grid-cols-2 gap-3 sm:gap-4 max-w-3xl mx-auto">
               {notes.map((note, index) => (
-                <li key={index} className="flex items-start gap-3 text-sm md:text-base text-body-text leading-relaxed">
-                  <span className="w-2.5 h-2.5 bg-accent rounded-full flex-shrink-0 mt-2" />
+                <li key={index} className="flex items-start gap-3 text-xs sm:text-sm md:text-base text-body-text leading-relaxed">
+                  <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-accent rounded-full flex-shrink-0 mt-2" />
                   {note}
                 </li>
               ))}

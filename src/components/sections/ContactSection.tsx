@@ -321,7 +321,7 @@ Looking forward to hearing from you!`;
               
               {/* Glass Background Form */}
               <motion.div 
-                className="relative glass-form p-8 lg:p-12 space-y-6 rounded-2xl"
+                className="relative glass-form p-4 sm:p-8 lg:p-12 space-y-5 sm:space-y-6 rounded-2xl"
                 whileHover={{ y: -5 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >

@@ -142,20 +142,26 @@ export default function AdminBrandsPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <AdminHeader title="Brand Clients & Logos" />
-        <Button onClick={handleOpenAdd} className="bg-accent text-accent-foreground hover:bg-accent/90 gap-2">
-          <Plus className="h-4 w-4" /> Add Brand Client
-        </Button>
-      </div>
+    <div className="space-y-6 sm:space-y-8 pb-12">
+      <AdminHeader
+        title="Brand Clients"
+        action={
+          <Button
+            onClick={handleOpenAdd}
+            size="sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 gap-1.5 h-9 px-3 text-xs font-semibold touch-manipulation shadow-sm"
+          >
+            <Plus className="h-4 w-4" /> <span className="hidden sm:inline">Add</span> Brand
+          </Button>
+        }
+      />
 
       {isLoading ? (
         <div className="flex h-64 items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       ) : brands.length === 0 ? (
-        <div className="rounded-xl border border-border/60 bg-card p-12 text-center">
+        <div className="rounded-xl border border-border/60 bg-card p-8 sm:p-12 text-center">
           <Award className="mx-auto h-12 w-12 text-muted-foreground/40 mb-3" />
           <h3 className="text-base font-medium">No brand clients yet</h3>
           <p className="text-xs text-muted-foreground mt-1 mb-4">
@@ -166,24 +172,24 @@ export default function AdminBrandsPage() {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3.5 sm:gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {brands.map((brand) => (
             <div
               key={brand.id}
-              className={`rounded-xl border p-4 transition-all shadow-sm flex flex-col justify-between ${
+              className={`rounded-xl border p-3.5 sm:p-4 transition-all shadow-sm flex flex-col justify-between ${
                 brand.is_active
                   ? 'border-border/60 bg-card'
                   : 'border-border/40 bg-muted/20 opacity-60'
               }`}
             >
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-semibold text-muted-foreground">
+                <div className="flex items-center justify-between mb-2 sm:mb-3">
+                  <span className="text-[11px] font-semibold text-muted-foreground">
                     #{brand.sort_order}
                   </span>
                   <button
                     onClick={() => handleToggleActive(brand)}
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-medium border transition-colors ${
+                    className={`rounded-full px-2.5 py-0.5 text-[10px] font-medium border transition-colors touch-manipulation min-h-[26px] ${
                       brand.is_active
                         ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
                         : 'bg-muted text-muted-foreground border-border'
@@ -193,7 +199,7 @@ export default function AdminBrandsPage() {
                   </button>
                 </div>
 
-                <div className="flex h-24 items-center justify-center rounded-lg bg-muted/40 p-2 mb-3">
+                <div className="flex h-20 sm:h-24 items-center justify-center rounded-lg bg-muted/40 p-2 mb-2 sm:mb-3">
                   {brand.logo_url ? (
                     <img
                       src={brand.logo_url}
@@ -210,25 +216,26 @@ export default function AdminBrandsPage() {
                   )}
                 </div>
 
-                <h4 className="text-sm font-semibold font-heading text-center truncate">
+                <h4 className="text-xs sm:text-sm font-semibold font-heading text-center truncate">
                   {brand.name}
                 </h4>
               </div>
 
-              <div className="flex items-center justify-end gap-2 border-t border-border/40 pt-3 mt-3">
+              <div className="flex items-center justify-end gap-1.5 border-t border-border/40 pt-2.5 sm:pt-3 mt-2 sm:mt-3">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => handleOpenEdit(brand)}
-                  className="h-8 gap-1 text-xs"
+                  className="min-h-[34px] px-2.5 gap-1 text-xs touch-manipulation"
                 >
-                  <Pencil className="h-3.5 w-3.5" /> Edit
+                  <Pencil className="h-3 w-3" /> Edit
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => handleDelete(brand.id)}
-                  className="h-8 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  className="min-h-[34px] min-w-[34px] p-0 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive touch-manipulation"
+                  title="Delete brand"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                 </Button>

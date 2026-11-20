@@ -18,7 +18,7 @@ export const MapSection = () => {
     <section
       id="location"
       ref={containerRef}
-      className="relative py-20 lg:py-32 overflow-hidden bg-card"
+      className="relative py-12 sm:py-20 lg:py-32 overflow-hidden bg-card"
     >
       {/* Background Decorations */}
       <motion.div
@@ -26,11 +26,11 @@ export const MapSection = () => {
         className="absolute -right-20 top-1/4 w-80 h-80 rounded-full bg-accent/5 blur-3xl"
       />
 
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
-        <div className="text-center mb-12 lg:mb-16">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+            <span className="inline-flex items-center gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-accent">
               <span className="w-8 h-0.5 bg-accent" />
               Find Us
               <span className="w-8 h-0.5 bg-accent" />
@@ -38,16 +38,16 @@ export const MapSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mt-6 text-foreground">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mt-4 sm:mt-6 text-foreground">
               Visit Our
-              <span className="text-accent ml-3">Studio</span>
+              <span className="text-accent ml-2 sm:ml-3">Studio</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <div className="flex items-center justify-center gap-2 mt-4">
-              <MapPin className="w-5 h-5 text-accent" />
-              <span className="text-body-text text-base md:text-lg">Nexus Business Centre, Ruiru Bypass (Kamakis)</span>
+            <div className="flex items-center justify-center gap-2 mt-3 sm:mt-4 text-center px-2">
+              <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-accent flex-shrink-0" />
+              <span className="text-body-text text-sm sm:text-base md:text-lg">Nexus Business Centre, Ruiru Bypass (Kamakis)</span>
             </div>
           </ScrollReveal>
         </div>
@@ -60,7 +60,7 @@ export const MapSection = () => {
             transition={{ duration: 0.3 }}
           >
             {/* Decorative Frame */}
-            <div className="absolute -inset-3 border-2 border-accent/20 rounded-2xl -rotate-1 group-hover:rotate-0 transition-transform duration-500" />
+            <div className="absolute -inset-2 sm:-inset-3 border-2 border-accent/20 rounded-2xl -rotate-1 group-hover:rotate-0 transition-transform duration-500" />
             
             <div className="relative rounded-xl overflow-hidden shadow-2xl shadow-accent/10">
               {/* Google Maps Embed - Visible Map */}
@@ -72,18 +72,18 @@ export const MapSection = () => {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-[350px] md:h-[450px]"
+                className="w-full h-[280px] sm:h-[350px] md:h-[450px]"
                 title="Ryankey Studios Location"
               />
               
               {/* Overlay with Studio Info */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/95 via-primary/80 to-transparent p-6 md:p-8">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="relative sm:absolute bottom-0 left-0 right-0 bg-primary/95 sm:bg-gradient-to-t sm:from-primary/95 sm:via-primary/80 sm:to-transparent p-4 sm:p-6 md:p-8">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
                   <div className="text-primary-foreground text-center md:text-left">
-                    <p className="font-heading font-semibold text-lg md:text-xl">Ryankey Studios</p>
+                    <p className="font-heading font-semibold text-base sm:text-lg md:text-xl">Ryankey Studios</p>
                     <div className="flex items-center justify-center md:justify-start gap-2 mt-1">
                       <Clock className="w-4 h-4 text-accent" />
-                      <p className="text-primary-foreground/80 text-sm md:text-base">Mon – Sat | 8:00 AM – 6:00 PM</p>
+                      <p className="text-primary-foreground/80 text-xs sm:text-sm md:text-base">Mon – Sat | 8:00 AM – 6:00 PM</p>
                     </div>
                   </div>
                   
@@ -91,7 +91,7 @@ export const MapSection = () => {
                     href="https://maps.app.goo.gl/qbnSnoA3k6FELAbH9"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-cta"
+                    className="btn-cta w-full sm:w-auto text-center justify-center min-h-[44px] touch-manipulation"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >

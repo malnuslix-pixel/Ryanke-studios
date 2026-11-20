@@ -152,53 +152,85 @@ export default function AdminDashboardPage() {
             No booking inquiries yet. Inquiries submitted on the site will appear here.
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/40 text-xs font-medium text-muted-foreground uppercase border-b border-border/60">
-                <tr>
-                  <th className="px-6 py-3">Client</th>
-                  <th className="px-6 py-3">Phone</th>
-                  <th className="px-6 py-3">Service</th>
-                  <th className="px-6 py-3">Date</th>
-                  <th className="px-6 py-3">Status</th>
-                  <th className="px-6 py-3 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border/40">
-                {recentBookings.map((booking) => (
-                  <tr key={booking.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="px-6 py-4 font-medium text-foreground">
-                      {booking.client_name}
-                    </td>
-                    <td className="px-6 py-4 text-muted-foreground">
-                      {booking.client_phone}
-                    </td>
-                    <td className="px-6 py-4 text-muted-foreground">
-                      {booking.service}
-                    </td>
-                    <td className="px-6 py-4 text-muted-foreground">
-                      {booking.preferred_date ? new Date(booking.preferred_date).toLocaleDateString() : 'Flexible'}
-                    </td>
-                    <td className="px-6 py-4">
-                      <StatusBadge status={booking.status} />
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      {booking.client_phone && (
-                        <a
-                          href={`https://wa.me/${booking.client_phone.replace(/[^0-9]/g, '')}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline"
-                        >
-                          <PhoneCall className="h-3 w-3" /> WhatsApp
-                        </a>
-                      )}
-                    </td>
+          <>
+            {/* Mobile Cards View (< sm) */}
+            <div className="divide-y divide-border/40 sm:hidden">
+              {recentBookings.map((booking) => (
+                <div key={booking.id} className="p-4 space-y-3 bg-card hover:bg-muted/20 transition-colors">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="font-semibold text-sm text-foreground">{booking.client_name}</h3>
+                      <p className="text-xs text-muted-foreground">{booking.service}</p>
+                    </div>
+                    <StatusBadge status={booking.status} />
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-muted-foreground pt-1 border-t border-border/30">
+                    <span>Date: {booking.preferred_date ? new Date(booking.preferred_date).toLocaleDateString() : 'Flexible'}</span>
+                    {booking.client_phone && (
+                      <a
+                        href={`https://wa.me/${booking.client_phone.replace(/[^0-9]/g, '')}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-500/10 text-green-600 font-medium hover:bg-green-500/20 active:scale-95 transition-all touch-manipulation"
+                      >
+                        <PhoneCall className="h-3 w-3" /> WhatsApp
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop Table View (>= sm) */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-muted/40 text-xs font-medium text-muted-foreground uppercase border-b border-border/60">
+                  <tr>
+                    <th className="px-6 py-3">Client</th>
+                    <th className="px-6 py-3">Phone</th>
+                    <th className="px-6 py-3">Service</th>
+                    <th className="px-6 py-3">Date</th>
+                    <th className="px-6 py-3">Status</th>
+                    <th className="px-6 py-3 text-right">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-border/40">
+                  {recentBookings.map((booking) => (
+                    <tr key={booking.id} className="hover:bg-muted/30 transition-colors">
+                      <td className="px-6 py-4 font-medium text-foreground">
+                        {booking.client_name}
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground">
+                        {booking.client_phone}
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground">
+                        {booking.service}
+                      </td>
+                      <td className="px-6 py-4 text-muted-foreground">
+                        {booking.preferred_date ? new Date(booking.preferred_date).toLocaleDateString() : 'Flexible'}
+                      </td>
+                      <td className="px-6 py-4">
+                        <StatusBadge status={booking.status} />
+                      </td>
+                      <td className="px-6 py-4 text-right">
+                        {booking.client_phone && (
+                          <a
+                            href={`https://wa.me/${booking.client_phone.replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex items-center gap-1 text-xs font-medium text-accent hover:underline"
+                          >
+                            <PhoneCall className="h-3 w-3" /> WhatsApp
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

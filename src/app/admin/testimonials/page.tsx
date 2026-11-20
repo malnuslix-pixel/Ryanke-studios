@@ -146,20 +146,26 @@ export default function AdminTestimonialsPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <AdminHeader title="Client Testimonials" />
-        <Button onClick={handleOpenAdd} className="bg-accent text-accent-foreground hover:bg-accent/90 gap-2">
-          <Plus className="h-4 w-4" /> Add Testimonial
-        </Button>
-      </div>
+    <div className="space-y-6 sm:space-y-8 pb-12">
+      <AdminHeader
+        title="Testimonials"
+        action={
+          <Button
+            onClick={handleOpenAdd}
+            size="sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 gap-1.5 h-9 px-3 text-xs font-semibold touch-manipulation shadow-sm"
+          >
+            <Plus className="h-4 w-4" /> <span className="hidden sm:inline">Add</span> Review
+          </Button>
+        }
+      />
 
       {isLoading ? (
         <div className="flex h-64 items-center justify-center">
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       ) : testimonials.length === 0 ? (
-        <div className="rounded-xl border border-border/60 bg-card p-12 text-center">
+        <div className="rounded-xl border border-border/60 bg-card p-8 sm:p-12 text-center">
           <MessageSquareQuote className="mx-auto h-12 w-12 text-muted-foreground/40 mb-3" />
           <h3 className="text-base font-medium">No testimonials yet</h3>
           <p className="text-xs text-muted-foreground mt-1 mb-4">
@@ -170,11 +176,11 @@ export default function AdminTestimonialsPage() {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((item) => (
             <div
               key={item.id}
-              className={`rounded-xl border p-5 transition-all shadow-sm flex flex-col justify-between ${
+              className={`rounded-xl border p-4 sm:p-5 transition-all shadow-sm flex flex-col justify-between ${
                 item.is_active
                   ? 'border-border/60 bg-card'
                   : 'border-border/40 bg-muted/20 opacity-70'
@@ -195,7 +201,7 @@ export default function AdminTestimonialsPage() {
 
                   <button
                     onClick={() => handleToggleActive(item)}
-                    className={`rounded-full px-2.5 py-0.5 text-xs font-medium border transition-colors ${
+                    className={`rounded-full px-2.5 py-1 text-xs font-medium border transition-colors touch-manipulation min-h-[30px] ${
                       item.is_active
                         ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
                         : 'bg-muted text-muted-foreground border-border'
@@ -224,7 +230,7 @@ export default function AdminTestimonialsPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => handleOpenEdit(item)}
-                  className="h-8 gap-1 text-xs"
+                  className="min-h-[36px] px-3 gap-1.5 text-xs touch-manipulation font-medium"
                 >
                   <Pencil className="h-3.5 w-3.5" /> Edit
                 </Button>
@@ -232,9 +238,10 @@ export default function AdminTestimonialsPage() {
                   variant="ghost"
                   size="sm"
                   onClick={() => handleDelete(item.id)}
-                  className="h-8 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  className="min-h-[36px] min-w-[36px] p-0 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive touch-manipulation"
+                  title="Delete review"
                 >
-                  <Trash2 className="h-3.5 w-3.5" />
+                  <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
             </div>

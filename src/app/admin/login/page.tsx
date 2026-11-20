@@ -55,7 +55,7 @@ function LoginForm() {
   };
 
   return (
-    <div className="w-full max-w-md space-y-7 rounded-2xl border border-border/40 bg-card/70 p-8 shadow-2xl backdrop-blur-md sm:p-10">
+    <div className="w-full max-w-md space-y-6 rounded-2xl border border-border/40 bg-card/70 p-5 sm:p-8 md:p-10 shadow-2xl backdrop-blur-md">
       <div className="flex flex-col items-center text-center">
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent text-accent-foreground shadow-lg shadow-accent/20">
           <Camera className="h-6 w-6" />
@@ -76,7 +76,7 @@ function LoginForm() {
             setAuthMode('secret');
             setError(null);
           }}
-          className={`flex items-center justify-center gap-1.5 rounded-lg py-2 transition-all duration-200 ${
+          className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 min-h-[40px] transition-all duration-200 touch-manipulation ${
             authMode === 'secret'
               ? 'bg-accent text-accent-foreground shadow-md'
               : 'text-muted-foreground hover:text-foreground'
@@ -91,7 +91,7 @@ function LoginForm() {
             setAuthMode('credentials');
             setError(null);
           }}
-          className={`flex items-center justify-center gap-1.5 rounded-lg py-2 transition-all duration-200 ${
+          className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 min-h-[40px] transition-all duration-200 touch-manipulation ${
             authMode === 'credentials'
               ? 'bg-accent text-accent-foreground shadow-md'
               : 'text-muted-foreground hover:text-foreground'
@@ -115,7 +115,7 @@ function LoginForm() {
               Admin Dashboard Secret Key
             </Label>
             <div className="relative">
-              <ShieldCheck className="absolute left-3 top-3 h-4 w-4 text-accent" />
+              <ShieldCheck className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-accent" />
               <Input
                 id="secretKey"
                 type={showSecretKey ? 'text' : 'password'}
@@ -123,14 +123,14 @@ function LoginForm() {
                 value={secretKey}
                 onChange={(e) => setSecretKey(e.target.value)}
                 required
-                className="pl-10 pr-10"
+                className="pl-10 pr-11 h-11 min-h-[44px] text-base sm:text-sm"
                 disabled={isLoading}
                 autoFocus
               />
               <button
                 type="button"
                 onClick={() => setShowSecretKey(!showSecretKey)}
-                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
                 aria-label={showSecretKey ? 'Hide secret key' : 'Show secret key'}
                 tabIndex={-1}
               >
@@ -148,7 +148,7 @@ function LoginForm() {
                 Email Address
               </Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
@@ -156,7 +156,7 @@ function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="pl-10"
+                  className="pl-10 h-11 min-h-[44px] text-base sm:text-sm"
                   disabled={isLoading}
                 />
               </div>
@@ -167,7 +167,7 @@ function LoginForm() {
                 Password
               </Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -175,13 +175,13 @@ function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="pl-10 pr-10"
+                  className="pl-10 pr-11 h-11 min-h-[44px] text-base sm:text-sm"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
+                  className="absolute right-0 top-0 h-11 w-11 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                   tabIndex={-1}
                 >
@@ -194,7 +194,7 @@ function LoginForm() {
 
         <Button
           type="submit"
-          className="w-full bg-accent text-accent-foreground hover:bg-accent/90 mt-2 font-medium"
+          className="w-full min-h-[44px] bg-accent text-accent-foreground hover:bg-accent/90 mt-2 font-medium touch-manipulation"
           disabled={isLoading}
         >
           {isLoading ? (
@@ -213,9 +213,9 @@ function LoginForm() {
       <div className="text-center pt-1">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors min-h-[36px] touch-manipulation"
         >
-          <ArrowLeft className="h-3 w-3" />
+          <ArrowLeft className="h-3.5 w-3.5" />
           Back to Public Website
         </Link>
       </div>
@@ -225,7 +225,7 @@ function LoginForm() {
 
 export default function AdminLoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12">
+    <div className="flex min-h-[100dvh] items-center justify-center bg-background px-3 py-8 sm:px-6 sm:py-12">
       <Suspense
         fallback={
           <div className="flex items-center justify-center p-12">

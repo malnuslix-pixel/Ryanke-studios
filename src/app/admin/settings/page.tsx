@@ -73,18 +73,37 @@ export default function AdminSettingsPage() {
   }
 
   return (
-    <div className="space-y-8 pb-12">
-      <AdminHeader title="Site Settings" />
+    <div className="space-y-6 sm:space-y-8 pb-16">
+      <AdminHeader
+        title="Site Settings"
+        action={
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            disabled={isSaving}
+            size="sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 gap-1.5 h-9 px-3.5 text-xs font-semibold touch-manipulation shadow-sm"
+          >
+            {isSaving ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <>
+                <Save className="h-4 w-4" /> Save
+              </>
+            )}
+          </Button>
+        }
+      />
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
         {/* Studio Identity */}
-        <div className="rounded-xl border border-border/60 bg-card p-6 shadow-sm space-y-6">
+        <div className="rounded-xl border border-border/60 bg-card p-4 sm:p-6 shadow-sm space-y-5">
           <div className="flex items-center gap-2 border-b border-border/40 pb-3">
             <Building2 className="h-5 w-5 text-accent" />
-            <h2 className="text-base font-semibold font-heading">Studio Identity</h2>
+            <h2 className="text-sm sm:text-base font-semibold font-heading">Studio Identity</h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="studio_name">Studio Name</Label>
               <Input
@@ -130,13 +149,13 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Contact Information */}
-        <div className="rounded-xl border border-border/60 bg-card p-6 shadow-sm space-y-6">
+        <div className="rounded-xl border border-border/60 bg-card p-4 sm:p-6 shadow-sm space-y-5">
           <div className="flex items-center gap-2 border-b border-border/40 pb-3">
             <Phone className="h-5 w-5 text-accent" />
-            <h2 className="text-base font-semibold font-heading">Contact Details</h2>
+            <h2 className="text-sm sm:text-base font-semibold font-heading">Contact Details</h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="phone_call">Call Phone Number</Label>
               <Input
@@ -171,13 +190,13 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Studio Location */}
-        <div className="rounded-xl border border-border/60 bg-card p-6 shadow-sm space-y-6">
+        <div className="rounded-xl border border-border/60 bg-card p-4 sm:p-6 shadow-sm space-y-5">
           <div className="flex items-center gap-2 border-b border-border/40 pb-3">
             <MapPin className="h-5 w-5 text-accent" />
-            <h2 className="text-base font-semibold font-heading">Location & Maps</h2>
+            <h2 className="text-sm sm:text-base font-semibold font-heading">Location & Maps</h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="address_line1">Address Line 1</Label>
               <Input
@@ -211,13 +230,13 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Social Links */}
-        <div className="rounded-xl border border-border/60 bg-card p-6 shadow-sm space-y-6">
+        <div className="rounded-xl border border-border/60 bg-card p-4 sm:p-6 shadow-sm space-y-5">
           <div className="flex items-center gap-2 border-b border-border/40 pb-3">
             <Share2 className="h-5 w-5 text-accent" />
-            <h2 className="text-base font-semibold font-heading">Social Media & Direct Links</h2>
+            <h2 className="text-sm sm:text-base font-semibold font-heading">Social Media & Direct Links</h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="instagram_url">Instagram URL</Label>
               <Input
@@ -260,20 +279,20 @@ export default function AdminSettingsPage() {
           </div>
         </div>
 
-        {/* Save Button */}
-        <div className="sticky bottom-6 z-20 flex justify-end">
+        {/* Mobile Sticky Save Button */}
+        <div className="sticky bottom-4 sm:bottom-6 z-20 flex justify-end">
           <Button
             type="submit"
             disabled={isSaving}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-xl px-8 w-full sm:w-auto min-h-[44px] touch-manipulation font-semibold text-sm"
           >
             {isSaving ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving...
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Saving Settings...
               </>
             ) : (
               <>
-                <Save className="mr-2 h-4 w-4" /> Save Settings
+                <Save className="mr-2 h-4 w-4" /> Save All Settings
               </>
             )}
           </Button>

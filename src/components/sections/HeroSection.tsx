@@ -90,7 +90,7 @@ export const HeroSection = () => {
           className="mb-4 sm:mb-6"
         >
           <motion.span 
-            className="inline-flex items-center gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-pure-white/80"
+            className="inline-flex items-center justify-center flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.1em] sm:tracking-[0.2em] md:tracking-[0.3em] uppercase text-pure-white/80 max-w-full px-2"
             whileHover={{ scale: 1.05 }}
           >
             <motion.span
@@ -164,7 +164,7 @@ export const HeroSection = () => {
               e.preventDefault();
               window.location.href = '/portfolio';
             }}
-            className="btn-luxury group w-full sm:w-auto"
+            className="btn-luxury group w-full sm:w-auto touch-manipulation min-h-[44px]"
             whileHover={{ scale: 1.05, boxShadow: '0 20px 60px -10px hsl(345 65% 35% / 0.5)' }}
             whileTap={{ scale: 0.95 }}
           >
@@ -182,7 +182,7 @@ export const HeroSection = () => {
             href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline-luxury text-pure-white border-pure-white/30 hover:border-accent hover:text-accent w-full sm:w-auto text-center"
+            className="btn-outline-luxury text-pure-white border-pure-white/30 hover:border-accent hover:text-accent w-full sm:w-auto text-center touch-manipulation min-h-[44px] flex items-center justify-center"
             whileHover={{ scale: 1.05, y: -3 }}
             whileTap={{ scale: 0.95 }}
           >

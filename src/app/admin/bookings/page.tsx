@@ -151,16 +151,16 @@ export default function AdminBookingsPage() {
       <AdminHeader title="Bookings & Inquiries" />
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex overflow-x-auto no-scrollbar gap-1.5 py-1 -mx-3 px-3 sm:mx-0 sm:px-0 sm:flex-wrap items-center">
           {STATUS_FILTERS.map((tab) => (
             <button
               key={tab.value}
               onClick={() => setStatusFilter(tab.value)}
-              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+              className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all min-h-[36px] touch-manipulation ${
                 statusFilter === tab.value
-                  ? 'bg-accent text-accent-foreground'
-                  : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-accent text-accent-foreground font-semibold shadow-sm'
+                  : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground active:scale-95'
               }`}
             >
               {tab.label}
@@ -177,7 +177,7 @@ export default function AdminBookingsPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name, phone..."
-            className="pl-9 h-9 text-xs"
+            className="pl-9 h-10 sm:h-9 text-xs"
           />
         </div>
       </div>
@@ -187,7 +187,7 @@ export default function AdminBookingsPage() {
           <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
         </div>
       ) : filteredBookings.length === 0 ? (
-        <div className="rounded-xl border border-border/60 bg-card p-12 text-center">
+        <div className="rounded-xl border border-border/60 bg-card p-8 sm:p-12 text-center">
           <CalendarCheck className="mx-auto h-12 w-12 text-muted-foreground/40 mb-3" />
           <h3 className="text-base font-medium">No bookings found</h3>
           <p className="text-xs text-muted-foreground mt-1">
@@ -198,7 +198,82 @@ export default function AdminBookingsPage() {
         </div>
       ) : (
         <div className="rounded-xl border border-border/60 bg-card shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
+          {/* Mobile Cards View (< md) */}
+          <div className="divide-y divide-border/40 md:hidden">
+            {filteredBookings.map((b) => (
+              <div key={b.id} className="p-4 space-y-3 bg-card hover:bg-muted/10 transition-colors">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 className="font-semibold text-sm text-foreground">{b.client_name}</h3>
+                    <p className="text-xs text-muted-foreground">{b.service}</p>
+                  </div>
+                  <select
+                    value={b.status}
+                    onChange={(e) =>
+                      handleUpdateStatus(b.id, e.target.value as Booking['status'])
+                    }
+                    className="rounded-full border border-border bg-background px-2.5 py-1 text-xs font-medium focus:outline-none focus:ring-1 focus:ring-accent"
+                  >
+                    <option value="new">New</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between text-xs text-muted-foreground gap-2 pt-1 border-t border-border/30">
+                  <div>
+                    <span>Date: {b.preferred_date ? new Date(b.preferred_date).toLocaleDateString() : 'Flexible'}</span>
+                    {b.duration && <span className="ml-2 text-[11px] text-muted-foreground/80">({b.duration})</span>}
+                  </div>
+                  <span className="text-[11px] text-muted-foreground/70">{new Date(b.created_at).toLocaleDateString()}</span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2 pt-1">
+                  {b.client_phone ? (
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={`https://wa.me/${b.client_phone.replace(/[^0-9]/g, '')}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-500/10 text-green-600 font-medium text-xs hover:bg-green-500/20 active:scale-95 transition-all touch-manipulation min-h-[36px]"
+                      >
+                        <PhoneCall className="h-3.5 w-3.5" /> WhatsApp
+                      </a>
+                      <a
+                        href={`tel:${b.client_phone.replace(/\s/g, '')}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-muted text-foreground font-medium text-xs hover:bg-muted/80 active:scale-95 transition-all touch-manipulation min-h-[36px]"
+                      >
+                        Call
+                      </a>
+                    </div>
+                  ) : <div />}
+
+                  <div className="flex items-center gap-1.5">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleViewDetails(b)}
+                      className="h-9 px-3 gap-1 text-xs touch-manipulation"
+                    >
+                      <Eye className="h-3.5 w-3.5" /> View
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDelete(b.id)}
+                      className="h-9 w-9 p-0 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive touch-manipulation"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop Table View (>= md) */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="bg-muted/40 text-xs font-medium text-muted-foreground uppercase border-b border-border/60">
                 <tr>

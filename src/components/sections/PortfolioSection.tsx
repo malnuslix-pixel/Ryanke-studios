@@ -112,7 +112,7 @@ export const PortfolioSection = () => {
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
   return (
-    <section id="portfolio" ref={containerRef} className="relative py-24 lg:py-40 overflow-hidden">
+    <section id="portfolio" ref={containerRef} className="relative py-12 sm:py-20 lg:py-40 overflow-hidden">
       {/* Background Decorations */}
       <motion.div
         style={{ y: y1, rotate }}
@@ -124,10 +124,10 @@ export const PortfolioSection = () => {
       />
 
       {/* Section Header */}
-      <div className="container mx-auto px-6 lg:px-12 mb-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 mb-10 sm:mb-16">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+            <span className="inline-flex items-center gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-accent">
               <span className="w-8 h-0.5 bg-accent" />
               Portfolio
               <span className="w-8 h-0.5 bg-accent" />
@@ -135,14 +135,14 @@ export const PortfolioSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 sm:mt-6">
               Our Featured
-              <span className="block text-accent mt-2">Work</span>
+              <span className="block text-accent mt-1 sm:mt-2">Work</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <p className="text-muted-foreground mt-6 max-w-2xl mx-auto">
+            <p className="text-muted-foreground mt-4 sm:mt-6 text-sm sm:text-base max-w-2xl mx-auto">
               Explore our portfolio across different platforms. Click on any category to view our work.
             </p>
           </ScrollReveal>
@@ -150,7 +150,7 @@ export const PortfolioSection = () => {
       </div>
 
       {/* Social Media Grid */}
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {socialPlatforms.map((platform, index) => (
             <ScrollReveal key={platform.name} delay={index * 0.1}>
@@ -163,7 +163,7 @@ export const PortfolioSection = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 {/* Platform Card */}
-                <div className="relative bg-card border border-border rounded-2xl p-6 lg:p-8 overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/10">
+                <div className="relative bg-card border border-border rounded-2xl p-5 sm:p-6 lg:p-8 overflow-hidden transition-all duration-500 hover:border-accent/50 hover:shadow-2xl hover:shadow-accent/10">
                   {/* Gradient Background on Hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${platform.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                   

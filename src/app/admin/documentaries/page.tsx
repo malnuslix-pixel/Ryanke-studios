@@ -196,13 +196,19 @@ export default function AdminDocumentariesPage() {
   };
 
   return (
-    <div className="space-y-8 pb-12">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <AdminHeader title="Documentaries & Film Showcase" />
-        <Button onClick={handleOpenAdd} className="bg-accent text-accent-foreground hover:bg-accent/90 gap-2">
-          <Plus className="h-4 w-4" /> Add Documentary Video
-        </Button>
-      </div>
+    <div className="space-y-6 sm:space-y-8 pb-12">
+      <AdminHeader
+        title="Documentaries"
+        action={
+          <Button
+            onClick={handleOpenAdd}
+            size="sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 gap-1.5 h-9 px-3 text-xs font-semibold touch-manipulation shadow-sm"
+          >
+            <Plus className="h-4 w-4" /> <span className="hidden sm:inline">Add</span> Documentary
+          </Button>
+        }
+      />
 
       {/* Info Callout for Google Drive */}
       <div className="rounded-xl border border-accent/20 bg-accent/5 p-4 sm:p-5 flex items-start gap-3">
@@ -297,14 +303,14 @@ export default function AdminDocumentariesPage() {
                   </a>
                 </div>
 
-                {/* Action Bar */}
+                {/* Action Bar with accessible mobile touch targets */}
                 <div className="flex items-center justify-between pt-3 border-t border-border/40">
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => handleToggleFeatured(doc)}
-                      className={`p-1.5 rounded-lg transition-colors ${
+                      className={`min-h-[38px] min-w-[38px] flex items-center justify-center p-2 rounded-lg transition-colors touch-manipulation active:scale-95 ${
                         doc.is_featured
-                          ? 'text-amber-500 hover:bg-amber-500/10'
+                          ? 'text-amber-500 bg-amber-500/10'
                           : 'text-muted-foreground hover:bg-muted'
                       }`}
                       title={doc.is_featured ? 'Featured on hero' : 'Mark as featured'}
@@ -313,9 +319,9 @@ export default function AdminDocumentariesPage() {
                     </button>
                     <button
                       onClick={() => handleToggleActive(doc)}
-                      className={`p-1.5 rounded-lg transition-colors ${
+                      className={`min-h-[38px] min-w-[38px] flex items-center justify-center p-2 rounded-lg transition-colors touch-manipulation active:scale-95 ${
                         doc.is_active
-                          ? 'text-green-500 hover:bg-green-500/10'
+                          ? 'text-green-500 bg-green-500/10'
                           : 'text-muted-foreground hover:bg-muted'
                       }`}
                       title={doc.is_active ? 'Visible on website' : 'Hidden from website'}
@@ -324,22 +330,23 @@ export default function AdminDocumentariesPage() {
                     </button>
                   </div>
 
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1.5">
                     <Button
                       size="sm"
                       variant="outline"
-                      className="h-8 px-2.5 text-xs gap-1"
                       onClick={() => handleOpenEdit(doc)}
+                      className="min-h-[38px] px-3 gap-1.5 text-xs touch-manipulation font-medium"
                     >
                       <Pencil className="h-3.5 w-3.5" /> Edit
                     </Button>
                     <Button
                       size="sm"
-                      variant="destructive"
-                      className="h-8 px-2 text-xs"
+                      variant="ghost"
                       onClick={() => handleDelete(doc.id)}
+                      className="min-h-[38px] min-w-[38px] p-0 text-xs text-destructive hover:bg-destructive/10 hover:text-destructive touch-manipulation"
+                      title="Delete documentary"
                     >
-                      <Trash2 className="h-3.5 w-3.5" />
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>

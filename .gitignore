@@ -28,6 +28,8 @@ dist-ssr
 out/
 next-env.d.ts
 powershell.cmd
+*.tsbuildinfo
+scratch/
 
 # Environment variables
 .env

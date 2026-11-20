@@ -293,8 +293,8 @@ export const AboutPreview = () => {
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
             >
               <motion.img
-                src={(ceoBrian as any)?.src || ceoBrian}
-                alt="Brian Abuga - Founder of Ryankey Studios"
+                src={ceoImage}
+                alt={`${ceoName} - ${ceoTitle}`}
                 className="max-w-full max-h-[85vh] object-contain select-none rounded-lg"
                 draggable={false}
                 animate={{ scale: zoomLevel }}
@@ -310,8 +310,8 @@ export const AboutPreview = () => {
               transition={{ delay: 0.4 }}
               className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center text-white"
             >
-              <h3 className="font-heading text-xl font-bold mb-1">Brian Abuga</h3>
-              <p className="text-sm text-white/70">Founder & Lead Photographer</p>
+              <h3 className="font-heading text-xl font-bold mb-1">{ceoName}</h3>
+              <p className="text-sm text-white/70">{ceoTitle}</p>
             </motion.div>
           </motion.div>
         )}

@@ -165,25 +165,31 @@ export default function AdminGalleryPage() {
     : items.filter((item) => item.category.toLowerCase() === selectedCategory.toLowerCase());
 
   return (
-    <div className="space-y-8 pb-12">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <AdminHeader title="Gallery Manager" />
-        <Button onClick={handleOpenAdd} className="bg-accent text-accent-foreground hover:bg-accent/90 gap-2">
-          <Plus className="h-4 w-4" /> Add Photo to Gallery
-        </Button>
-      </div>
+    <div className="space-y-6 sm:space-y-8 pb-12">
+      <AdminHeader
+        title="Gallery Manager"
+        action={
+          <Button
+            onClick={handleOpenAdd}
+            size="sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 gap-1.5 h-9 px-3 text-xs font-semibold touch-manipulation shadow-sm"
+          >
+            <Plus className="h-4 w-4" /> <span className="hidden sm:inline">Add</span> Photo
+          </Button>
+        }
+      />
 
-      {/* Category Pills */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-border/40 pb-4">
-        <Filter className="h-4 w-4 text-muted-foreground mr-1" />
+      {/* Category Pills - Swipeable on mobile */}
+      <div className="flex overflow-x-auto no-scrollbar items-center gap-1.5 border-b border-border/40 pb-3 -mx-3 px-3 sm:mx-0 sm:px-0 sm:flex-wrap">
+        <Filter className="h-4 w-4 text-muted-foreground mr-1 shrink-0" />
         {CATEGORIES.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+            className={`shrink-0 rounded-full px-3.5 py-1.5 text-xs font-medium transition-all min-h-[34px] touch-manipulation ${
               selectedCategory === cat
-                ? 'bg-accent text-accent-foreground'
-                : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground'
+                ? 'bg-accent text-accent-foreground font-semibold shadow-sm'
+                : 'bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground active:scale-95'
             }`}
           >
             {cat}
@@ -265,14 +271,14 @@ export default function AdminGalleryPage() {
                 <div className="flex items-center gap-1 shrink-0">
                   <button
                     onClick={() => handleOpenEdit(item)}
-                    className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+                    className="min-h-[34px] min-w-[34px] flex items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground active:scale-95 touch-manipulation"
                     title="Edit"
                   >
                     <Pencil className="h-3.5 w-3.5" />
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
-                    className="rounded p-1 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                    className="min-h-[34px] min-w-[34px] flex items-center justify-center rounded-lg text-muted-foreground hover:bg-destructive/10 hover:text-destructive active:scale-95 touch-manipulation"
                     title="Delete"
                   >
                     <Trash2 className="h-3.5 w-3.5" />

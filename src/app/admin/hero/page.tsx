@@ -91,17 +91,35 @@ export default function AdminHeroPage() {
   }
 
   return (
-    <div className="space-y-8 pb-12">
-      <AdminHeader title="Hero Section Editor" />
+    <div className="space-y-6 sm:space-y-8 pb-12">
+      <AdminHeader
+        title="Hero Section Editor"
+        action={
+          <Button
+            type="button"
+            onClick={handleSubmit as any}
+            disabled={isSaving}
+            size="sm"
+            className="bg-accent text-accent-foreground hover:bg-accent/90 gap-1.5 h-9 min-h-[36px]"
+          >
+            {isSaving ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Save className="h-4 w-4" />
+            )}
+            <span className="hidden xs:inline">Save</span>
+          </Button>
+        }
+      />
 
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="rounded-xl border border-border/60 bg-card p-6 shadow-sm space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
+        <div className="rounded-xl border border-border/60 bg-card p-4 sm:p-6 shadow-sm space-y-5 sm:space-y-6">
           <div className="flex items-center gap-2 border-b border-border/40 pb-3">
             <ImageIcon className="h-5 w-5 text-accent" />
             <h2 className="text-base font-semibold font-heading">Homepage Hero Banner</h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="headline">Headline</Label>
               <Input
@@ -109,6 +127,7 @@ export default function AdminHeroPage() {
                 value={hero.headline || ''}
                 onChange={(e) => handleChange('headline', e.target.value)}
                 placeholder="Your Vision, Our Lens"
+                className="min-h-[42px]"
                 required
               />
             </div>
@@ -120,6 +139,7 @@ export default function AdminHeroPage() {
                 value={hero.subheadline || ''}
                 onChange={(e) => handleChange('subheadline', e.target.value)}
                 placeholder="Your Dream Studios"
+                className="min-h-[42px]"
               />
             </div>
           </div>
@@ -135,7 +155,7 @@ export default function AdminHeroPage() {
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="cta_text">Primary Button Text</Label>
               <Input
@@ -143,6 +163,7 @@ export default function AdminHeroPage() {
                 value={hero.cta_text || ''}
                 onChange={(e) => handleChange('cta_text', e.target.value)}
                 placeholder="Book Now"
+                className="min-h-[42px]"
               />
             </div>
 
@@ -153,6 +174,7 @@ export default function AdminHeroPage() {
                 value={hero.cta_link || ''}
                 onChange={(e) => handleChange('cta_link', e.target.value)}
                 placeholder="https://wa.me/254718445264"
+                className="min-h-[42px]"
               />
             </div>
           </div>
@@ -174,25 +196,27 @@ export default function AdminHeroPage() {
               {(hero.badge_texts || []).map((badge, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center gap-1 rounded-full bg-accent/10 text-accent px-3 py-1 text-xs font-medium border border-accent/20"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 text-accent px-3 py-1.5 text-xs font-medium border border-accent/20"
                 >
                   {badge}
                   <button
                     type="button"
                     onClick={() => handleRemoveBadge(idx)}
-                    className="hover:text-destructive transition-colors ml-1"
+                    className="p-1 -mr-1 rounded-full hover:bg-destructive/20 hover:text-destructive transition-colors touch-manipulation"
+                    aria-label={`Remove badge ${badge}`}
                   >
-                    <X className="h-3 w-3" />
+                    <X className="h-3.5 w-3.5" />
                   </button>
                 </span>
               ))}
             </div>
 
-            <div className="flex gap-2 max-w-md">
+            <div className="flex flex-col sm:flex-row gap-2 max-w-md">
               <Input
                 value={newBadge}
                 onChange={(e) => setNewBadge(e.target.value)}
                 placeholder="Add badge (e.g. 4K Drone Footage)"
+                className="min-h-[42px]"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
@@ -200,18 +224,24 @@ export default function AdminHeroPage() {
                   }
                 }}
               />
-              <Button type="button" onClick={handleAddBadge} variant="outline" size="sm">
+              <Button
+                type="button"
+                onClick={handleAddBadge}
+                variant="outline"
+                size="sm"
+                className="min-h-[42px] sm:min-h-0 touch-manipulation"
+              >
                 <Plus className="h-4 w-4 mr-1" /> Add
               </Button>
             </div>
           </div>
         </div>
 
-        <div className="sticky bottom-6 z-20 flex justify-end">
+        <div className="sticky bottom-4 z-20 flex justify-end p-2 sm:p-0 bg-background/80 sm:bg-transparent backdrop-blur sm:backdrop-blur-none rounded-xl">
           <Button
             type="submit"
             disabled={isSaving}
-            className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8"
+            className="w-full sm:w-auto min-h-[44px] bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8 font-medium"
           >
             {isSaving ? (
               <>

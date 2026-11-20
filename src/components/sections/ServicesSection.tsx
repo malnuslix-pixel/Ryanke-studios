@@ -94,12 +94,12 @@ export const ServicesSection = () => {
   const services = liveServices.length > 0 ? liveServices : defaultServices;
 
   return (
-    <section id="services" className="relative py-24 lg:py-40 bg-secondary/50">
+    <section id="services" className="relative py-12 sm:py-20 lg:py-40 bg-secondary/50">
       {/* Section Header */}
-      <div className="container mx-auto px-6 lg:px-12 mb-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 mb-10 sm:mb-16">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <span className="inline-flex items-center gap-3 text-sm font-semibold tracking-[0.3em] uppercase text-accent">
+            <span className="inline-flex items-center gap-3 text-xs sm:text-sm font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-accent">
               <span className="w-8 h-0.5 bg-accent" />
               Our Services
               <span className="w-8 h-0.5 bg-accent" />
@@ -107,14 +107,14 @@ export const ServicesSection = () => {
           </ScrollReveal>
 
           <ScrollReveal delay={0.1}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-6">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mt-4 sm:mt-6">
               Professional Services for
-              <span className="block text-accent mt-2">Every Vision</span>
+              <span className="block text-accent mt-1 sm:mt-2">Every Vision</span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal delay={0.2}>
-            <p className="text-base md:text-lg text-body-text leading-relaxed mt-6 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-body-text leading-relaxed mt-4 sm:mt-6 max-w-2xl mx-auto">
               From intimate family moments to grand corporate events, we offer comprehensive 
               photography and videography services tailored to bring your unique story to life.
             </p>
@@ -123,12 +123,12 @@ export const ServicesSection = () => {
       </div>
 
       {/* Services Grid */}
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
             <StaggerItem key={service.title}>
               <motion.div
-                className="group card-luxury p-6 lg:p-8 h-full"
+                className="group card-luxury p-5 sm:p-6 lg:p-8 h-full"
                 whileHover={{ y: -12, scale: 1.02 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               >
@@ -166,7 +166,7 @@ export const ServicesSection = () => {
 
         {/* Photography Style Note */}
         <ScrollReveal delay={0.3}>
-          <div className="text-center mt-16 p-8 bg-card border border-border/50 rounded-lg">
+          <div className="text-center mt-12 sm:mt-16 p-4 sm:p-8 bg-card border border-border/50 rounded-xl">
             <p className="font-heading font-semibold text-lg md:text-xl text-foreground mb-2">Our Photography Style</p>
             <p className="text-body-text text-base md:text-lg">
               Clean, vibrant, cinematic, natural-light focused, storytelling-driven visuals.

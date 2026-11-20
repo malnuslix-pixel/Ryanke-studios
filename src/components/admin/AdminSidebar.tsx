@@ -50,7 +50,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col gap-1">
+    <nav className="flex flex-col gap-1.5">
       {navItems.map((item) => {
         const isActive =
           item.href === '/admin'
@@ -63,10 +63,10 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
             href={item.href}
             onClick={onNavigate}
             className={cn(
-              'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
+              'flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium transition-all duration-200 min-h-[44px] touch-manipulation',
               isActive
-                ? 'bg-accent text-accent-foreground shadow-sm'
-                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                ? 'bg-accent text-accent-foreground shadow-sm font-semibold'
+                : 'text-muted-foreground hover:bg-muted hover:text-foreground active:scale-[0.98]'
             )}
           >
             <item.icon className="h-4 w-4 shrink-0" />
@@ -116,18 +116,18 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
       </div>
 
       {/* Footer */}
-      <div className="mt-auto border-t px-3 py-4 space-y-1">
+      <div className="mt-auto border-t px-3 py-4 space-y-2">
         <Link
           href="/"
           target="_blank"
-          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          className="flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground min-h-[44px] touch-manipulation"
         >
           <ExternalLink className="h-4 w-4" />
           Back to Site
         </Link>
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
+          className="flex w-full items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive min-h-[44px] touch-manipulation text-left"
         >
           <LogOut className="h-4 w-4" />
           Logout
@@ -140,7 +140,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 /** Desktop sidebar — always visible at lg+ */
 export function AdminSidebarDesktop() {
   return (
-    <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:border-r lg:bg-card">
+    <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:border-r lg:bg-card shrink-0">
       <SidebarContent />
     </aside>
   );
@@ -153,12 +153,12 @@ export function AdminSidebarMobile() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="lg:hidden">
+        <Button variant="ghost" size="icon" className="lg:hidden h-9 w-9 -ml-1 text-foreground shrink-0 touch-manipulation">
           <Menu className="h-5 w-5" />
-          <span className="sr-only">Toggle menu</span>
+          <span className="sr-only">Toggle navigation menu</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="w-64 p-0">
+      <SheetContent side="left" className="w-72 sm:w-80 p-0">
         <SheetHeader className="sr-only">
           <SheetTitle>Navigation Menu</SheetTitle>
         </SheetHeader>

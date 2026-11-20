@@ -140,17 +140,17 @@ const GalleryPage = () => {
 
       <section className="py-16 sm:py-24 lg:py-32 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
-          {/* Category Filter */}
+          {/* Category Filter - Mobile Swipeable / Desktop Centered */}
           <ScrollReveal>
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-16">
+            <div className="flex overflow-x-auto no-scrollbar gap-2 py-1.5 px-4 -mx-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center sm:overflow-visible mb-8 sm:mb-16">
               {categories.map((category) => (
                 <button
                   key={category}
                   onClick={() => handleSelectCategory(category)}
-                  className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-300 ${
+                  className={`shrink-0 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-300 min-h-[38px] touch-manipulation ${
                     selectedCategory === category
-                      ? 'bg-accent text-accent-foreground shadow-lg shadow-accent/30 font-semibold'
-                      : 'bg-card border border-border text-muted-foreground hover:border-accent/50 hover:text-accent'
+                      ? 'bg-accent text-accent-foreground shadow-lg shadow-accent/30 font-semibold scale-[1.02]'
+                      : 'bg-card border border-border text-muted-foreground hover:border-accent/50 hover:text-accent active:scale-95'
                   }`}
                 >
                   {category}

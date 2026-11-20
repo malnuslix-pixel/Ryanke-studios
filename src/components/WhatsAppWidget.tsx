@@ -26,7 +26,7 @@ export const WhatsAppWidget = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -34,7 +34,7 @@ export const WhatsAppWidget = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute bottom-20 right-0 w-72 bg-card border border-border rounded-2xl shadow-2xl shadow-accent/20 overflow-hidden"
+            className="absolute bottom-16 sm:bottom-20 right-0 w-[min(18rem,calc(100vw-2rem))] bg-card border border-border rounded-2xl shadow-2xl shadow-accent/20 overflow-hidden"
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-green-500 to-green-600 p-4 text-white">
@@ -50,7 +50,8 @@ export const WhatsAppWidget = () => {
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-8 h-8 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors"
+                  className="w-8 h-8 rounded-full hover:bg-white/20 flex items-center justify-center transition-colors touch-manipulation"
+                  aria-label="Close WhatsApp chat preview"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -75,7 +76,7 @@ export const WhatsAppWidget = () => {
                 href={whatsappLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all"
+                className="flex items-center justify-center gap-2 w-full py-3 min-h-[44px] bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-xl hover:from-green-600 hover:to-green-700 transition-all touch-manipulation"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -92,7 +93,7 @@ export const WhatsAppWidget = () => {
         onClick={handleClick}
         onHoverStart={() => setIsHovered(true)}
         onHoverEnd={() => setIsHovered(false)}
-        className="relative w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-lg shadow-green-500/30 flex items-center justify-center text-white focus:outline-none focus:ring-4 focus:ring-green-500/50"
+        className="relative w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-lg shadow-green-500/30 flex items-center justify-center text-white focus:outline-none focus:ring-4 focus:ring-green-500/50 touch-manipulation"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         animate={{
