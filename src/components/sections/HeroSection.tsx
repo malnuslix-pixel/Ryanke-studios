@@ -24,10 +24,10 @@ export const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden [clip-path:inset(0)]"
     >
-      {/* Fixed Hero Background Image — 100% stationary, zero scroll jitter across all mobile & desktop devices */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {/* Fixed Hero Background Image — 100% stationary, does NOT move when scrolled */}
+      <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
         <img
           src={imageSrc}
           alt="Ryankey Studios professional photography"
@@ -43,8 +43,8 @@ export const HeroSection = () => {
             }
           }}
         />
-        {/* Cinematic dark overlay for crystal-clear typography on all screens */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-background z-10" />
+        {/* Subtle uniform dark overlay — zero bottom shading/gradient */}
+        <div className="absolute inset-0 bg-black/25 pointer-events-none" />
       </div>
 
       {/* Decorative vertical lines */}

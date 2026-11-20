@@ -28,8 +28,8 @@ export const PageHeader = ({ title, subtitle, description, heroImage }: PageHead
         ) : (
           <div className="w-full h-full bg-primary" />
         )}
-        {/* Dark overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-background z-10" />
+        {/* Dark overlay for contrast — zero bottom shading */}
+        <div className="absolute inset-0 bg-black/40 z-10 pointer-events-none" />
       </div>
 
       {/* Decorative vertical lines */}

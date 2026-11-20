@@ -36,7 +36,7 @@ export const BrandMarquee = () => {
   const brands = liveBrands.length > 0 ? liveBrands : defaultBrands;
 
   return (
-    <section className="py-8 sm:py-10 md:py-12 border-y border-border/50 overflow-hidden bg-secondary/20">
+    <section className="relative z-20 py-8 sm:py-10 md:py-12 border-y border-border/50 overflow-hidden bg-background">
       <ScrollReveal>
         <div className="text-center mb-4 sm:mb-6">
           <span className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-muted-foreground">
