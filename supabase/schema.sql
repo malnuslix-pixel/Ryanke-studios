@@ -332,3 +332,17 @@ INSERT INTO documentaries (title, description, drive_url, thumbnail_url, duratio
 ('Voices of Impact: Grassroots Transformation', 'A cinematic deep-dive documentary covering community resilience, conservation, and human connection in rural and metropolitan Kenya.', 'https://drive.google.com', '/gallery/corporate.jpg', '18 min', 'Community & NGO Storytelling', '2025', 'Watch Documentary', TRUE, 1),
 ('Borders of Elegance: Architectural & Aerial Kenya', 'Capturing landmark architectural developments and breathtaking 4K aerial cinematography from Rift Valley to Nairobi skies.', 'https://drive.google.com', '/gallery/creative.jpg', '12 min', 'Commercial & Aerial', '2025', 'Watch on Google Drive', FALSE, 2);
 
+-- ============================================
+-- 13. Explicit Table Privileges & Grants
+-- (Required by PostgreSQL so PostgREST roles anon, authenticated, & service_role can access tables)
+-- ============================================
+GRANT USAGE ON SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL TABLES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+GRANT ALL ON ALL ROUTINES IN SCHEMA public TO postgres, anon, authenticated, service_role;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO postgres, anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO postgres, anon, authenticated, service_role;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON ROUTINES TO postgres, anon, authenticated, service_role;
+
+

@@ -9,13 +9,13 @@ export async function GET() {
       .select('*')
       .order('sort_order', { ascending: true });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error || !data) {
+      return NextResponse.json([]);
     }
 
     return NextResponse.json(data);
   } catch (err) {
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json([]);
   }
 }
 
