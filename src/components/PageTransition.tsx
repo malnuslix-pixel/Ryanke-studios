@@ -49,7 +49,7 @@ export const PageTransition = ({ children, className = '' }: PageTransitionProps
 
   return (
     <motion.div
-      initial="initial"
+      initial={false}
       animate="enter"
       exit="exit"
       variants={prefersReducedMotion ? {
@@ -69,7 +69,7 @@ export const PageTransition = ({ children, className = '' }: PageTransitionProps
 export const PageContent = ({ children, className = '' }: PageTransitionProps) => {
   return (
     <motion.div
-      initial="hidden"
+      initial={false}
       animate="visible"
       variants={{
         hidden: { opacity: 0 },

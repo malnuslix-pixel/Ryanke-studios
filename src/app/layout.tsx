@@ -75,7 +75,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.variable} ${montserrat.variable}`}>
+    <html lang="en" className={`dark ${poppins.variable} ${montserrat.variable}`}>
       <body className="bg-background text-foreground font-sans antialiased">
         <Providers>{children}</Providers>
       </body>
