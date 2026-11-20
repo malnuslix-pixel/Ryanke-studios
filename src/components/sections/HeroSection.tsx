@@ -1,12 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Camera, Video, Play } from 'lucide-react';
-import heroImage from '@/assets/hero-image.jpg';
+import heroImageWebp from '@/assets/hero-image.webp';
+import heroImageJpg from '@/assets/hero-image.jpg';
 
 export const HeroSection = () => {
   const [heroData, setHeroData] = useState<any>(null);
+
+  const { scrollY } = useScroll();
+  // Anamorphic letterbox bars aperture opening on scroll
+  const topBarY = useTransform(scrollY, [0, 240], ['0%', '-100%']);
+  const bottomBarY = useTransform(scrollY, [0, 240], ['0%', '100%']);
+  const letterboxOpacity = useTransform(scrollY, [0, 200], [1, 0]);
 
   useEffect(() => {
     fetch('/api/admin/hero')
@@ -19,7 +26,8 @@ export const HeroSection = () => {
       .catch(() => {});
   }, []);
 
-  const imageSrc = heroData?.hero_image_url || (heroImage as any)?.src || heroImage;
+  const imageSrc = heroData?.hero_image_url || (heroImageWebp as any)?.src || heroImageWebp;
+  const fallbackSrc = (heroImageJpg as any)?.src || heroImageJpg;
 
   return (
     <section
@@ -37,15 +45,42 @@ export const HeroSection = () => {
           decoding="async"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
-            const fallback = (heroImage as any)?.src || heroImage;
-            if (target.src !== fallback) {
-              target.src = fallback;
+            if (target.src !== fallbackSrc) {
+              target.src = fallbackSrc;
             }
           }}
         />
         {/* Subtle uniform dark overlay — zero bottom shading/gradient */}
         <div className="absolute inset-0 bg-black/25 pointer-events-none" />
       </div>
+
+      {/* Cinematic Anamorphic Letterbox Top Bar (glides up on scroll) */}
+      <motion.div
+        style={{ y: topBarY, opacity: letterboxOpacity }}
+        className="fixed top-0 left-0 right-0 h-8 sm:h-12 lg:h-14 bg-black/90 backdrop-blur-sm z-30 pointer-events-none flex items-center justify-between px-4 sm:px-8 border-b border-white/10"
+      >
+        <div className="flex items-center gap-2 text-[9px] sm:text-[11px] font-mono tracking-widest text-pure-white/60 uppercase">
+          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+          <span>REC • 2.39:1 CINEMASCOPE</span>
+        </div>
+        <div className="text-[9px] sm:text-[11px] font-mono tracking-widest text-pure-white/40 uppercase hidden sm:block">
+          RYANKEY STUDIOS • 4K PRORES
+        </div>
+      </motion.div>
+
+      {/* Cinematic Anamorphic Letterbox Bottom Bar (glides down on scroll) */}
+      <motion.div
+        style={{ y: bottomBarY, opacity: letterboxOpacity }}
+        className="fixed bottom-0 left-0 right-0 h-8 sm:h-12 lg:h-14 bg-black/90 backdrop-blur-sm z-30 pointer-events-none flex items-center justify-between px-4 sm:px-8 border-t border-white/10"
+      >
+        <div className="text-[9px] sm:text-[11px] font-mono tracking-widest text-pure-white/60 uppercase">
+          SHUTTER 180° • ISO 400
+        </div>
+        <div className="flex items-center gap-2 text-[9px] sm:text-[11px] font-mono tracking-widest text-accent/80 uppercase">
+          <span>SCROLL TO EXPLORE</span>
+          <span className="animate-bounce">↓</span>
+        </div>
+      </motion.div>
 
       {/* Decorative vertical lines */}
       <div className="absolute top-1/4 left-4 lg:left-16 z-10 hidden sm:block pointer-events-none">

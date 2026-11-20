@@ -5,7 +5,7 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { ContactSection } from '@/components/sections/ContactSection';
 import { MapSection } from '@/components/sections/MapSection';
-import portfolioHero from '@/assets/portfolio-hero.jpg';
+import portfolioHero from '@/assets/portfolio-hero.webp';
 
 const ContactPage = () => {
   useSmoothScroll();

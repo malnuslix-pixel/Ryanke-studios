@@ -6,7 +6,7 @@ import { PageHeader } from '@/components/sections/PageHeader';
 import { ServicesSection } from '@/components/sections/ServicesSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { CTASection } from '@/components/sections/CTASection';
-import servicesHero from '@/assets/services-hero.jpg';
+import servicesHero from '@/assets/services-hero.webp';
 
 const ServicesPage = () => {
   useSmoothScroll();

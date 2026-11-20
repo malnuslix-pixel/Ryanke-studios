@@ -26,7 +26,7 @@ const fallbackDocs: DocumentaryItem[] = [
     title: 'Voices of Impact: Grassroots Transformation',
     description: 'A cinematic deep-dive documentary covering community resilience, conservation, and human connection in rural and metropolitan Kenya.',
     drive_url: 'https://drive.google.com/file/d/1cRCqSXOo95cyipBxGsV5G3L7Ynwh6cla/view?usp=drivesdk',
-    thumbnail_url: '/gallery/corporate.jpg',
+    thumbnail_url: '/gallery/corporate.webp',
     duration: '18 min',
     client_or_topic: 'Community & NGO Storytelling',
     year: '2025',
@@ -40,7 +40,7 @@ const fallbackDocs: DocumentaryItem[] = [
     title: 'Borders of Elegance: Architectural & Aerial Kenya',
     description: 'Capturing landmark architectural developments and breathtaking 4K aerial cinematography from Rift Valley to Nairobi skies.',
     drive_url: 'https://drive.google.com/file/d/1hjdX4PVGTxGWL3Z5GPdEaEg26qMPimqP/view?usp=drivesdk',
-    thumbnail_url: '/gallery/creative.jpg',
+    thumbnail_url: '/gallery/creative.webp',
     duration: '12 min',
     client_or_topic: 'Commercial & Aerial Cinema',
     year: '2025',
@@ -106,15 +106,15 @@ export const DocumentaryShowcase = () => {
                 {/* 16:9 Thumbnail Cover */}
                 <div className="relative aspect-video w-full overflow-hidden bg-black/40">
                   <img
-                    src={doc.thumbnail_url || '/gallery/corporate.jpg'}
+                    src={doc.thumbnail_url || '/gallery/corporate.webp'}
                     alt={doc.title}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      if (!target.src.endsWith('/gallery/corporate.jpg')) {
-                        target.src = '/gallery/corporate.jpg';
+                      if (!target.src.endsWith('/gallery/corporate.webp')) {
+                        target.src = '/gallery/corporate.webp';
                       }
                     }}
                   />

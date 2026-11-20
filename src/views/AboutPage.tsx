@@ -6,7 +6,7 @@ import { PageHeader } from '@/components/sections/PageHeader';
 import { AboutSection } from '@/components/sections/AboutSection';
 import { ProcessSection } from '@/components/sections/ProcessSection';
 import { CTASection } from '@/components/sections/CTASection';
-import aboutHero from '@/assets/about-hero.jpeg';
+import aboutHero from '@/assets/about-hero.webp';
 
 const AboutPage = () => {
   useSmoothScroll();

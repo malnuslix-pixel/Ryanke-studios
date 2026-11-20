@@ -5,7 +5,7 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { PricingSection } from '@/components/sections/PricingSection';
 import { CTASection } from '@/components/sections/CTASection';
-import pricingHero from '@/assets/pricing-hero.jpg';
+import pricingHero from '@/assets/pricing-hero.webp';
 
 const PricingPage = () => {
   useSmoothScroll();

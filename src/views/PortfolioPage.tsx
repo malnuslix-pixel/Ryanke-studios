@@ -6,7 +6,7 @@ import { PageHeader } from '@/components/sections/PageHeader';
 import { PortfolioSection } from '@/components/sections/PortfolioSection';
 import { DocumentaryShowcase } from '@/components/sections/DocumentaryShowcase';
 import { CTASection } from '@/components/sections/CTASection';
-import portfolioHero from '@/assets/portfolio-hero.jpg';
+import portfolioHero from '@/assets/portfolio-hero.webp';
 
 const PortfolioPage = () => {
   useSmoothScroll();

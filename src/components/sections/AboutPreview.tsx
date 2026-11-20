@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ScrollReveal } from '../ScrollReveal';
 import { ArrowRight, X, ZoomIn } from 'lucide-react';
 import { useState, useCallback, useEffect } from 'react';
-import ceoBrian from '@/assets/ceo-brian.jpg';
+import ceoBrian from '@/assets/ceo-brian.webp';
 
 const defaultStats = [
   { value: '5000+', label: 'Clients Served' },

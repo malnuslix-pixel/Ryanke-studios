@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
 import { ParallaxSection } from '../ParallaxSection';
-import ceoBrian from '@/assets/ceo-brian.jpg';
+import ceoBrian from '@/assets/ceo-brian.webp';
 
 const defaultStats = [
   { value: '2021', label: 'Established' },

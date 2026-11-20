@@ -10,7 +10,7 @@ import { ScrollReveal } from '@/components/ScrollReveal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ZoomIn, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Film, ExternalLink, Play } from 'lucide-react';
 import Image from 'next/image';
-import galleryHero from '@/assets/gallery-hero.jpg';
+import galleryHero from '@/assets/gallery-hero.webp';
 
 type Category = 'All' | 'Corporate' | 'Events' | 'Family' | 'Brands' | 'Portraits' | 'Documentary' | 'Drone & Aerial' | 'Creative' | 'Lifestyle';
 
@@ -25,27 +25,27 @@ interface GalleryItem {
 }
 
 const defaultGalleryItems: GalleryItem[] = [
-  { id: 1, image_url: '/gallery/event.jpg', title: 'She Sparkles Event', description: 'A vibrant celebration of women empowerment.', category: 'Events' },
-  { id: 2, image_url: '/gallery/event-2.jpg', title: 'Corporate Speaking', description: 'Dynamic corporate event photography.', category: 'Events' },
-  { id: 3, image_url: '/gallery/birthdays.jpg', title: 'Birthday Celebration', description: 'Milestone birthday celebrations and lively portraits.', category: 'Events' },
-  { id: 4, image_url: '/gallery/family.jpg', title: 'Maternity Moments', description: 'Timeless maternity & family joy captured authentically.', category: 'Family' },
-  { id: 5, image_url: '/gallery/family-2.jpg', title: 'Family Portraits', description: 'Capturing unforgettable family connections.', category: 'Family' },
-  { id: 6, image_url: '/gallery/moments-1.jpg', title: 'Signature Studio Portraits', description: 'Sharp, expressive high-fashion studio portraits.', category: 'Portraits' },
-  { id: 7, image_url: '/gallery/moments-2.jpg', title: 'Candid Expression', description: 'Spontaneous and heartfelt natural portraits.', category: 'Portraits' },
-  { id: 8, image_url: '/gallery/moments-3.jpg', title: 'Classic Studio Lighting', description: 'Dramatic mood lighting and refined styling.', category: 'Portraits' },
-  { id: 9, image_url: '/gallery/moments-4.jpg', title: 'Editorial Portrait', description: 'Modern magazine-grade editorial photography.', category: 'Portraits' },
-  { id: 10, image_url: '/gallery/brand-1.jpg', title: 'Commercial Campaign', description: 'Compelling brand identity & advertising imagery.', category: 'Brands' },
-  { id: 11, image_url: '/gallery/brand-2.jpg', title: 'Product Aesthetics', description: 'Polished product visuals designed to convert.', category: 'Brands' },
-  { id: 12, image_url: '/gallery/brand-3.jpg', title: 'Brand Storytelling', description: 'Showcasing the team and passion behind the brand.', category: 'Brands' },
-  { id: 13, image_url: '/gallery/brand-4.jpg', title: 'Corporate Branding', description: 'Executive imagery that inspires confidence.', category: 'Brands' },
-  { id: 14, image_url: '/gallery/corporate.jpg', title: 'Executive Keynote', description: 'High-impact coverage of corporate summits.', category: 'Corporate' },
-  { id: 15, image_url: '/gallery/creative.jpg', title: 'Creative Vision', description: 'Boundary-pushing conceptual & artistic shoots.', category: 'Creative' },
-  { id: 16, image_url: '/gallery/lifestyle.jpg', title: 'City Living', description: 'Authentic moments celebrating Nairobi culture.', category: 'Lifestyle' },
-  { id: 17, image_url: '/gallery/lifestyle-2.jpg', title: 'Urban Elegance', description: 'Modern metropolitan storytelling and style.', category: 'Lifestyle' },
-  { id: 18, image_url: '/gallery/lifestyle-3.jpg', title: 'Outdoor Splendor', description: 'Natural light photography in scenic environments.', category: 'Lifestyle' },
-  { id: 19, image_url: '/gallery/photo-retouch.jpg', title: 'Master Retouching', description: 'Ultra-fine skin and tone post-production artistry.', category: 'Creative' },
-  { id: 20, image_url: '/gallery/creative.jpg', title: 'Aerial Panorama', description: 'High-altitude panoramic cinematography for real estate & events.', category: 'Drone & Aerial' },
-  { id: 21, image_url: '/gallery/corporate.jpg', title: 'Voices of Impact Documentary', description: 'In-depth human interest and NGO documentary storytelling.', category: 'Documentary' },
+  { id: 1, image_url: '/gallery/event.webp', title: 'She Sparkles Event', description: 'A vibrant celebration of women empowerment.', category: 'Events' },
+  { id: 2, image_url: '/gallery/event-2.webp', title: 'Corporate Speaking', description: 'Dynamic corporate event photography.', category: 'Events' },
+  { id: 3, image_url: '/gallery/birthdays.webp', title: 'Birthday Celebration', description: 'Milestone birthday celebrations and lively portraits.', category: 'Events' },
+  { id: 4, image_url: '/gallery/family.webp', title: 'Maternity Moments', description: 'Timeless maternity & family joy captured authentically.', category: 'Family' },
+  { id: 5, image_url: '/gallery/family-2.webp', title: 'Family Portraits', description: 'Capturing unforgettable family connections.', category: 'Family' },
+  { id: 6, image_url: '/gallery/moments-1.webp', title: 'Signature Studio Portraits', description: 'Sharp, expressive high-fashion studio portraits.', category: 'Portraits' },
+  { id: 7, image_url: '/gallery/moments-2.webp', title: 'Candid Expression', description: 'Spontaneous and heartfelt natural portraits.', category: 'Portraits' },
+  { id: 8, image_url: '/gallery/moments-3.webp', title: 'Classic Studio Lighting', description: 'Dramatic mood lighting and refined styling.', category: 'Portraits' },
+  { id: 9, image_url: '/gallery/moments-4.webp', title: 'Editorial Portrait', description: 'Modern magazine-grade editorial photography.', category: 'Portraits' },
+  { id: 10, image_url: '/gallery/brand-1.webp', title: 'Commercial Campaign', description: 'Compelling brand identity & advertising imagery.', category: 'Brands' },
+  { id: 11, image_url: '/gallery/brand-2.webp', title: 'Product Aesthetics', description: 'Polished product visuals designed to convert.', category: 'Brands' },
+  { id: 12, image_url: '/gallery/brand-3.webp', title: 'Brand Storytelling', description: 'Showcasing the team and passion behind the brand.', category: 'Brands' },
+  { id: 13, image_url: '/gallery/brand-4.webp', title: 'Corporate Branding', description: 'Executive imagery that inspires confidence.', category: 'Brands' },
+  { id: 14, image_url: '/gallery/corporate.webp', title: 'Executive Keynote', description: 'High-impact coverage of corporate summits.', category: 'Corporate' },
+  { id: 15, image_url: '/gallery/creative.webp', title: 'Creative Vision', description: 'Boundary-pushing conceptual & artistic shoots.', category: 'Creative' },
+  { id: 16, image_url: '/gallery/lifestyle.webp', title: 'City Living', description: 'Authentic moments celebrating Nairobi culture.', category: 'Lifestyle' },
+  { id: 17, image_url: '/gallery/lifestyle-2.webp', title: 'Urban Elegance', description: 'Modern metropolitan storytelling and style.', category: 'Lifestyle' },
+  { id: 18, image_url: '/gallery/lifestyle-3.webp', title: 'Outdoor Splendor', description: 'Natural light photography in scenic environments.', category: 'Lifestyle' },
+  { id: 19, image_url: '/gallery/photo-retouch.webp', title: 'Master Retouching', description: 'Ultra-fine skin and tone post-production artistry.', category: 'Creative' },
+  { id: 20, image_url: '/gallery/creative.webp', title: 'Aerial Panorama', description: 'High-altitude panoramic cinematography for real estate & events.', category: 'Drone & Aerial' },
+  { id: 21, image_url: '/gallery/corporate.webp', title: 'Voices of Impact Documentary', description: 'In-depth human interest and NGO documentary storytelling.', category: 'Documentary' },
 ];
 
 const GalleryPage = () => {
