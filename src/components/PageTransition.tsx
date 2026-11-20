@@ -44,7 +44,9 @@ export const PageTransition = ({ children, className = '' }: PageTransitionProps
   
   // Scroll to top on mount
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    try {
+      window.scrollTo(0, 0);
+    } catch {}
   }, []);
 
   return (

@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
 
@@ -23,7 +23,6 @@ export const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,18 +48,6 @@ export const Navigation = () => {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
-
-  // Handle nav link click with smooth transition
-  const handleNavClick = useCallback((href: string) => {
-    setIsMobileMenuOpen(false);
-    
-    // Small delay for mobile menu to close smoothly
-    const delay = isMobileMenuOpen ? 200 : 0;
-    
-    setTimeout(() => {
-      router.push(href);
-    }, delay);
-  }, [router, isMobileMenuOpen]);
 
   return (
     <>
@@ -287,7 +274,7 @@ export const Navigation = () => {
                   >
                     <Link 
                       href={link.href}
-                      onClick={() => handleNavClick(link.href)}
+                      onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <motion.span
                         className={`font-heading text-2xl xs:text-3xl sm:text-4xl font-bold tracking-tight transition-all duration-300 block py-2 relative ${

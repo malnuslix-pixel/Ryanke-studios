@@ -130,7 +130,6 @@
   }
 
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /* Smooth scrolling with better performance */
@@ -737,8 +736,8 @@
   @apply bg-accent/30 text-foreground;
 }
 
-/* Prevent horizontal page overflow on small devices */
-html, body {
+/* Prevent horizontal page overflow on small devices safely */
+body {
   max-width: 100vw;
-  overflow-x: clip;
+  overflow-x: hidden;
 }
