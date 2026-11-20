@@ -87,6 +87,13 @@ export const AboutSection = () => {
                   alt={`${ceoName} - ${ceoTitle}`}
                   loading="lazy"
                   decoding="async"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const fallback = (ceoBrian as any)?.src || ceoBrian;
+                    if (target.src !== fallback) {
+                      target.src = fallback;
+                    }
+                  }}
                   className="w-full h-full object-cover object-top"
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-primary/90 to-transparent p-4 sm:p-6">

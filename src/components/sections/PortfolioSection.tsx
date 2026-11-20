@@ -112,7 +112,7 @@ export const PortfolioSection = () => {
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 10]);
 
   return (
-    <section id="portfolio" ref={containerRef} className="relative py-12 sm:py-20 lg:py-40 overflow-hidden">
+    <section id="portfolio" ref={containerRef} className="relative py-12 sm:py-16 lg:py-24 overflow-hidden">
       {/* Background Decorations */}
       <motion.div
         style={{ y: y1, rotate }}

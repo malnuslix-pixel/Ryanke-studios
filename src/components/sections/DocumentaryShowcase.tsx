@@ -110,6 +110,13 @@ export const DocumentaryShowcase = () => {
                     alt={doc.title}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (!target.src.endsWith('/gallery/corporate.jpg')) {
+                        target.src = '/gallery/corporate.jpg';
+                      }
+                    }}
                   />
                   {/* Dark gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />

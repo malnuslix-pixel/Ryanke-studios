@@ -101,6 +101,15 @@ export const AboutPreview = () => {
                     src={ceoImage} 
                     alt={`${ceoName} - ${ceoTitle}`}
                     className="w-full h-full object-cover object-top"
+                    loading="lazy"
+                    decoding="async"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      const fallback = (ceoBrian as any)?.src || ceoBrian;
+                      if (target.src !== fallback) {
+                        target.src = fallback;
+                      }
+                    }}
                     animate={{ scale: isHovering ? 1.08 : 1 }}
                     transition={{ duration: 0.6 }}
                   />

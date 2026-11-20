@@ -1,21 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Camera, Video, Play } from 'lucide-react';
 import heroImage from '@/assets/hero-image.jpg';
 
 export const HeroSection = () => {
   const [heroData, setHeroData] = useState<any>(null);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
-    // Detect touch/mobile device once on mount
-    const touch =
-      window.matchMedia('(pointer: coarse)').matches ||
-      'ontouchstart' in window;
-    setIsTouchDevice(touch);
-
     fetch('/api/admin/hero')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
@@ -23,198 +16,124 @@ export const HeroSection = () => {
           setHeroData(data);
         }
       })
-      .catch(() => { });
+      .catch(() => {});
   }, []);
-
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
-
-  // Desktop-only parallax transforms
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
 
   const imageSrc = heroData?.hero_image_url || (heroImage as any)?.src || heroImage;
 
   return (
     <section
       id="home"
-      ref={containerRef}
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image — parallax on desktop, static on mobile */}
-      {isTouchDevice ? (
-        /* Mobile: static full-bleed image, no JS-driven transforms */
-        <div className="absolute inset-0 z-0">
-          <img
-            src={imageSrc}
-            alt="Ryankey Studios professional photography"
-            className="w-full h-full object-cover"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </div>
-      ) : (
-        /* Desktop: cinematic parallax with GPU-promoted layer */
-        <motion.div
-          style={{ y, scale, willChange: 'transform' }}
-          className="absolute inset-0 z-0"
-        >
-          <img
-            src={imageSrc}
-            alt="Ryankey Studios professional photography"
-            className="w-full h-full object-cover"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </motion.div>
-      )}
+      {/* Fixed Hero Background Image — 100% stationary, zero scroll jitter across all mobile & desktop devices */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <img
+          src={imageSrc}
+          alt="Ryankey Studios professional photography"
+          className="w-full h-full object-cover object-center select-none"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            const fallback = (heroImage as any)?.src || heroImage;
+            if (target.src !== fallback) {
+              target.src = fallback;
+            }
+          }}
+        />
+        {/* Cinematic dark overlay for crystal-clear typography on all screens */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-background z-10" />
+      </div>
 
-      {/* Decorative Elements - Hidden on mobile for performance */}
-      <motion.div
-        style={isTouchDevice ? undefined : { opacity }}
-        className="absolute top-1/4 left-4 lg:left-16 z-10 hidden sm:block"
-      >
+      {/* Decorative vertical lines */}
+      <div className="absolute top-1/4 left-4 lg:left-16 z-10 hidden sm:block pointer-events-none">
         <motion.div
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
-          whileInView={{ scaleY: [0.5, 1, 0.5], opacity: [0.5, 1, 0.5] }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 3, ease: "easeInOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.8 }}
+          transition={{ duration: 1.5 }}
         />
-      </motion.div>
-      <motion.div
-        style={isTouchDevice ? undefined : { opacity }}
-        className="absolute top-1/4 right-4 lg:right-16 z-10 hidden sm:block"
-      >
+      </div>
+      <div className="absolute top-1/4 right-4 lg:right-16 z-10 hidden sm:block pointer-events-none">
         <motion.div
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
-          whileInView={{ scaleY: [1, 0.5, 1], opacity: [1, 0.5, 1] }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 3, ease: "easeInOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.8 }}
+          transition={{ duration: 1.5, delay: 0.3 }}
         />
-      </motion.div>
+      </div>
 
-      {/* Content */}
-      <motion.div
-        style={isTouchDevice ? undefined : { opacity, y: textY }}
-        className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-12 text-center"
-      >
+      {/* Hero Content */}
+      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-12 text-center py-20 sm:py-24">
         {/* Pre-heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-4 sm:mb-6"
         >
-          <motion.span
-            className="inline-flex items-center justify-center flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.1em] sm:tracking-[0.2em] md:tracking-[0.3em] uppercase text-pure-white/80 max-w-full px-2"
-            whileHover={{ scale: 1.05 }}
-          >
-            <motion.span
-              whileInView={{ rotate: [0, 10, -10, 0] }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5 }}
-            >
-              <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
-            </motion.span>
+          <span className="inline-flex items-center justify-center flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.1em] sm:tracking-[0.2em] md:tracking-[0.3em] uppercase text-pure-white/80 max-w-full px-2">
+            <Camera className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
             {heroData?.subheadline || 'Photography • Videography • Drone • Documentaries'}
-            <motion.span
-              whileInView={{ rotate: [0, -10, 10, 0] }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5, delay: 0.2 }}
-            >
-              <Video className="w-3 h-3 sm:w-4 sm:h-4" />
-            </motion.span>
-          </motion.span>
+            <Video className="w-3 h-3 sm:w-4 sm:h-4 text-accent" />
+          </span>
         </motion.div>
 
         {/* Main Heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.9] tracking-tight mb-6 sm:mb-8 text-pure-white"
+          transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.95] tracking-tight mb-6 sm:mb-8 text-pure-white"
         >
-          <motion.span
-            className="block"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            Capturing
-          </motion.span>
-          <motion.span
-            className="block mt-1 sm:mt-2"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
+          <span className="block">Capturing</span>
+          <span className="block mt-1 sm:mt-2">
             <span className="text-accent">Moments</span> That
-          </motion.span>
-          <motion.span
-            className="block mt-1 sm:mt-2"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            Last Forever
-          </motion.span>
+          </span>
+          <span className="block mt-1 sm:mt-2">Last Forever</span>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-2xl mx-auto text-sm sm:text-lg md:text-xl text-pure-white/80 leading-relaxed mb-8 sm:mb-12 px-2"
+          transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-2xl mx-auto text-sm sm:text-lg md:text-xl text-pure-white/85 leading-relaxed mb-8 sm:mb-12 px-2"
         >
-          {heroData?.description || 'Ryankey Studios specializes in high-quality visual storytelling, documentary filmmaking, drone cinematography, and creative photography across Nairobi and beyond.'}
+          {heroData?.description ||
+            'Ryankey Studios specializes in high-quality visual storytelling, documentary filmmaking, drone cinematography, and creative photography across Nairobi and beyond.'}
         </motion.p>
 
         {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
-          <motion.a
+          <a
             href="/portfolio"
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.href = '/portfolio';
-            }}
-            className="btn-luxury group w-full sm:w-auto touch-manipulation min-h-[44px]"
-            whileHover={{ scale: 1.05, boxShadow: '0 20px 60px -10px hsl(345 65% 35% / 0.5)' }}
-            whileTap={{ scale: 0.95 }}
+            className="btn-luxury group w-full sm:w-auto touch-manipulation min-h-[44px] flex items-center justify-center gap-2"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              <motion.span
-                whileHover={{ scale: 1.25 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Play className="w-4 h-4" />
-              </motion.span>
-              View Our Work
-            </span>
-          </motion.a>
-          <motion.a
+            <Play className="w-4 h-4 fill-current" />
+            <span>View Our Work</span>
+          </a>
+          <a
             href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-outline-luxury text-pure-white border-pure-white/30 hover:border-accent hover:text-accent w-full sm:w-auto text-center touch-manipulation min-h-[44px] flex items-center justify-center"
-            whileHover={{ scale: 1.05, y: -3 }}
-            whileTap={{ scale: 0.95 }}
+            className="btn-outline-luxury text-pure-white border-pure-white/40 hover:border-accent hover:text-accent w-full sm:w-auto text-center touch-manipulation min-h-[44px] flex items-center justify-center"
           >
             Book via WhatsApp
-          </motion.a>
+          </a>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Corner Decorations - Hidden on small mobile */}
-      <div className="absolute bottom-0 left-0 w-16 sm:w-32 h-16 sm:h-32 border-l border-b border-pure-white/20 hidden sm:block" />
-      <div className="absolute bottom-0 right-0 w-16 sm:w-32 h-16 sm:h-32 border-r border-b border-pure-white/20 hidden sm:block" />
+      {/* Corner Decorations */}
+      <div className="absolute bottom-0 left-0 w-16 sm:w-32 h-16 sm:h-32 border-l border-b border-pure-white/20 hidden sm:block pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-16 sm:w-32 h-16 sm:h-32 border-r border-b border-pure-white/20 hidden sm:block pointer-events-none" />
     </section>
   );
 };

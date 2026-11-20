@@ -89,7 +89,15 @@ export const Navigation = () => {
                   alt="Ryankey Studios"
                   className="h-8 sm:h-10 md:h-12 w-auto relative z-10"
                   fetchPriority="high"
+                  loading="eager"
                   decoding="async"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    const fallback = (ryankeyLogo as any)?.src || ryankeyLogo;
+                    if (target.src !== fallback) {
+                      target.src = fallback;
+                    }
+                  }}
                 />
               </motion.div>
             </Link>
