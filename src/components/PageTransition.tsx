@@ -8,29 +8,23 @@ interface PageTransitionProps {
   className?: string;
 }
 
-// Enhanced page variants with smoother transitions
+// Pure opacity fade transition so position: fixed elements lock to the viewport without containing block traps
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 20,
-    scale: 0.98,
   },
   enter: {
     opacity: 1,
-    y: 0,
-    scale: 1,
   },
   exit: {
     opacity: 0,
-    y: -10,
-    scale: 0.99,
   },
 };
 
 const pageTransition = {
   type: 'tween',
-  ease: [0.25, 0.46, 0.45, 0.94], // Premium smooth ease
-  duration: 0.5,
+  ease: [0.25, 0.46, 0.45, 0.94],
+  duration: 0.35,
 };
 
 const reducedMotionTransition = {
@@ -60,7 +54,7 @@ export const PageTransition = ({ children, className = '' }: PageTransitionProps
         exit: { opacity: 0 },
       } : pageVariants}
       transition={prefersReducedMotion ? reducedMotionTransition : pageTransition}
-      className={`will-change-[opacity,transform] ${className}`}
+      className={`will-change-[opacity] ${className}`}
     >
       {children}
     </motion.div>

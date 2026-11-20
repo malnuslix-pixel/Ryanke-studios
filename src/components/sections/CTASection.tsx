@@ -7,7 +7,7 @@ import { ArrowRight, MessageCircle } from 'lucide-react';
 
 export const CTASection = () => {
   return (
-    <section className="relative py-12 sm:py-16 lg:py-24 overflow-hidden bg-primary text-primary-foreground">
+    <section className="relative z-20 py-12 sm:py-16 lg:py-24 overflow-hidden bg-primary text-primary-foreground">
       {/* Background decorations */}
       <div
         className="absolute top-0 left-1/4 w-48 sm:w-72 lg:w-96 h-48 sm:h-72 lg:h-96 rounded-full bg-accent/10 blur-3xl opacity-20 pointer-events-none"
