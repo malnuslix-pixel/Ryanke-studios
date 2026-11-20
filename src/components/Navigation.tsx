@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Phone, ArrowUpRight } from 'lucide-react';
+import { X, Phone, ArrowUpRight } from 'lucide-react';
 import ryankeyLogo from '@/assets/ryankey-logo.png';
 
 const navLinks = [
@@ -20,13 +20,30 @@ const navLinks = [
 
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
+    let prevScrollY = window.scrollY;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      const currentScrollY = window.scrollY;
+      setIsScrolled(currentScrollY > 50);
+
+      // Top of page: always visible
+      if (currentScrollY <= 20) {
+        setIsVisible(true);
+      } else if (currentScrollY > prevScrollY && currentScrollY > 60) {
+        // Scrolling down -> header disappears
+        setIsVisible(false);
+      } else if (currentScrollY < prevScrollY - 8) {
+        // Scrolling up -> header reveals
+        setIsVisible(true);
+      }
+
+      prevScrollY = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -47,15 +64,19 @@ export const Navigation = () => {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsVisible(true);
   }, [pathname]);
 
   return (
     <>
       <motion.header
         initial={false}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${isScrolled
+        animate={{
+          y: isVisible || isMobileMenuOpen ? 0 : -100,
+          opacity: isVisible || isMobileMenuOpen ? 1 : 0,
+        }}
+        transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${isScrolled
           ? 'glass-nav py-2 sm:py-3'
           : 'bg-primary/90 backdrop-blur-md py-3 sm:py-4 md:py-5'
           }`}
@@ -187,36 +208,38 @@ export const Navigation = () => {
               </motion.a>
             </div>
 
-            {/* Mobile Menu Button with animation */}
+            {/* Mobile Menu Button — displays "Menu" instead of hamburger bars */}
             <motion.button
-              className="lg:hidden p-2.5 sm:p-3 rounded-lg text-pure-white hover:bg-white/10 transition-colors touch-manipulation relative"
+              className="lg:hidden px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full border border-pure-white/20 hover:border-accent text-pure-white hover:text-accent bg-black/40 backdrop-blur-md transition-all touch-manipulation relative flex items-center justify-center min-h-[38px] text-xs sm:text-sm font-semibold tracking-wider uppercase font-heading group"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.94 }}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
             >
-              {/* Glow effect */}
-              <span className="absolute inset-0 bg-accent/20 rounded-lg blur-lg opacity-0 hover:opacity-100 transition-opacity" />
+              <span className="absolute inset-0 bg-accent/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
               <AnimatePresence mode="wait">
                 {isMobileMenuOpen ? (
-                  <motion.div
+                  <motion.span
                     key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 4 }}
                     transition={{ duration: 0.15 }}
+                    className="relative z-10 flex items-center gap-1.5 text-accent"
                   >
-                    <X size={22} className="sm:w-6 sm:h-6" />
-                  </motion.div>
+                    <X size={16} />
+                    <span>Close</span>
+                  </motion.span>
                 ) : (
-                  <motion.div
+                  <motion.span
                     key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
                     transition={{ duration: 0.15 }}
+                    className="relative z-10 flex items-center"
                   >
-                    <Menu size={22} className="sm:w-6 sm:h-6" />
-                  </motion.div>
+                    <span>Menu</span>
+                  </motion.span>
                 )}
               </AnimatePresence>
             </motion.button>
