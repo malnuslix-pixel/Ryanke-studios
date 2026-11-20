@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { format } from 'date-fns';
 import { ScrollReveal } from '../ScrollReveal';
-import { Mail, Phone, MapPin, Clock, MessageCircle, Send, Sparkles, CalendarIcon, AlertCircle, Check } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, MessageCircle, Send, CalendarIcon, AlertCircle, Check } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
@@ -186,7 +186,6 @@ Looking forward to hearing from you!`;
                 whileHover={{ x: 5, scale: 1.02 }}
               >
                 <span className="w-8 h-0.5 bg-accent" />
-                <Sparkles className="w-4 h-4 text-accent" />
                 Get in Touch
               </motion.span>
             </ScrollReveal>
@@ -326,9 +325,6 @@ Looking forward to hearing from you!`;
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="flex items-center gap-3 mb-8">
-                  <div className="text-accent">
-                    <Sparkles className="w-6 h-6 text-accent" />
-                  </div>
                   <h3 className="font-heading text-xl md:text-2xl font-semibold text-foreground">Book a Session</h3>
                 </div>
                 

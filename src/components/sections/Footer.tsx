@@ -168,10 +168,7 @@ export const Footer = () => {
         <div className="container mx-auto px-6 lg:px-12 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-primary-foreground/50 text-sm">
-              © {new Date().getFullYear()} Ryankey Studios. All rights reserved. •{' '}
-              <Link href="/admin" className="hover:text-accent transition-colors">
-                Studio Portal
-              </Link>
+              © {new Date().getFullYear()} Ryankey Studios. All rights reserved.
             </p>
             <motion.button onClick={scrollToTop} className="flex items-center gap-2 text-sm text-primary-foreground/50 hover:text-accent transition-colors" whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
               Back to top <ArrowUp size={16} />

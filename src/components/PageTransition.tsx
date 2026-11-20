@@ -41,7 +41,7 @@ const reducedMotionTransition = {
 
 export const PageTransition = ({ children, className = '' }: PageTransitionProps) => {
   const prefersReducedMotion = useReducedMotion();
-  
+
   // Scroll to top on mount
   useEffect(() => {
     try {

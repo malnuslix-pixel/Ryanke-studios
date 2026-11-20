@@ -55,18 +55,17 @@ export const Navigation = () => {
         initial={false}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-          isScrolled
-            ? 'glass-nav py-2 sm:py-3'
-            : 'bg-primary/90 backdrop-blur-md py-3 sm:py-4 md:py-5'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${isScrolled
+          ? 'glass-nav py-2 sm:py-3'
+          : 'bg-primary/90 backdrop-blur-md py-3 sm:py-4 md:py-5'
+          }`}
       >
         {/* Animated gradient border */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
-          animate={{ 
+          animate={{
             opacity: isScrolled ? 1 : 0,
-            scaleX: isScrolled ? 1 : 0 
+            scaleX: isScrolled ? 1 : 0
           }}
           transition={{ duration: 0.3 }}
         />
@@ -74,7 +73,7 @@ export const Navigation = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <nav className="flex items-center justify-between">
             {/* Logo with hover glow */}
-            <Link 
+            <Link
               href="/"
               className="touch-manipulation relative group"
             >
@@ -85,9 +84,9 @@ export const Navigation = () => {
               >
                 {/* Glow effect behind logo */}
                 <div className="absolute -inset-2 bg-accent/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <img 
-                  src={(ryankeyLogo as any)?.src || ryankeyLogo} 
-                  alt="Ryankey Studios" 
+                <img
+                  src={(ryankeyLogo as any)?.src || ryankeyLogo}
+                  alt="Ryankey Studios"
                   className="h-8 sm:h-10 md:h-12 w-auto relative z-10"
                   fetchPriority="high"
                   decoding="async"
@@ -101,19 +100,18 @@ export const Navigation = () => {
                 const isActive = pathname === link.href;
                 const isHovered = hoveredLink === link.href;
                 return (
-                  <Link 
-                    key={link.href} 
+                  <Link
+                    key={link.href}
                     href={link.href}
                     onMouseEnter={() => setHoveredLink(link.href)}
                     onMouseLeave={() => setHoveredLink(null)}
                     className="relative"
                   >
                     <motion.span
-                      className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 block ${
-                        isActive 
-                          ? 'text-accent' 
-                          : 'text-pure-white/90 hover:text-accent'
-                      }`}
+                      className={`relative px-4 py-2 text-sm font-medium tracking-wide transition-all duration-300 block ${isActive
+                        ? 'text-accent'
+                        : 'text-pure-white/90 hover:text-accent'
+                        }`}
                       whileHover={{ y: -4, scale: 1.08 }}
                       whileTap={{ scale: 0.92 }}
                     >
@@ -121,15 +119,15 @@ export const Navigation = () => {
                       <motion.span
                         className="absolute inset-0 bg-accent/10 rounded-lg -z-10"
                         initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ 
+                        animate={{
                           opacity: isHovered ? 1 : 0,
                           scale: isHovered ? 1 : 0.8
                         }}
                         transition={{ duration: 0.2 }}
                       />
-                      
+
                       {link.label}
-                      
+
                       {/* Animated underline */}
                       <motion.span
                         className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-accent to-wine-light"
@@ -163,7 +161,7 @@ export const Navigation = () => {
                 </motion.span>
                 <span className="hidden xl:inline">+254 702 340 700</span>
               </motion.a>
-              
+
               <motion.a
                 href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
                 target="_blank"
@@ -173,7 +171,7 @@ export const Navigation = () => {
                 whileTap={{ scale: 0.92 }}
               >
                 {/* Animated gradient background on hover */}
-                <span 
+                <span
                   className="absolute inset-0 bg-gradient-to-r from-accent via-wine-light to-accent opacity-0 group-hover:opacity-40 transition-opacity duration-300"
                 />
                 <span className="relative z-10">Book Now</span>
@@ -232,8 +230,8 @@ export const Navigation = () => {
             <div className="absolute inset-0 bg-gradient-morph opacity-30" />
             <motion.div
               className="absolute top-1/4 left-1/4 w-40 sm:w-56 h-40 sm:h-56 rounded-full bg-accent/15 blur-3xl pointer-events-none"
-              animate={{ 
-                scale: [1, 1.3, 1], 
+              animate={{
+                scale: [1, 1.3, 1],
                 opacity: [0.15, 0.3, 0.15],
                 x: [0, 30, 0],
                 y: [0, -20, 0]
@@ -242,15 +240,15 @@ export const Navigation = () => {
             />
             <motion.div
               className="absolute bottom-1/4 right-1/4 w-28 sm:w-40 h-28 sm:h-40 rounded-full bg-accent/10 blur-3xl pointer-events-none"
-              animate={{ 
-                scale: [1.2, 1, 1.2], 
+              animate={{
+                scale: [1.2, 1, 1.2],
                 opacity: [0.1, 0.2, 0.1],
                 x: [0, -20, 0],
                 y: [0, 30, 0]
               }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
-            
+
             <motion.nav
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -266,20 +264,19 @@ export const Navigation = () => {
                     className="overflow-hidden touch-manipulation w-full text-center group"
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      delay: 0.05 + index * 0.05, 
-                      duration: 0.35, 
-                      ease: [0.25, 0.46, 0.45, 0.94] 
+                    transition={{
+                      delay: 0.05 + index * 0.05,
+                      duration: 0.35,
+                      ease: [0.25, 0.46, 0.45, 0.94]
                     }}
                   >
-                    <Link 
+                    <Link
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       <motion.span
-                        className={`font-heading text-2xl xs:text-3xl sm:text-4xl font-bold tracking-tight transition-all duration-300 block py-2 relative ${
-                          isActive ? 'text-accent' : 'text-pure-white'
-                        }`}
+                        className={`font-heading text-2xl xs:text-3xl sm:text-4xl font-bold tracking-tight transition-all duration-300 block py-2 relative ${isActive ? 'text-accent' : 'text-pure-white'
+                          }`}
                         whileHover={{ scale: 1.05, x: 10, color: 'hsl(345, 65%, 45%)' }}
                         whileTap={{ scale: 0.97, x: 8 }}
                       >
@@ -291,7 +288,7 @@ export const Navigation = () => {
                   </motion.div>
                 );
               })}
-              
+
               <motion.div
                 className="flex flex-col items-center gap-4 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-accent/20 w-full max-w-[280px]"
                 initial={{ opacity: 0, y: 20 }}
@@ -307,7 +304,7 @@ export const Navigation = () => {
                   <Phone size={18} className="xs:w-5 xs:h-5" />
                   +254 702 340 700
                 </motion.a>
-                
+
                 <motion.a
                   href="https://wa.me/254718445264?text=Hello%2C%20I%20would%20like%20to%20book%20a%20session"
                   target="_blank"
@@ -317,7 +314,7 @@ export const Navigation = () => {
                   whileTap={{ scale: 0.97 }}
                 >
                   {/* Shimmer effect */}
-                  <motion.span 
+                  <motion.span
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
                     animate={{ x: ['-100%', '100%'] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}

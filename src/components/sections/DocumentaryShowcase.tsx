@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Film, ExternalLink, Clock, Calendar, Sparkles, MessageCircle } from 'lucide-react';
+import { Play, Film, ExternalLink, Clock, Calendar, MessageCircle } from 'lucide-react';
 import { ScrollReveal } from '../ScrollReveal';
 
 export interface DocumentaryItem {
@@ -25,7 +25,7 @@ const fallbackDocs: DocumentaryItem[] = [
     id: 'doc-fallback-1',
     title: 'Voices of Impact: Grassroots Transformation',
     description: 'A cinematic deep-dive documentary covering community resilience, conservation, and human connection in rural and metropolitan Kenya.',
-    drive_url: 'https://drive.google.com',
+    drive_url: 'https://drive.google.com/file/d/1cRCqSXOo95cyipBxGsV5G3L7Ynwh6cla/view?usp=drivesdk',
     thumbnail_url: '/gallery/corporate.jpg',
     duration: '18 min',
     client_or_topic: 'Community & NGO Storytelling',
@@ -39,7 +39,7 @@ const fallbackDocs: DocumentaryItem[] = [
     id: 'doc-fallback-2',
     title: 'Borders of Elegance: Architectural & Aerial Kenya',
     description: 'Capturing landmark architectural developments and breathtaking 4K aerial cinematography from Rift Valley to Nairobi skies.',
-    drive_url: 'https://drive.google.com',
+    drive_url: 'https://drive.google.com/file/d/1hjdX4PVGTxGWL3Z5GPdEaEg26qMPimqP/view?usp=drivesdk',
     thumbnail_url: '/gallery/creative.jpg',
     duration: '12 min',
     client_or_topic: 'Commercial & Aerial Cinema',
@@ -69,7 +69,7 @@ export const DocumentaryShowcase = () => {
   }, []);
 
   return (
-    <section id="documentaries" className="py-12 sm:py-20 lg:py-28 bg-secondary/30 border-y border-border/40 relative overflow-hidden">
+    <section id="documentaries" className="py-10 sm:py-14 lg:py-20 bg-secondary/30 border-y border-border/40 relative overflow-hidden">
       {/* Background glow accents */}
       <div className="absolute top-1/3 -left-40 w-96 h-96 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 -right-40 w-96 h-96 rounded-full bg-accent/10 blur-3xl pointer-events-none" />

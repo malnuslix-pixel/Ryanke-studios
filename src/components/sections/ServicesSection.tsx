@@ -3,13 +3,12 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ScrollReveal, StaggerContainer, StaggerItem } from '../ScrollReveal';
-import { Camera, Users, Building, Film, Sparkles, Plane, Palette, Video } from 'lucide-react';
+import { Camera, Users, Building, Film, Plane, Palette, Video } from 'lucide-react';
 
 const iconMap: Record<string, any> = {
   Building,
   Users,
   Camera,
-  Sparkles,
   Film,
   Plane,
   Palette,
@@ -36,7 +35,7 @@ const defaultServices = [
     features: ['Baby Showers', 'Birthday Events', 'Corporate Events'],
   },
   {
-    icon: Sparkles,
+    icon: Palette,
     title: 'Product Photography',
     description: 'Showcase your products with clean, vibrant images that drive sales and engagement.',
     features: ['E-commerce Shots', 'Catalog Images', 'Social Media Content'],

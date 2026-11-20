@@ -23,7 +23,7 @@ export const HeroSection = () => {
           setHeroData(data);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const containerRef = useRef(null);
@@ -79,7 +79,7 @@ export const HeroSection = () => {
         style={isTouchDevice ? undefined : { opacity }}
         className="absolute top-1/4 left-4 lg:left-16 z-10 hidden sm:block"
       >
-        <motion.div 
+        <motion.div
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
           whileInView={{ scaleY: [0.5, 1, 0.5], opacity: [0.5, 1, 0.5] }}
           viewport={{ once: false, amount: 0.2 }}
@@ -90,7 +90,7 @@ export const HeroSection = () => {
         style={isTouchDevice ? undefined : { opacity }}
         className="absolute top-1/4 right-4 lg:right-16 z-10 hidden sm:block"
       >
-        <motion.div 
+        <motion.div
           className="w-px h-24 lg:h-32 bg-gradient-to-b from-transparent via-accent to-transparent"
           whileInView={{ scaleY: [1, 0.5, 1], opacity: [1, 0.5, 1] }}
           viewport={{ once: false, amount: 0.2 }}
@@ -110,7 +110,7 @@ export const HeroSection = () => {
           transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="mb-4 sm:mb-6"
         >
-          <motion.span 
+          <motion.span
             className="inline-flex items-center justify-center flex-wrap gap-2 sm:gap-3 text-xs sm:text-sm font-semibold tracking-[0.1em] sm:tracking-[0.2em] md:tracking-[0.3em] uppercase text-pure-white/80 max-w-full px-2"
             whileHover={{ scale: 1.05 }}
           >
@@ -139,21 +139,21 @@ export const HeroSection = () => {
           transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="font-heading text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[0.9] tracking-tight mb-6 sm:mb-8 text-pure-white"
         >
-          <motion.span 
+          <motion.span
             className="block"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             Capturing
           </motion.span>
-          <motion.span 
+          <motion.span
             className="block mt-1 sm:mt-2"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <span className="text-accent">Moments</span> That
           </motion.span>
-          <motion.span 
+          <motion.span
             className="block mt-1 sm:mt-2"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}

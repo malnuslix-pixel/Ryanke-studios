@@ -36,10 +36,10 @@ export const BrandMarquee = () => {
   const brands = liveBrands.length > 0 ? liveBrands : defaultBrands;
 
   return (
-    <section className="py-16 md:py-20 border-y border-border/50 overflow-hidden bg-secondary/20">
+    <section className="py-8 sm:py-10 md:py-12 border-y border-border/50 overflow-hidden bg-secondary/20">
       <ScrollReveal>
-        <div className="text-center mb-8 md:mb-12">
-          <span className="text-xs md:text-sm font-semibold tracking-[0.3em] uppercase text-muted-foreground">
+        <div className="text-center mb-4 sm:mb-6">
+          <span className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-muted-foreground">
             Featured In & Trusted By
           </span>
         </div>
@@ -52,7 +52,7 @@ export const BrandMarquee = () => {
 
         {/* First Marquee Row */}
         <motion.div
-          className="flex gap-8 md:gap-16 whitespace-nowrap mb-6"
+          className="flex gap-8 md:gap-16 whitespace-nowrap mb-4"
           animate={{ x: ['0%', '-50%'] }}
           transition={{
             duration: 25,
@@ -92,54 +92,6 @@ export const BrandMarquee = () => {
           ))}
         </motion.div>
       </div>
-
-      {/* Stats Row */}
-      <ScrollReveal delay={0.2}>
-        <div className="flex flex-wrap justify-center gap-6 sm:gap-12 md:gap-16 mt-8 sm:mt-12 md:mt-16 px-4">
-          <motion.div 
-            className="text-center group cursor-default"
-            whileHover={{ scale: 1.05 }}
-          >
-            <motion.span 
-              className="block font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-accent"
-              whileHover={{ y: -5 }}
-            >
-              1000+
-            </motion.span>
-            <span className="text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
-              Happy Clients
-            </span>
-          </motion.div>
-          <motion.div 
-            className="text-center group cursor-default"
-            whileHover={{ scale: 1.05 }}
-          >
-            <motion.span 
-              className="block font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-accent"
-              whileHover={{ y: -5 }}
-            >
-              5+
-            </motion.span>
-            <span className="text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
-              Brands Served
-            </span>
-          </motion.div>
-          <motion.div 
-            className="text-center group cursor-default"
-            whileHover={{ scale: 1.05 }}
-          >
-            <motion.span 
-              className="block font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-accent"
-              whileHover={{ y: -5 }}
-            >
-              500+
-            </motion.span>
-            <span className="text-xs md:text-sm tracking-[0.1em] sm:tracking-[0.15em] uppercase text-muted-foreground group-hover:text-foreground transition-colors">
-              Projects Done
-            </span>
-          </motion.div>
-        </div>
-      </ScrollReveal>
     </section>
   );
 };

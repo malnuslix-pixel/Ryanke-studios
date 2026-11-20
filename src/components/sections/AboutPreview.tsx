@@ -71,7 +71,7 @@ export const AboutPreview = () => {
 
   return (
     <>
-      <section className="relative py-16 sm:py-24 lg:py-40 overflow-hidden">
+      <section className="relative py-12 sm:py-16 lg:py-24 overflow-hidden">
         {/* Background decoration */}
         <div className="absolute -right-20 top-1/4 w-96 h-96 rounded-full bg-accent/5 blur-3xl" />
         

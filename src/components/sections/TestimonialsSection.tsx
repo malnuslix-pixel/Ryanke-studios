@@ -101,7 +101,7 @@ export const TestimonialsSection = () => {
     <section
       id="testimonials"
       ref={containerRef}
-      className="relative py-16 sm:py-24 lg:py-40 text-primary-foreground overflow-hidden"
+      className="relative py-12 sm:py-16 lg:py-24 text-primary-foreground overflow-hidden"
     >
       {/* Background Cover Image */}
       <div 

@@ -125,7 +125,7 @@ const doubledPlatforms = [...socialPlatforms, ...socialPlatforms, ...socialPlatf
 
 export const PortfolioPreview = () => {
   return (
-    <section className="relative py-16 sm:py-24 lg:py-40 overflow-hidden">
+    <section className="relative py-12 sm:py-16 lg:py-24 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 sm:gap-8 mb-10 sm:mb-16">
