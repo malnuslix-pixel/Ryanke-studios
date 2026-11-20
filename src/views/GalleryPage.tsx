@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { PageHeader } from '@/components/sections/PageHeader';
 import { CTASection } from '@/components/sections/CTASection';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ZoomIn, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Film, ExternalLink, Play } from 'lucide-react';
 import Image from 'next/image';
 import galleryHero from '@/assets/gallery-hero.jpg';
 
@@ -51,6 +52,8 @@ const GalleryPage = () => {
   useSmoothScroll();
   const [selectedCategory, setSelectedCategory] = useState<Category>('All');
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(defaultGalleryItems);
+  const [visibleCount, setVisibleCount] = useState<number>(5);
+  const [featuredDoc, setFeaturedDoc] = useState<any>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -73,11 +76,29 @@ const GalleryPage = () => {
         }
       })
       .catch(() => {});
+
+    // Fetch documentaries from admin dashboard to power the CTA
+    fetch('/api/admin/documentaries')
+      .then((res) => (res.ok ? res.json() : []))
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const featured = data.find((d: any) => d.is_featured && d.is_active !== false) || data[0];
+          setFeaturedDoc(featured);
+        }
+      })
+      .catch(() => {});
   }, []);
+
+  const handleSelectCategory = (cat: Category) => {
+    setSelectedCategory(cat);
+    setVisibleCount(5); // Reset to 5 on category change
+  };
 
   const filteredItems = selectedCategory === 'All'
     ? galleryItems
     : galleryItems.filter((item) => item.category === selectedCategory);
+
+  const displayedItems = filteredItems.slice(0, visibleCount);
 
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
@@ -90,12 +111,12 @@ const GalleryPage = () => {
   }, []);
 
   const nextImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % filteredItems.length : null));
-  }, [filteredItems.length]);
+    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % displayedItems.length : null));
+  }, [displayedItems.length]);
 
   const prevImage = useCallback(() => {
-    setLightboxIndex((prev) => (prev !== null ? (prev - 1 + filteredItems.length) % filteredItems.length : null));
-  }, [filteredItems.length]);
+    setLightboxIndex((prev) => (prev !== null ? (prev - 1 + displayedItems.length) % displayedItems.length : null));
+  }, [displayedItems.length]);
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -125,7 +146,7 @@ const GalleryPage = () => {
               {categories.map((category) => (
                 <button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => handleSelectCategory(category)}
                   className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium tracking-wide transition-all duration-300 ${
                     selectedCategory === category
                       ? 'bg-accent text-accent-foreground shadow-lg shadow-accent/30 font-semibold'
@@ -138,13 +159,13 @@ const GalleryPage = () => {
             </div>
           </ScrollReveal>
 
-          {/* Gallery Grid */}
+          {/* Gallery Grid (initial 5 images) */}
           <motion.div 
             layout
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8"
           >
             <AnimatePresence mode="popLayout">
-              {filteredItems.map((item, index) => (
+              {displayedItems.map((item, index) => (
                 <motion.div
                   key={item.id}
                   layout
@@ -161,7 +182,7 @@ const GalleryPage = () => {
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-                    loading={index < 6 ? 'eager' : 'lazy'}
+                    loading={index < 5 ? 'eager' : 'lazy'}
                   />
 
                   {/* Gradient Overlay */}
@@ -192,12 +213,63 @@ const GalleryPage = () => {
               ))}
             </AnimatePresence>
           </motion.div>
+
+          {/* Action Bar: View More & Watch Our Documentaries CTA */}
+          <div className="mt-12 sm:mt-16 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+            {visibleCount < filteredItems.length && (
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setVisibleCount((prev) => Math.min(prev + 6, filteredItems.length))}
+                className="btn-luxury w-full sm:w-auto px-8 py-3.5 flex items-center justify-center gap-2 text-sm font-semibold shadow-lg"
+              >
+                <span>View More Photos ({filteredItems.length - visibleCount} remaining)</span>
+                <ChevronDown className="w-4 h-4" />
+              </motion.button>
+            )}
+
+            {visibleCount >= filteredItems.length && filteredItems.length > 5 && (
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setVisibleCount(5)}
+                className="btn-outline-luxury w-full sm:w-auto px-6 py-3.5 flex items-center justify-center gap-2 text-sm font-medium"
+              >
+                <span>Show Less</span>
+                <ChevronUp className="w-4 h-4" />
+              </motion.button>
+            )}
+
+            {/* Watch Our Documentaries CTA (controlled from admin dashboard) */}
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
+              {featuredDoc?.drive_url ? (
+                <a
+                  href={featuredDoc.drive_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline-luxury border-accent/60 text-foreground hover:bg-accent hover:text-accent-foreground w-full sm:w-auto px-8 py-3.5 flex items-center justify-center gap-2.5 text-sm font-semibold transition-all duration-300 shadow-md group"
+                >
+                  <Film className="w-4 h-4 text-accent group-hover:text-current transition-colors" />
+                  <span>{featuredDoc.cta_label || 'Watch Our Documentaries'}</span>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+                </a>
+              ) : (
+                <Link
+                  href="/portfolio#documentaries"
+                  className="btn-outline-luxury border-accent/60 text-foreground hover:bg-accent hover:text-accent-foreground w-full sm:w-auto px-8 py-3.5 flex items-center justify-center gap-2.5 text-sm font-semibold transition-all duration-300 shadow-md group"
+                >
+                  <Film className="w-4 h-4 text-accent group-hover:text-current transition-colors" />
+                  <span>Watch Our Documentaries</span>
+                </Link>
+              )}
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Lightbox Modal */}
       <AnimatePresence>
-        {lightboxIndex !== null && filteredItems[lightboxIndex] && (
+        {lightboxIndex !== null && displayedItems[lightboxIndex] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -249,8 +321,8 @@ const GalleryPage = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={filteredItems[lightboxIndex].image_url}
-                alt={filteredItems[lightboxIndex].title}
+                src={displayedItems[lightboxIndex].image_url}
+                alt={displayedItems[lightboxIndex].title}
                 fill
                 sizes="90vw"
                 className="object-contain"
@@ -264,14 +336,14 @@ const GalleryPage = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <span className="text-xs text-accent uppercase tracking-wider font-semibold">
-                {filteredItems[lightboxIndex].category}
+                {displayedItems[lightboxIndex].category}
               </span>
               <h3 className="font-heading text-lg sm:text-xl font-bold mt-0.5">
-                {filteredItems[lightboxIndex].title}
+                {displayedItems[lightboxIndex].title}
               </h3>
-              {filteredItems[lightboxIndex].description && (
+              {displayedItems[lightboxIndex].description && (
                 <p className="text-xs sm:text-sm text-white/70 mt-1">
-                  {filteredItems[lightboxIndex].description}
+                  {displayedItems[lightboxIndex].description}
                 </p>
               )}
             </div>

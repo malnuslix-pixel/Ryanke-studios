@@ -18,6 +18,7 @@ import {
   LogOut,
   Menu,
   Camera,
+  Film,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -38,6 +39,7 @@ const navItems = [
   { label: 'About', href: '/admin/about', icon: User },
   { label: 'Services', href: '/admin/services', icon: Briefcase },
   { label: 'Gallery', href: '/admin/gallery', icon: Images },
+  { label: 'Documentaries', href: '/admin/documentaries', icon: Film },
   { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
   { label: 'Pricing', href: '/admin/pricing', icon: CreditCard },
   { label: 'Brands', href: '/admin/brands', icon: Award },

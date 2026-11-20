@@ -3,7 +3,7 @@
 import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Camera, Lock, Mail, KeyRound, ArrowLeft, Loader2, ShieldCheck } from 'lucide-react';
+import { Camera, Lock, Mail, KeyRound, ArrowLeft, Loader2, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,8 +15,10 @@ function LoginForm() {
 
   const [authMode, setAuthMode] = useState<'secret' | 'credentials'>('secret');
   const [secretKey, setSecretKey] = useState('');
+  const [showSecretKey, setShowSecretKey] = useState(false);
   const [email, setEmail] = useState('admin@ryankeystudios.com');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -116,15 +118,24 @@ function LoginForm() {
               <ShieldCheck className="absolute left-3 top-3 h-4 w-4 text-accent" />
               <Input
                 id="secretKey"
-                type="password"
+                type={showSecretKey ? 'text' : 'password'}
                 placeholder="Enter secret key..."
                 value={secretKey}
                 onChange={(e) => setSecretKey(e.target.value)}
                 required
-                className="pl-10"
+                className="pl-10 pr-10"
                 disabled={isLoading}
                 autoFocus
               />
+              <button
+                type="button"
+                onClick={() => setShowSecretKey(!showSecretKey)}
+                className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
+                aria-label={showSecretKey ? 'Hide secret key' : 'Show secret key'}
+                tabIndex={-1}
+              >
+                {showSecretKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
             <p className="text-[11px] text-muted-foreground">
               Enter the master secret key configured for Ryankey Studios.
@@ -159,14 +170,23 @@ function LoginForm() {
                 <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="pl-10"
+                  className="pl-10 pr-10"
                   disabled={isLoading}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-3 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
               </div>
             </div>
           </>

@@ -291,3 +291,44 @@ INSERT INTO process_steps (step_number, title, description, icon) VALUES
 (2, 'Planning', 'Our team crafts a customized shoot plan including location scouting, mood boards, and scheduling.', 'Calendar'),
 (3, 'The Shoot', 'Our experienced team brings your vision to life with professional equipment and creative direction.', 'Camera'),
 (4, 'Delivery', 'Receive your professionally edited photos and videos, delivered digitally with prints available.', 'Package');
+
+-- ============================================
+-- 12. Documentaries & Video Projects
+-- ============================================
+CREATE TABLE documentaries (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title TEXT NOT NULL,
+  description TEXT,
+  drive_url TEXT NOT NULL,
+  thumbnail_url TEXT,
+  duration TEXT DEFAULT '15 min',
+  client_or_topic TEXT DEFAULT 'Documentary',
+  year TEXT DEFAULT '2025',
+  cta_label TEXT DEFAULT 'Watch Documentary',
+  is_featured BOOLEAN DEFAULT FALSE,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  sort_order INT NOT NULL DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE documentaries ENABLE ROW LEVEL SECURITY;
+
+-- Public can view active documentaries
+CREATE POLICY "Public can view active documentaries"
+  ON documentaries FOR SELECT
+  USING (is_active = TRUE);
+
+-- Authenticated admins have full CRUD
+CREATE POLICY "Admins have full access to documentaries"
+  ON documentaries FOR ALL
+  TO authenticated
+  USING (TRUE)
+  WITH CHECK (TRUE);
+
+-- Documentaries Seed Data
+INSERT INTO documentaries (title, description, drive_url, thumbnail_url, duration, client_or_topic, year, cta_label, is_featured, sort_order) VALUES
+('Voices of Impact: Grassroots Transformation', 'A cinematic deep-dive documentary covering community resilience, conservation, and human connection in rural and metropolitan Kenya.', 'https://drive.google.com', '/gallery/corporate.jpg', '18 min', 'Community & NGO Storytelling', '2025', 'Watch Documentary', TRUE, 1),
+('Borders of Elegance: Architectural & Aerial Kenya', 'Capturing landmark architectural developments and breathtaking 4K aerial cinematography from Rift Valley to Nairobi skies.', 'https://drive.google.com', '/gallery/creative.jpg', '12 min', 'Commercial & Aerial', '2025', 'Watch on Google Drive', FALSE, 2);
+
