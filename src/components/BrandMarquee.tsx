@@ -55,7 +55,7 @@ export const BrandMarquee = () => {
           className="flex gap-8 md:gap-16 whitespace-nowrap mb-4"
           animate={{ x: ['0%', '-50%'] }}
           transition={{
-            duration: 25,
+            duration: 30,
             ease: 'linear',
             repeat: Infinity,
           }}

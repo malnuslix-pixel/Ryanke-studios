@@ -178,7 +178,7 @@ export const PortfolioPreview = () => {
                 animate={{ x: ['0%', '-50%'] }}
                 transition={{
                   x: {
-                    duration: 25,
+                    duration: 30,
                     repeat: Infinity,
                     ease: 'linear',
                   },
